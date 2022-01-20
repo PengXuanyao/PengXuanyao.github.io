@@ -20,25 +20,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="三元运算符  与C一样，这是一些例子： 12345678910111213141516171819Examples:(0 ? 3 : 5)     &#x2F;&#x2F; This is 5 because the condition is false.(sel ? b : a)   &#x2F;&#x2F; A 2-to-1 multiplexer between a and b selected by sel.always">
+<meta name="description" content="三元运算符  与C一样，这是一些例子：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【verilog学习】-05-其他语法特性">
-<meta property="og:url" content="http://example.com/2022/01/19/%E3%80%90verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:url" content="http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="PengXuanyao">
-<meta property="og:description" content="三元运算符  与C一样，这是一些例子： 12345678910111213141516171819Examples:(0 ? 3 : 5)     &#x2F;&#x2F; This is 5 because the condition is false.(sel ? b : a)   &#x2F;&#x2F; A 2-to-1 multiplexer between a and b selected by sel.always">
+<meta property="og:description" content="三元运算符  与C一样，这是一些例子：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-19T02:19:22.000Z">
-<meta property="article:modified_time" content="2022-01-19T06:11:14.941Z">
+<meta property="article:modified_time" content="2022-01-20T01:19:09.038Z">
 <meta property="article:author" content="PengXuanyao">
 <meta property="article:tag" content="verilog">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/01/19/%E3%80%90verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
+<link rel="canonical" href="http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/01/19/%E3%80%90verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/","path":"2022/01/19/【verilog学习】-05-其他语法特性/","title":"【verilog学习】-05-其他语法特性"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/","path":"2022/01/19/【Verilog学习】-05-其他语法特性/","title":"【verilog学习】-05-其他语法特性"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>【verilog学习】-05-其他语法特性 | PengXuanyao</title>
@@ -135,7 +135,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E3%80%90verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -208,9 +208,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-01-19 10:19:22 / 修改时间：14:11:14" itemprop="dateCreated datePublished" datetime="2022-01-19T10:19:22+08:00">2022-01-19</time>
+      <time title="创建时间：2022-01-19 10:19:22" itemprop="dateCreated datePublished" datetime="2022-01-19T10:19:22+08:00">2022-01-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-20 09:19:09" itemprop="dateModified" datetime="2022-01-20T09:19:09+08:00">2022-01-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -235,6 +241,7 @@
         <h2 id="三元运算符">三元运算符</h2>
 <hr />
 <p>与C一样，这是一些例子：</p>
+<span id="more"></span>
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Examples:</span><br><span class="line"></span><br><span class="line">(<span class="number">0</span> ? <span class="number">3</span> : <span class="number">5</span>)     <span class="comment">// This is 5 because the condition is false.</span></span><br><span class="line">(sel ? b : a)   <span class="comment">// A 2-to-1 multiplexer between a and b selected by sel.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)         <span class="comment">// A T-flip-flop.</span></span><br><span class="line">  q &lt;= toggle ? ~q : q;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(*)                   <span class="comment">// State transition logic for a one-input FSM</span></span><br><span class="line">  <span class="keyword">case</span> (state)</span><br><span class="line">    A: next = w ? B : A;</span><br><span class="line">    B: next = w ? A : B;</span><br><span class="line">  <span class="keyword">endcase</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> out = ena ? q : <span class="number">1&#x27;bz</span>;  <span class="comment">// A tri-state buffer</span></span><br><span class="line"></span><br><span class="line">((sel[<span class="number">1</span>:<span class="number">0</span>] == <span class="number">2&#x27;h0</span>) ? a :     <span class="comment">// A 3-to-1 mux</span></span><br><span class="line"> (sel[<span class="number">1</span>:<span class="number">0</span>] == <span class="number">2&#x27;h1</span>) ? b :</span><br><span class="line">                      c )</span><br></pre></td></tr></table></figure>
 <h2 id="缩减运算符">缩减运算符</h2>
 <hr />
@@ -276,6 +283,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/" rel="next" title="【Verilog学习】-06-组合电路">
+                  【Verilog学习】-06-组合电路 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

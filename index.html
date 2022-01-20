@@ -132,7 +132,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E3%80%90verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -194,7 +194,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/19/%E3%80%90verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/" class="post-title-link" itemprop="url">【verilog学习】-05-其他语法特性</a>
+          <a href="/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/" class="post-title-link" itemprop="url">【Verilog学习】-06-组合电路</a>
         </h2>
 
         <div class="post-meta-container">
@@ -206,7 +206,106 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-01-19 10:19:22 / 修改时间：14:11:14" itemprop="dateCreated datePublished" datetime="2022-01-19T10:19:22+08:00">2022-01-19</time>
+      <time title="创建时间：2022-01-20 09:18:00 / 修改时间：11:02:53" itemprop="dateCreated datePublished" datetime="2022-01-20T09:18:00+08:00">2022-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这一章主要对组合逻辑电路的设计做了一个复习，前面也有比较多的涉及，因此下面仅记录一些关键点。</p>
+<h2 id="硬件设计思路">硬件设计思路</h2>
+<hr />
+<p>这里与软件的涉及不同，硬件设计主要是逆向的思考，即由想要的输出决定输入(assign ringer = ··· )。</p>
+<blockquote>
+<p><strong>Design hint:</strong> When designing circuits, one often has to think of the problem &quot;backwards&quot;, starting from the outputs then working backwards towards the inputs. This is often the opposite of how one would think about a (sequential, imperative) programming problem, where one would look at the inputs first then decide on an action (or output). For sequential programs, one would often think &quot;If (inputs are ___ ) then (output should be ___ )&quot;. On the other hand, hardware designers often think &quot;The (output should be ___ ) when (inputs are ___ )&quot;.</p>
+<p>The above problem description is written in an imperative form suitable for software programming (<em>if ring then do this</em>), so you must convert it to a more declarative form suitable for hardware implementation (<code>*assign ringer = ___*</code>). Being able to think in, and translate between, both styles is one of the most important skills needed for hardware design.</p>
+</blockquote>
+<p><strong>这道题比较有意思：</strong></p>
+<blockquote>
+<p>You are given a 100-bit input vector in[99:0]. We want to know some relationships between each bit and its neighbour:</p>
+<ul>
+<li><strong>out_both</strong>: Each bit of this output vector should indicate whether <em>both</em> the corresponding input bit and its neighbour to the <strong>left</strong> are '1'. For example, <code>out_both[98]</code> should indicate if <code>in[98]</code> and <code>in[99]</code> are both 1. Since <code>in[99]</code> has no neighbour to the left, the answer is obvious so we don't need to know <code>out_both[99]</code>.</li>
+<li><strong>out_any</strong>: Each bit of this output vector should indicate whether <em>any</em> of the corresponding input bit and its neighbour to the <strong>right</strong> are '1'. For example, <code>out_any[2]</code> should indicate if either <code>in[2]</code> or <code>in[1]</code> are 1. Since <code>in[0]</code> has no neighbour to the right, the answer is obvious so we don't need to know <code>out_any[0]</code>.</li>
+<li><strong>out_different</strong>: Each bit of this output vector should indicate whether the corresponding input bit is different from its neighbour to the <strong>left</strong>. For example, <code>out_different[98]</code> should indicate if <code>in[98]</code> is different from <code>in[99]</code>. For this part, treat the vector as wrapping around, so <code>in[99]</code>'s neighbour to the left is <code>in[0]</code>.</li>
+</ul>
+</blockquote>
+<p><strong>solution:</strong></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] in,</span><br><span class="line">	<span class="keyword">output</span> [<span class="number">98</span>:<span class="number">0</span>] out_both,</span><br><span class="line">	<span class="keyword">output</span> [<span class="number">99</span>:<span class="number">1</span>] out_any,</span><br><span class="line">	<span class="keyword">output</span> [<span class="number">99</span>:<span class="number">0</span>] out_different</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// See gatesv for explanations.</span></span><br><span class="line">	<span class="keyword">assign</span> out_both = in &amp; in[<span class="number">99</span>:<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">assign</span> out_any = in[<span class="number">99</span>:<span class="number">1</span>] | in ;</span><br><span class="line">	<span class="keyword">assign</span> out_different = in ^ &#123;in[<span class="number">0</span>], in[<span class="number">99</span>:<span class="number">1</span>]&#125;;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>可以用向量操作，比循环更方便。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="彭宣尧的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/" class="post-title-link" itemprop="url">【verilog学习】-05-其他语法特性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-19 10:19:22" itemprop="dateCreated datePublished" datetime="2022-01-19T10:19:22+08:00">2022-01-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-20 09:19:09" itemprop="dateModified" datetime="2022-01-20T09:19:09+08:00">2022-01-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -231,27 +330,14 @@
           <h2 id="三元运算符">三元运算符</h2>
 <hr />
 <p>与C一样，这是一些例子：</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Examples:</span><br><span class="line"></span><br><span class="line">(<span class="number">0</span> ? <span class="number">3</span> : <span class="number">5</span>)     <span class="comment">// This is 5 because the condition is false.</span></span><br><span class="line">(sel ? b : a)   <span class="comment">// A 2-to-1 multiplexer between a and b selected by sel.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)         <span class="comment">// A T-flip-flop.</span></span><br><span class="line">  q &lt;= toggle ? ~q : q;</span><br><span class="line"></span><br><span class="line"><span class="keyword">always</span> @(*)                   <span class="comment">// State transition logic for a one-input FSM</span></span><br><span class="line">  <span class="keyword">case</span> (state)</span><br><span class="line">    A: next = w ? B : A;</span><br><span class="line">    B: next = w ? A : B;</span><br><span class="line">  <span class="keyword">endcase</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">assign</span> out = ena ? q : <span class="number">1&#x27;bz</span>;  <span class="comment">// A tri-state buffer</span></span><br><span class="line"></span><br><span class="line">((sel[<span class="number">1</span>:<span class="number">0</span>] == <span class="number">2&#x27;h0</span>) ? a :     <span class="comment">// A 3-to-1 mux</span></span><br><span class="line"> (sel[<span class="number">1</span>:<span class="number">0</span>] == <span class="number">2&#x27;h1</span>) ? b :</span><br><span class="line">                      c )</span><br></pre></td></tr></table></figure>
-<h2 id="缩减运算符">缩减运算符</h2>
-<hr />
-<p>单目运算，用来简化运算操作：</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&amp; a[<span class="number">3</span>:<span class="number">0</span>]     <span class="comment">// AND: a[3]&amp;a[2]&amp;a[1]&amp;a[0]. Equivalent to (a[3:0] == 4&#x27;hf)</span></span><br><span class="line">| b[<span class="number">3</span>:<span class="number">0</span>]     <span class="comment">// OR:  b[3]|b[2]|b[1]|b[0]. Equivalent to (b[3:0] != 4&#x27;h0)</span></span><br><span class="line">^ c[<span class="number">2</span>:<span class="number">0</span>]     <span class="comment">// XOR: c[2]^c[1]^c[0]</span></span><br><span class="line">~&amp; d[<span class="number">2</span>:<span class="number">0</span>]	<span class="comment">//  NAND : ~ (d[2]&amp;d[1]&amp;d[0])</span></span><br></pre></td></tr></table></figure>
-<h2 id="组合逻辑中的for-loop">组合逻辑中的for-loop</h2>
-<hr />
-<p>将输入输出顺序反向：</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] in,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">99</span>:<span class="number">0</span>] out</span><br><span class="line">);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">$bits</span>(out);i++)		<span class="comment">// $bits() is a system function that returns the width of a signal.</span></span><br><span class="line">			out[i] = in[<span class="built_in">$bits</span>(out)-i-<span class="number">1</span>];	<span class="comment">// $bits(out) is 100 because out is 100 bits wide.</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h2 id="population-count">population count</h2>
-<p>计算输入中1的个数</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">254</span>:<span class="number">0</span>] in,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] out</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">always</span> @(*) <span class="keyword">begin</span>	<span class="comment">// Combinational always block</span></span><br><span class="line">		out = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">255</span>;i++)</span><br><span class="line">			out = out + in[i];</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h2 id="设计一百位的全加器">设计一百位的全加器</h2>
-<p>注意这里generate里面的loop要有label，否则会报错</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] a, b,</span><br><span class="line">    <span class="keyword">input</span> cin,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">99</span>:<span class="number">0</span>] cout,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">99</span>:<span class="number">0</span>] sum );</span><br><span class="line">    <span class="keyword">generate</span></span><br><span class="line">        <span class="keyword">genvar</span> i;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">100</span> ; i= i+<span class="number">1</span>)<span class="keyword">begin</span>:adder_loop	<span class="comment">//这里要有这个babel</span></span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span>)<span class="keyword">begin</span></span><br><span class="line">                full_adder full_adder_inst(a[i],b[i],cin,cout[i],sum[i]);</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                full_adder full_adder_inst(a[i],b[i],cout[i-<span class="number">1</span>],cout[i],sum[i]);</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endgenerate</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> full_adder( </span><br><span class="line">    <span class="keyword">input</span> a, b, cin,</span><br><span class="line">    <span class="keyword">output</span> cout, sum );</span><br><span class="line">	<span class="keyword">assign</span> sum = a ^ b ^ cin;</span><br><span class="line">    <span class="keyword">assign</span> cout = (a &amp; b) | (cin &amp; a) | (b &amp; cin);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<p>也可以使用实例数组的写法，下一道道题尝试使用。尝试失败，因为需要用到中间的变量cout</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/nevercode/p/15201279.html">Verilog实例数组 - NeverCode - 博客园 (cnblogs.com)</a></p>
-</blockquote>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> [<span class="number">399</span>:<span class="number">0</span>] a, b,</span><br><span class="line">    <span class="keyword">input</span> cin,</span><br><span class="line">    <span class="keyword">output</span> cout,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">399</span>:<span class="number">0</span>] sum );</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">99</span>:<span class="number">0</span>] intermediate_cout;</span><br><span class="line">    <span class="keyword">assign</span> cout = intermediate_cout[<span class="number">99</span>];</span><br><span class="line">    <span class="keyword">generate</span></span><br><span class="line">        <span class="keyword">genvar</span> i;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; <span class="number">100</span>;i=i+<span class="number">1</span>)<span class="keyword">begin</span>:bcd_loop</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">0</span>)<span class="keyword">begin</span></span><br><span class="line">                bcd_fadd bcd_fadd(a[<span class="number">4</span>*(i+<span class="number">1</span>)-<span class="number">1</span>:<span class="number">4</span>*i],b[<span class="number">4</span>*(i+<span class="number">1</span>)-<span class="number">1</span>:<span class="number">4</span>*i],cin,intermediate_cout[i],sum[<span class="number">4</span>*(i+<span class="number">1</span>)-<span class="number">1</span>:<span class="number">4</span>*i]);</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">                bcd_fadd bcd_fadd(a[<span class="number">4</span>*(i+<span class="number">1</span>)-<span class="number">1</span>:<span class="number">4</span>*i],b[<span class="number">4</span>*(i+<span class="number">1</span>)-<span class="number">1</span>:<span class="number">4</span>*i],intermediate_cout[i-<span class="number">1</span>],intermediate_cout[i],sum[<span class="number">4</span>*(i+<span class="number">1</span>)-<span class="number">1</span>:<span class="number">4</span>*i]);</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endgenerate</span></span><br><span class="line">endmodule0</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -992,99 +1078,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/01/13/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-02-%E5%90%91%E9%87%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/13/%E3%80%90HoloCubic%E3%80%91-00-%E5%8E%9F%E7%90%86%E5%9B%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="彭宣尧的博客">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/13/%E3%80%90HoloCubic%E3%80%91-00-%E5%8E%9F%E7%90%86%E5%9B%BE/" class="post-title-link" itemprop="url">【HoloCubic】-00-原理图</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-13 12:08:14" itemprop="dateCreated datePublished" datetime="2022-01-13T12:08:14+08:00">2022-01-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-16 16:09:00" itemprop="dateModified" datetime="2022-01-16T16:09:00+08:00">2022-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%B5%E5%AD%90%E5%88%9B%E5%AE%A2/" itemprop="url" rel="index"><span itemprop="name">电子创客</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="简介">简介</h2>
-<p>这是一个稚晖君的开源小项目，通过记录一下复现的过程，来熟悉一下AD。（好久没有画过板子了）</p>
-<p>这一部分主要是原理图的一些学习：</p>
-<blockquote>
-<p>实现任意的走线，是通过 shift + space 实现，能够有90度、45度和任意角度走线。</p>
-<p>元件的镜像反转，是通过鼠标左键拖住元件，再点击X/Y实现水平和垂直方向的反转。（这一点和旋转元器件不同，旋转，点一下元件，松开后，再按空格就可以）</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/13/%E3%80%90HoloCubic%E3%80%91-00-%E5%8E%9F%E7%90%86%E5%9B%BE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
