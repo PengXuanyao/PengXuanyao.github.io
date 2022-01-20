@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="简介 这是一个稚晖君的开源小项目，通过记录一下复现的过程，来熟悉一下AD。（好久没有画过板子了） 这一部分主要是原理图的一些学习：  实现任意的走线，是通过 shift + space 实现，能够有90度、45度和任意角度走线。 元件的镜像反转，是通过鼠标左键拖住元件，再点击X&#x2F;Y实现水平和垂直方向的反转。（这一点和旋转元器件不同，旋转，点一下元件，松开后，再按空格就可以）  这个稚">
+<meta name="description" content="简介 这是一个稚晖君的开源小项目，通过记录一下复现的过程，来熟悉一下AD。（好久没有画过板子了） 这一部分主要是原理图的一些学习：  实现任意的走线，是通过 shift + space 实现，能够有90度、45度和任意角度走线。 元件的镜像反转，是通过鼠标左键拖住元件，再点击X&#x2F;Y实现水平和垂直方向的反转。（这一点和旋转元器件不同，旋转，点一下元件，松开后，再按空格就可以）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【HoloCubic】-00-原理图">
 <meta property="og:url" content="http://example.com/2022/01/13/%E3%80%90HoloCubic%E3%80%91-00-%E5%8E%9F%E7%90%86%E5%9B%BE/index.html">
 <meta property="og:site_name" content="PengXuanyao">
-<meta property="og:description" content="简介 这是一个稚晖君的开源小项目，通过记录一下复现的过程，来熟悉一下AD。（好久没有画过板子了） 这一部分主要是原理图的一些学习：  实现任意的走线，是通过 shift + space 实现，能够有90度、45度和任意角度走线。 元件的镜像反转，是通过鼠标左键拖住元件，再点击X&#x2F;Y实现水平和垂直方向的反转。（这一点和旋转元器件不同，旋转，点一下元件，松开后，再按空格就可以）  这个稚">
+<meta property="og:description" content="简介 这是一个稚晖君的开源小项目，通过记录一下复现的过程，来熟悉一下AD。（好久没有画过板子了） 这一部分主要是原理图的一些学习：  实现任意的走线，是通过 shift + space 实现，能够有90度、45度和任意角度走线。 元件的镜像反转，是通过鼠标左键拖住元件，再点击X&#x2F;Y实现水平和垂直方向的反转。（这一点和旋转元器件不同，旋转，点一下元件，松开后，再按空格就可以）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-13T04:08:14.000Z">
-<meta property="article:modified_time" content="2022-01-14T07:41:47.659Z">
+<meta property="article:modified_time" content="2022-01-16T08:09:00.878Z">
 <meta property="article:author" content="PengXuanyao">
 <meta property="article:tag" content="HoloCubic">
 <meta property="article:tag" content="稚晖君">
@@ -136,17 +136,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+          <a href="/categories/">
         <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">标签</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -215,7 +217,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-14 15:41:47" itemprop="dateModified" datetime="2022-01-14T15:41:47+08:00">2022-01-14</time>
+      <time title="修改时间：2022-01-16 16:09:00" itemprop="dateModified" datetime="2022-01-16T16:09:00+08:00">2022-01-16</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -244,7 +246,8 @@
 <p>实现任意的走线，是通过 shift + space 实现，能够有90度、45度和任意角度走线。</p>
 <p>元件的镜像反转，是通过鼠标左键拖住元件，再点击X/Y实现水平和垂直方向的反转。（这一点和旋转元器件不同，旋转，点一下元件，松开后，再按空格就可以）</p>
 </blockquote>
-<p>这个稚晖君的项目中主要用到了以下几个模块：</p>
+<span id="more"></span>
+<p>tips：在绘制PCB的时候如果需要画圆角，用Shift+Space来切换；在画好圆角后直接拖动原来的直角的端点到一定距离后删除即可。详见这一篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Teamo1110/article/details/108400204">Altium designer如何快速定义板子外形（直角和圆角）_Teamo1110的博客-CSDN博客_altium 圆角</a></p>
 
     </div>
 
