@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="PengXuanyao">
 <meta property="og:description" content="这一章主要对组合逻辑电路的设计做了一个复习，前面也有比较多的涉及，因此下面仅记录一些关键点。 硬件设计思路  这里与软件的涉及不同，硬件设计主要是逆向的思考，即由想要的输出决定输入(assign ringer &#x3D; ··· )。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220209223151265.png">
 <meta property="article:published_time" content="2022-01-20T01:18:00.000Z">
-<meta property="article:modified_time" content="2022-01-21T09:07:46.925Z">
+<meta property="article:modified_time" content="2022-02-09T14:45:45.420Z">
 <meta property="article:author" content="PengXuanyao">
 <meta property="article:tag" content="verilog">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220209223151265.png">
 
 
 <link rel="canonical" href="http://example.com/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/">
@@ -120,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">硬件设计思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">多路选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#assign%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">assign方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-%E6%96%B9%E5%BC%8F%E9%80%82%E7%94%A8%E4%BA%8E%E8%BE%83%E5%A4%9A%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.2.</span> <span class="nav-text">case 方式（适用于较多的情况）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">加法器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E7%A0%81%E5%8A%A0%E6%B3%95%E5%8F%8A%E5%85%B6%E6%BA%A2%E5%87%BA%E5%88%A4%E6%96%AD"><span class="nav-number">3.1.</span> <span class="nav-text">补码加法及其溢出判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%9A%84%E5%85%A8%E5%8A%A0%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">100位的全加器（使用+）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bcd-adder"><span class="nav-number">5.</span> <span class="nav-text">BCD adder</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">硬件设计思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">多路选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#assign%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">assign方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-%E6%96%B9%E5%BC%8F%E9%80%82%E7%94%A8%E4%BA%8E%E8%BE%83%E5%A4%9A%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.2.</span> <span class="nav-text">case 方式（适用于较多的情况）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E6%B3%95%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">加法器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E7%A0%81%E5%8A%A0%E6%B3%95%E5%8F%8A%E5%85%B6%E6%BA%A2%E5%87%BA%E5%88%A4%E6%96%AD"><span class="nav-number">3.1.</span> <span class="nav-text">补码加法及其溢出判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%9A%84%E5%85%A8%E5%8A%A0%E5%99%A8%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">100位的全加器（使用+）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bcd-adder"><span class="nav-number">5.</span> <span class="nav-text">BCD adder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E5%A4%9A%E8%B7%AF%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-number">5.1.</span> <span class="nav-text">再谈多路选择器</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -135,7 +137,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -146,7 +148,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -216,7 +218,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-21 17:07:46" itemprop="dateModified" datetime="2022-01-21T17:07:46+08:00">2022-01-21</time>
+      <time title="修改时间：2022-02-09 22:45:45" itemprop="dateModified" datetime="2022-02-09T22:45:45+08:00">2022-02-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -281,7 +283,26 @@
 <figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] a, b,</span><br><span class="line">    <span class="keyword">input</span> cin,</span><br><span class="line">    <span class="keyword">output</span> cout,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">99</span>:<span class="number">0</span>] sum );</span><br><span class="line">    <span class="keyword">assign</span> &#123;cout, sum&#125; = a + b + cin;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
 <p>05章节里里面的方法更为原始直接。</p>
 <h2 id="bcd-adder">BCD adder</h2>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module top_module( </span><br><span class="line">    input [15:0] a, b,</span><br><span class="line">    input cin,</span><br><span class="line">    output cout,</span><br><span class="line">    output [15:0] sum );</span><br><span class="line">	assign sum = a + b;</span><br><span class="line">    assign </span><br><span class="line">endmodule</span><br></pre></td></tr></table></figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> [<span class="number">15</span>:<span class="number">0</span>] a, b,</span><br><span class="line">    <span class="keyword">input</span> cin,</span><br><span class="line">    <span class="keyword">output</span> cout,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">15</span>:<span class="number">0</span>] sum );</span><br><span class="line">	<span class="keyword">assign</span> sum = a + b;</span><br><span class="line">    <span class="keyword">assign</span> </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="再谈多路选择器">再谈多路选择器</h3>
+<blockquote>
+<p>Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits <code>in[3:0]</code>, sel=1 selects bits <code>in[7:4]</code>, sel=2 selects bits <code>in[11:8]</code>, etc.</p>
+</blockquote>
+<p>这道题涉及到的问题是由于不能够直接使用<code>in[ sel * 4+3 : sel*  4 ]</code>，因为变量sel的宽度不确定。</p>
+<p>博客中，给了更为紧凑的语法，就是Indexed vector part select（下标向量的部分选择）<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
+<p>代码如下：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module( </span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1023</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] sel,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] out );</span><br><span class="line">    <span class="keyword">assign</span> out[<span class="number">3</span>:<span class="number">0</span>] = in[sel*<span class="number">4</span> :<span class="number">4</span>];</span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 参考答案：</span></span><br><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">1023</span>:<span class="number">0</span>] in,</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] sel,</span><br><span class="line">	<span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] out</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// We can&#x27;t part-select multiple bits without an error, but we can select one bit at a time,</span></span><br><span class="line">	<span class="comment">// four times, then concatenate them together.</span></span><br><span class="line">	<span class="keyword">assign</span> out = &#123;in[sel*<span class="number">4</span>+<span class="number">3</span>], in[sel*<span class="number">4</span>+<span class="number">2</span>], in[sel*<span class="number">4</span>+<span class="number">1</span>], in[sel*<span class="number">4</span>+<span class="number">0</span>]&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Alternatively, &quot;indexed vector part select&quot; works better, but has an unfamiliar syntax:</span></span><br><span class="line">	<span class="comment">// assign out = in[sel*4 +: 4];		// Select starting at index &quot;sel*4&quot;, then select a total width of 4 bits with increasing (+:) index number.</span></span><br><span class="line">	<span class="comment">// assign out = in[sel*4+3 -: 4];	// Select starting at index &quot;sel*4+3&quot;, then select a total width of 4 bits with decreasing (-:) index number.</span></span><br><span class="line">	<span class="comment">// Note: The width (4 in this case) must be constant.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>题目分析如下，当输入有一个发生变化时（相邻的方格中可以看到），输出就会发生反转。就是输入异或的结果。</p>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220209223151265.png" alt="image-20220209223151265" /><figcaption>image-20220209223151265</figcaption>
+</figure>
+<p>也可以通过化简SOP得到。</p>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013701860/article/details/52317614">Verilog-2001的向量部分选择_LuchangLi 的专栏-CSDN博客_verilog 向量部分选择</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
 
     </div>
 

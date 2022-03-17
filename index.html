@@ -132,7 +132,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -143,7 +143,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -181,6 +181,786 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/17/%E3%80%90CAG-SLAM%E3%80%91-04-%E9%99%A4%E6%B3%95%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/17/%E3%80%90CAG-SLAM%E3%80%91-04-%E9%99%A4%E6%B3%95%E5%99%A8/" class="post-title-link" itemprop="url">【CAG_SLAM】-04-除法器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-17 11:06:10" itemprop="dateCreated datePublished" datetime="2022-03-17T11:06:10+08:00">2022-03-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/" class="post-title-link" itemprop="url">【Verilog学习】-08-时序逻辑-基础触发器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 11:36:28" itemprop="dateCreated datePublished" datetime="2022-03-15T11:36:28+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-17 10:33:57" itemprop="dateModified" datetime="2022-03-17T10:33:57+08:00">2022-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="dff">1.DFF</h2>
+<hr />
+<p>Create a single D flip-flop.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,    <span class="comment">// Clocks are used in sequential circuits</span></span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> q );</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    	q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8">2.DFF8</h2>
+<hr />
+<p>Create 8 D flip-flops. All DFFs should be triggered by the positive edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        q[<span class="number">7</span>:<span class="number">0</span>] &lt;= d[<span class="number">7</span>:<span class="number">0</span>];	<span class="comment">// q &lt;= d;</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8r">3.Dff8r</h2>
+<hr />
+<p>Create 8 D flip-flops with active high synchronous reset. All DFFs should be triggered by the positive edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,            <span class="comment">// Synchronous reset</span></span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">&#x27;b0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            q &lt;= d;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        	    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8p">4.Dff8p</h2>
+<hr />
+<p>Create 8 D flip-flops with active high synchronous reset. The flip-flops must be reset to 0x34 rather than zero. All DFFs should be triggered by the <strong>negative</strong> edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            d &lt;= <span class="number">8&#x27;h34</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            d &lt;= q;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8ar">5.Dff8ar</h2>
+<hr />
+<p>Create 8 D flip-flops with active high asynchronous reset. All DFFs should be triggered by the positive edge of <code>clk</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,   <span class="comment">// active high asynchronous reset</span></span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> areset) <span class="keyword">begin</span> <span class="comment">// 这里加上or和后面的信号可以实现异步</span></span><br><span class="line">        <span class="keyword">if</span> (areset) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">&#x27;d0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            q &lt;= d;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff16e">6.Dff16e</h2>
+<hr />
+<p>Create 16 D flip-flops. It's sometimes useful to only modify parts of a group of flip-flops. The byte-enable inputs control whether each byte of the 16 registers should be written to on that cycle. <code>byteena[1]</code> controls the upper byte <code>d[15:8]</code>, while <code>byteena[0]</code> controls the lower byte <code>d[7:0]</code>.</p>
+<p><code>resetn</code> is a synchronous(同步的，不要和异步高反了, active-low reset.</p>
+<p>All DFFs should be triggered by the positive edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> resetn,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] byteena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">15</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">15</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (!resetn) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">&#x27;d0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            q[<span class="number">15</span>:<span class="number">8</span>] &lt;= byteena[<span class="number">1</span>] ? d[<span class="number">15</span>:<span class="number">8</span>] : q[<span class="number">15</span>:<span class="number">8</span>];</span><br><span class="line">            q[<span class="number">7</span>:<span class="number">0</span>] &lt;= byteena[<span class="number">0</span>] ? d[<span class="number">7</span>:<span class="number">0</span>] : q[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="d-latch">7.D Latch</h2>
+<hr />
+<p>Implement the following circuit:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_m2014q4a.png"><img src="https://hdlbits.01xz.net/mw/images/0/03/Exams_m2014q4a.png" alt="Exams m2014q4a.png" /></a></p>
+<p>Note that this is a latch, so a Quartus warning about having inferred a latch is expected.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> d, </span><br><span class="line">    <span class="keyword">input</span> ena,</span><br><span class="line">    <span class="keyword">output</span> q);</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (ena) <span class="keyword">begin</span></span><br><span class="line">    		d &lt;= q;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-with-gate">8.DFF with gate</h2>
+<hr />
+<p>Implement the following circuit:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_m2014q4d.png"><img src="https://hdlbits.01xz.net/mw/images/f/f2/Exams_m2014q4d.png" alt="Exams m2014q4d.png" /></a></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in, </span><br><span class="line">    <span class="keyword">output</span> out);</span><br><span class="line">	<span class="keyword">wire</span> d;</span><br><span class="line">    <span class="keyword">reg</span> q;</span><br><span class="line">    <span class="keyword">assign</span> d = in ^ out;</span><br><span class="line">    <span class="keyword">assign</span> out = q;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    	q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-mux---0">9.DFF + MUX - 0</h2>
+<hr />
+<p>Taken from ECE253 2015 midterm question 5</p>
+<p>Consider the sequential circuit below:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Mt2015_muxdff.png"><embed src="https://hdlbits.01xz.net/mw/thumb.php?f=Mt2015_muxdff.png&amp;width=800" /></a></p>
+<p>Assume that you want to implement hierarchical Verilog code for this circuit, using three instantiations of a submodule that has a flip-flop and multiplexer in it. Write a Verilog module (containing one flip-flop and multiplexer) named <code>top_module</code> for this submodule.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">	<span class="keyword">input</span> clk,</span><br><span class="line">	<span class="keyword">input</span> L,</span><br><span class="line">	<span class="keyword">input</span> r_in,</span><br><span class="line">	<span class="keyword">input</span> q_in,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> Q);</span><br><span class="line">    <span class="keyword">wire</span> d;</span><br><span class="line">    <span class="keyword">assign</span> d = L ? r_in : q_in;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        Q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-mux---1">10.DFF + MUX - 1</h2>
+<p>Consider the <em>n</em>-bit shift register circuit shown below:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_2014q4.png"><embed src="https://hdlbits.01xz.net/mw/thumb.php?f=Exams_2014q4.png&amp;width=900" /></a></p>
+<p>Write a Verilog module named top_module for one stage of this circuit, including both the flip-flop and multiplexers.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> w, R, E, L,</span><br><span class="line">    <span class="keyword">output</span> Q</span><br><span class="line">);</span><br><span class="line">	<span class="keyword">wire</span> x,d;</span><br><span class="line">    <span class="keyword">assign</span> x = E ? W : Q;</span><br><span class="line">    <span class="keyword">assign</span> d = L ? R : x;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    	Q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-gates">11.DFF + GATES</h2>
+<hr />
+<p>Given the finite state machine circuit as shown, assume that the D flip-flops are initially reset to zero before the machine begins.</p>
+<p>Build this circuit.</p>
+<p>Hint: Be careful with the reset state. Ensure that each D flip-flop's Q output is really the inverse of its Q output, even before the first clock edge of the simulation.</p>
+<figure>
+<img src="https://hdlbits.01xz.net/mw/images/d/d6/Ece241_2014_q4.png" alt="Ece241 2014 q4.png" /><figcaption>Ece241 2014 q4.png</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> x,</span><br><span class="line">    <span class="keyword">output</span> z</span><br><span class="line">); </span><br><span class="line">	<span class="keyword">reg</span> q0 = <span class="number">&#x27;b0</span>,q1 = <span class="number">&#x27;b0</span>, q2 = <span class="number">&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">wire</span> q0_n,q1_n,q2_n,d0,d1,d2;</span><br><span class="line">    <span class="keyword">assign</span> q0_n = ~q0;</span><br><span class="line">    <span class="keyword">assign</span> q1_n = ~q1;</span><br><span class="line">    <span class="keyword">assign</span> q2_n = ~q2;</span><br><span class="line">    <span class="keyword">assign</span> d0 = x ^ q0;</span><br><span class="line">    <span class="keyword">assign</span> d1 = x &amp; q1_n;</span><br><span class="line">    <span class="keyword">assign</span> d2 = x | q2_n;</span><br><span class="line">    <span class="keyword">assign</span> z = ~(q0 | q1 | q2);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    	q0 &lt;= d0;</span><br><span class="line">        q1 &lt;= d1;</span><br><span class="line">        q2 &lt;= d2;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="jk-ff2">12.JK-FF<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h2>
+<hr />
+<p>A JK flip-flop has the below truth table. Implement a JK flip-flop with only a D-type flip-flop and gates. Note: Qold is the output of the D flip-flop before the positive clock edge.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">J</th>
+<th style="text-align: left;">K</th>
+<th style="text-align: left;">Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Qold</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">~Qold</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> j,</span><br><span class="line">    <span class="keyword">input</span> k,</span><br><span class="line">    <span class="keyword">output</span> Q); </span><br><span class="line">    <span class="keyword">reg</span> q;</span><br><span class="line">    <span class="keyword">assign</span> Q = q;</span><br><span class="line">    <span class="comment">// 真值表方式</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (&#123;j,k&#125;)</span><br><span class="line">            <span class="number">2&#x27;b00</span>: q &lt;= q;</span><br><span class="line">            <span class="number">2&#x27;b01</span>: q &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">            <span class="number">2&#x27;b10</span>: q &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">            <span class="number">2&#x27;b11</span>: q &lt;= ~q;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// 公式</span></span><br><span class="line">    <span class="comment">// always @(posedge Clk) begin</span></span><br><span class="line">    <span class="comment">//    Q &lt;= (J&amp;(~Q))|((~K)&amp;Q);</span></span><br><span class="line">    <span class="comment">// end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="edge-detect">13.Edge Detect</h2>
+<hr />
+<p>For each bit in an 8-bit vector, detect when the input signal changes from 0 in one clock cycle to 1 the next (similar to positive edge detection). The output bit should be set the cycle after a 0 to 1 transition occurs.</p>
+<p>Here are some examples. For clarity, in[1] and pedge[1] are shown separately.</p>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315145934275.png" alt="Edge Detect" /><figcaption>Edge Detect</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] pedge</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] last_in;</span><br><span class="line">    <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk)</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            last_in &lt;= in;</span><br><span class="line">            pedge &lt;= in &amp; ~last_in;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="edgedetect2">14.EdgeDetect2</h2>
+<hr />
+<p>For each bit in an 8-bit vector, detect when the input signal changes from one clock cycle to the next (detect any edge). The output bit should be set the cycle after a 0 to 1 transition occurs.</p>
+<p>Here are some examples. For clarity, in[1] and anyedge[1] are shown separately.</p>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220317090850624.png" alt="in双边沿检测" /><figcaption>in双边沿检测</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] anyedge</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] in_last;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            in_last &lt;= in;</span><br><span class="line">            anyedge &lt;= in_last ^ in;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="edgecapture">15.EdgeCapture</h2>
+<hr />
+<p>For each bit in a 32-bit vector, capture when the input signal changes from 1 in one clock cycle to 0 the next. &quot;Capture&quot; means that the output will remain 1 until the register is reset (synchronous reset).</p>
+<p>Each output bit behaves like a SR flip-flop: The output bit should be set (to 1) the cycle after a 1 to 0 transition occurs. The output bit should be reset (to 0) at the positive clock edge when reset is high. If both of the above events occur at the same time, reset has precedence. In the last 4 cycles of the example waveform below, the 'reset' event occurs one cycle earlier than the 'set' event, so there is no conflict here.</p>
+<p>In the example waveform below, reset, in[1] and out[1] are shown again separately for clarity.</p>
+<p>（注意这里的题意是捕捉下降沿）</p>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220317092415643.png" alt="下降沿捕捉波形图" /><figcaption>下降沿捕捉波形图</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">31</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">31</span>:<span class="number">0</span>] out</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] in_last;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    	in_last &lt;= in;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">generate</span></span><br><span class="line">        <span class="keyword">genvar</span> i;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i = i + <span class="number">1</span>) <span class="keyword">begin</span>:my_gen</span><br><span class="line">            <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">                <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">                    out[i] &lt;= <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (in_last[i] &amp; ~in[i]) <span class="keyword">begin</span></span><br><span class="line">                    out[i] &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    out[i] &lt;= out[i];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endgenerate</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dualedge">16.Dualedge</h2>
+<hr />
+<p>You're familiar with flip-flops that are triggered on the positive edge of the clock, or negative edge of the clock. A dual-edge triggered flip-flop is triggered on both edges of the clock. However, FPGAs don't have dual-edge triggered flip-flops, and <code>always @(posedge clk or negedge clk)</code> is not accepted as a legal sensitivity list.</p>
+<p>Build a circuit that functionally behaves like a dual-edge triggered flip-flop:</p>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220317094907414.png" alt="waveform" /><figcaption>waveform</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> n,p;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        n &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        p &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">assign</span> q = clk ? n : p;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>标答：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">	<span class="keyword">input</span> clk,</span><br><span class="line">	<span class="keyword">input</span> d,</span><br><span class="line">	<span class="keyword">output</span> q);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">reg</span> p, n;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// A positive-edge triggered flip-flop</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)</span><br><span class="line">        p &lt;= d ^ n;</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// A negative-edge triggered flip-flop</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk)</span><br><span class="line">        n &lt;= d ^ p;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Why does this work? </span></span><br><span class="line">    <span class="comment">// After posedge clk, p changes to d^n. Thus q = (p^n) = (d^n^n) = d.</span></span><br><span class="line">    <span class="comment">// After negedge clk, n changes to p^n. Thus q = (p^n) = (p^p^n) = d.</span></span><br><span class="line">    <span class="comment">// At each (positive or negative) clock edge, p and n FFs alternately</span></span><br><span class="line">    <span class="comment">// load a value that will cancel out the other and cause the new value of d to remain.</span></span><br><span class="line">    <span class="keyword">assign</span> q = p ^ n;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">	<span class="comment">// Can&#x27;t synthesize this.</span></span><br><span class="line">	<span class="comment">/*always @(posedge clk, negedge clk) begin</span></span><br><span class="line"><span class="comment">		q &lt;= d;</span></span><br><span class="line"><span class="comment">	end*/</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<hr />
+<p>从13题开始，解题出现了困难。</p>
+<p>13、14题的结题思路是一致的，关键点是明白要进行边沿检测，就应该将前一时刻和当前时刻的输入作比较，如果两个输入不同则是出现了边沿。</p>
+<p>15题主要是理解题意的问题，要进行下边沿的捕捉，因此需要边沿的检测和锁存，检测的思路和13、14相同，而锁存的方式是通过if语句。</p>
+<p>16题是双边沿检测的问题，这里是涉及到一个双边沿检测电路的代码综合的问题<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>。注意具体的实现方法。</p>
+<h2 id="参考资料">参考资料</h2>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cjx_csdn/article/details/105203494">Verilog寄存器电路描述（异步复位、异步置位等）_cjx_csdn的博客-CSDN博客_verilog寄存器</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/reborn_lee/article/details/81331395">通过仿真和综合认识JK触发器（Verilog HDL语言描述JK触发器）_Reborn Lee-CSDN博客_jk触发器verilog代码</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38305370/article/details/111396429">verilog实现双边沿触发器Dual-edge triggered flip-flop_城外南风起的博客-CSDN博客_verilog 双边沿</a><a href="#fnref3" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/" class="post-title-link" itemprop="url">【vivado】-00-install</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 10:40:31" itemprop="dateCreated datePublished" datetime="2022-03-15T10:40:31+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-17 08:42:50" itemprop="dateModified" datetime="2022-03-17T08:42:50+08:00">2022-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言">前言</h2>
+<p>这里开始终于着手把落下的工作开始真正一步一步地落实下去了，这两天的心情比较低落，主要是前期对自己的要求没有达到目标，导致现在的进展非常地缓慢。对科研和学习一定要高标准、严要求，没有什么是做不了的，大多数的问题都可以靠时间解决。一定要把时间安排妥当。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/08/%E3%80%90BC26%E3%80%91-03-%E5%AF%B9%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/08/%E3%80%90BC26%E3%80%91-03-%E5%AF%B9%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91/" class="post-title-link" itemprop="url">【BC26】-03-对接阿里云</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-08 20:30:23" itemprop="dateCreated datePublished" datetime="2022-03-08T20:30:23+08:00">2022-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-15 21:02:03" itemprop="dateModified" datetime="2022-03-15T21:02:03+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="mqtt-部分">MQTT 部分</h1>
+<h2 id="mqtt发送过程">MQTT发送过程</h2>
+<ol type="1">
+<li><code>AT+CGPADDR</code>，查询IP，获取到OK表示BC26状态正常</li>
+<li><code>AT+QMTCFG=&quot;aliauth&quot;,0,&quot;gg43bimZeb9&quot;,&quot;Lighting&quot;,&quot;2790aa518d49f0ed3955254f693c0c13&quot;</code>，配置阿里云</li>
+<li><code>AT+QMTOPEN=0,“iot-as-mqtt.cn-shanghai.aliyuncs.com”,1883</code>连接阿里云,在连接完成后马上需要用5发送连接设备指令，否者会自动断开</li>
+<li><code>AT+QMTCONN=0,&quot;Lighting&quot;</code>，连接设备，这里的lighting是阿里云自己定义的设备名称</li>
+<li><code>AT+QMTPUB=0,0,0,0,&quot;/sys/a1tW6nsMu2w/BC28/thing/event/property/post&quot;</code>,发布指令</li>
+<li><code>&#123;params:&#123;RoomHumidity:58.8&#125;&#125;</code>，具体数据</li>
+</ol>
+<h2 id="mqtt接收过程">MQTT接收过程</h2>
+<ol type="1">
+<li><code>AT+QMTSUB=0,1,&quot;/a1tW6nsMu2w/BC28/user/get&quot;,0</code>阿里云下发消息需要NB提前订阅阿里云的发布主题</li>
+</ol>
+<h2 id="mqtt最后断开设备或关闭网络">MQTT最后断开设备或关闭网络</h2>
+<ol type="1">
+<li><code>AT+QMTDISC=0</code>，断开设备</li>
+<li><code>AT+QMTCLOSE=0</code>，关闭网络（不要关闭）</li>
+</ol>
+<h1 id="云平台配置">云平台配置</h1>
+<p>直接在aliyun上，搜索物联网云平台即可。</p>
+<h1 id="代码以及具体实现">代码以及具体实现</h1>
+<h2 id="串口的问题">串口的问题</h2>
+<p>以前的串口存在一个问题，一次只能接收一行数据，必须要每次接收多行数据才行。因此，buffer再加一个维度，得到的一个二维的buffer用于接收多行的数据。</p>
+<p>逻辑是，以前在flag=true的时候，是直接忽略了下一次数据的输入。现在，去掉这一个限制，当前这个flag（一行数据接收完毕）的功能不用，其功能转化为判断是否接收完毕的功能，如果其值为false说明没有接收完毕，继续接收；如果为true（手动置位），说明当下这一批数据已经处理完成，不再需要，将数组清空，最后将其reset为false，进行新一轮数据的等待接收。</p>
+<h2 id="信息发送">信息发送</h2>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315205608885.png" alt="第一条指令标准接收情况" /><figcaption>第一条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315205855365.png" alt="第二条指令标准接收情况" /><figcaption>第二条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315210021168.png" alt="第三条指令标准接收情况" /><figcaption>第三条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315210107956.png" alt="第四条指令标准接收情况" /><figcaption>第四条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315210154288.png" alt="发送信息" /><figcaption>发送信息</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JIANGYINGH/article/details/106795838">物联网通信之初识MQTT协议_JIANGYINGH的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.icode9.com/content-4-818090.html">NBIOT专栏之BC28串口连接阿里云物联网平台接发数据 (icode9.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/112095247">BC26连接阿里云，MQTT协议，AT流程和STM32代码实现_qlexcel的专栏-CSDN博客_bc26 阿里云</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E6%97%A0%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/23/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E6%97%A0%E9%A2%98/" class="post-title-link" itemprop="url">【札记】无题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-02-23 12:46:00 / 修改时间：12:49:10" itemprop="dateCreated datePublished" datetime="2022-02-23T12:46:00+08:00">2022-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一个小问题">一个小问题</h2>
+<p>以前的经验总结中，可能重点放在了改掉坏毛病上面，但是最近发现，可能坚持一个好习惯的效果更好。锻炼虽然会用一点时间，但是可以显著地提高2-3倍的效率，这样是非常划算的交易。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-07-testbench/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/12/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-07-testbench/" class="post-title-link" itemprop="url">【Verilog学习】-07-testbench</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-12 21:05:35" itemprop="dateCreated datePublished" datetime="2022-02-12T21:05:35+08:00">2022-02-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-15 11:36:33" itemprop="dateModified" datetime="2022-03-15T11:36:33+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="testbench">testbench</h2>
+<p>textbench的写法中，主要就是对信号进行初始化（时钟，输入数据等），时钟信号的生成。这里这介绍一些基础的用法。在后面，要结合python写一下脚本对结果进行一些比对等。</p>
+<h2 id="基础写法">基础写法</h2>
+<h3 id="section"></h3>
+<p>这个是延时的符号，表示延时多久才进行操作，只能在仿真中使用，没有对应实际的电路。</p>
+<h3 id="产生时钟1">产生时钟<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h3>
+<h3 id="方法1">方法1</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( );</span><br><span class="line">    <span class="keyword">parameter</span> clk_period = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">forever</span></span><br><span class="line">            <span class="variable">#(clk_period/2)</span> clk = ~clk;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    dut dut_inst1(clk);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="方法2">方法2</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( );</span><br><span class="line">    <span class="keyword">parameter</span> clk_period = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> <span class="variable">#(clk_period/2)</span> clk = ~clk;</span><br><span class="line">    dut dut_inst1(clk);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="编写激励2">编写激励<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h3>
+<p>基础的部分还是通过延时来解决。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( <span class="keyword">output</span> <span class="keyword">reg</span> A, <span class="keyword">output</span> <span class="keyword">reg</span> B );<span class="comment">//</span></span><br><span class="line">	<span class="keyword">parameter</span> A_period_1 = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">parameter</span> A_period_2 = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">parameter</span> B_period_1 = <span class="number">15</span>;</span><br><span class="line">    <span class="keyword">parameter</span> B_period_2 = <span class="number">25</span>;</span><br><span class="line">    <span class="comment">// generate input patterns here</span></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">		A = <span class="number">0</span>;</span><br><span class="line">        #A_period_1;</span><br><span class="line">        A = <span class="number">1</span>;</span><br><span class="line">        #A_period_2;</span><br><span class="line">        A = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	<span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">		B = <span class="number">0</span>;</span><br><span class="line">        #B_period_1;</span><br><span class="line">        B = <span class="number">1</span>;</span><br><span class="line">        #B_period_2;</span><br><span class="line">        B = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="一个简单的testbench">一个简单的testbench</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module();</span><br><span class="line">    <span class="keyword">parameter</span> clk_period = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">reg</span> in;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] s;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] qs [<span class="number">7</span>:<span class="number">0</span>];	<span class="comment">//最开始这里搞错了，应该是7：0才有8个数</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] i = <span class="number">3&#x27;d1</span>;</span><br><span class="line">    <span class="keyword">reg</span> out;</span><br><span class="line">	<span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line">        qs[<span class="number">0</span>] = <span class="number">3&#x27;d2</span>;</span><br><span class="line">        qs[<span class="number">1</span>] = <span class="number">3&#x27;d6</span>;</span><br><span class="line">        qs[<span class="number">2</span>] = <span class="number">3&#x27;d2</span>;</span><br><span class="line">        qs[<span class="number">3</span>] = <span class="number">3&#x27;d7</span>;</span><br><span class="line">        qs[<span class="number">4</span>] = <span class="number">3&#x27;d0</span>;</span><br><span class="line">        s = qs[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">forever</span></span><br><span class="line">            <span class="variable">#(clk_period/2)</span> clk = ~clk;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">    	in = <span class="number">0</span>;</span><br><span class="line">        <span class="variable">#(2*clk_period)</span>;</span><br><span class="line">        in = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">#(clk_period)</span>;</span><br><span class="line">        in = <span class="number">0</span>;</span><br><span class="line">        <span class="variable">#(clk_period)</span>;</span><br><span class="line">        in = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">#(3*clk_period)</span>;</span><br><span class="line">        in = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(i&lt;<span class="number">3&#x27;d4</span>)<span class="keyword">begin</span></span><br><span class="line">            s &lt;= qs[i];</span><br><span class="line">            i &lt;= i + <span class="number">3&#x27;d1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            s &lt;= qs[<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    q7 inst(</span><br><span class="line">    clk,</span><br><span class="line">    in,</span><br><span class="line">    s,</span><br><span class="line">    out</span><br><span class="line">	);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/flomingo1/article/details/102676669">Verilog仿真时钟产生方法学习_flomingo1的专栏-CSDN博客_verilog时钟信号怎么产生</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wordwarwordwar/article/details/53885209">Verilog testbench总结(一)_坚持-CSDN博客_testbench怎么写</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/%E3%80%90BC26%E3%80%91-02-%E5%8A%9F%E8%83%BD%E5%AE%8C%E5%96%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/30/%E3%80%90BC26%E3%80%91-02-%E5%8A%9F%E8%83%BD%E5%AE%8C%E5%96%84/" class="post-title-link" itemprop="url">【BC26】-02-功能完善</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-30 18:26:02" itemprop="dateCreated datePublished" datetime="2022-01-30T18:26:02+08:00">2022-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-31 17:50:37" itemprop="dateModified" datetime="2022-01-31T17:50:37+08:00">2022-01-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="功能描述">功能描述</h2>
+<hr />
+<p>本次项目需要完成的BC26收发模块的功能：</p>
+<ul>
+<li>整体：能够通过单片机用UART2和BC26模块进行通信，能够将数据收发传送到BC26模块并发送出去。</li>
+<li>BC26模块的初始化</li>
+<li>BC26模块进行数据的发送</li>
+<li>BC26模块进行数据的接收（中断？）</li>
+</ul>
+<h2 id="接口定义">接口定义</h2>
+<hr />
+<p>status BC26_Init(void); 进行模块的初始化（原来的程序有一点冗长，主要调试信息太多了，做了一些简化）</p>
+<p>status BC26_SendMessageUDP(char *); 通过UDP方式进行数据的发送</p>
+<p>status BC26_ReceiveMessageUDP(void)； 通过UDP方式进行数据的接收（通过向上位机打印来验证）</p>
+<h2 id="编程思路">编程思路</h2>
+<hr />
+<p>将BC的接口定义完成之后，为了简化接收的步骤，封装一个串口发送和接收字符串的函数。</p>
+<p>然后将原来的函数进行一波简化应该就可以用了。</p>
+<h2 id="编程实现">编程实现</h2>
+<hr />
+<ul>
+<li><p>遇到的第一个问题是在封装了发送字符串的函数后，没有办法进行系统时钟的设置，在设置的时候直接进入了Error_Handle();。</p>
+<p>解决方法：重新启动一下这个CubeMX来进行重置，然后就可以work了，不太清楚是哪里出现了问题，应该是Clock的配置出现了问题。</p></li>
+<li><p>现在是需要继续封装一个接收字符串的函数，在flag为true的时候读取出来字符串，然后，可能要改一下前面的</p></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/%E3%80%90%E8%93%9D%E6%A1%A5%E6%9D%AF%E3%80%91-00-%E5%BC%80%E5%8F%91%E6%9D%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -204,9 +984,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-01-27 12:47:19 / 修改时间：12:49:52" itemprop="dateCreated datePublished" datetime="2022-01-27T12:47:19+08:00">2022-01-27</time>
+      <time title="创建时间：2022-01-27 12:47:19" itemprop="dateCreated datePublished" datetime="2022-01-27T12:47:19+08:00">2022-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-23 12:46:11" itemprop="dateModified" datetime="2022-02-23T12:46:11+08:00">2022-02-23</time>
     </span>
 
   
@@ -269,9 +1055,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-01-27 11:32:10 / 修改时间：19:18:08" itemprop="dateCreated datePublished" datetime="2022-01-27T11:32:10+08:00">2022-01-27</time>
+      <time title="创建时间：2022-01-27 11:32:10" itemprop="dateCreated datePublished" datetime="2022-01-27T11:32:10+08:00">2022-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-30 18:03:34" itemprop="dateModified" datetime="2022-01-30T18:03:34+08:00">2022-01-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -409,655 +1201,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/%E3%80%90rhino%E3%80%91-01-%E5%BB%BA%E6%A8%A1%E9%A2%91%E8%B0%B1%E7%81%AF%E5%A4%96%E5%A3%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/26/%E3%80%90rhino%E3%80%91-01-%E5%BB%BA%E6%A8%A1%E9%A2%91%E8%B0%B1%E7%81%AF%E5%A4%96%E5%A3%B3/" class="post-title-link" itemprop="url">【rhino】-01-建模频谱灯外壳</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-26 15:20:18 / 修改时间：21:49:52" itemprop="dateCreated datePublished" datetime="2022-01-26T15:20:18+08:00">2022-01-26</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这里的这个项目是我从这学期开始，一直鸽到现在才弄的一个东西。这个频谱灯的电路和程序方面其实在去年的10月就已经调通了，但是呢，这个外壳一直没有设计。</p>
-<p>这里就有得用上一些大一学过的一些工图方面的知识来解决这些问题了。</p>
-<h2 id="尺寸分析">尺寸分析</h2>
-<p>尺寸分析主要是需要对频谱灯的电路板的定位孔进行一个测量，然后再外壳相应的位置预留固定孔即可。</p>
-<p>在AD中进行尺寸的测量会遇到一些问题，最主要的就是选点不知道为什么选不准，具体的例子如下：</p>
-<p>这里的想要测量的量是两个开关之间的距离，但是没有办法锁定到中见到中间（P+D+L的方式）</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220126180126310.png" alt="无法定位在圆孔中间" /><figcaption>无法定位在圆孔中间</figcaption>
-</figure>
-<p>但是，可以使用到P+D+D的方式可以但又是没有这种可以拉出来的效果。这样就麻烦了。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220126180731341.png" alt="利用P+D+D(Standard测量得到的结果" /><figcaption>利用P+D+D(Standard测量得到的结果</figcaption>
-</figure>
-<p>网上没有具体的解决方案，这里就只好暂且留一下这个问题了。</p>
-<p>下面是测量好的整个板子的尺寸信息，通过这个尺寸信息，将会进行相关的开槽了打孔。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220126214604882.png" alt="尺寸信息" /><figcaption>尺寸信息</figcaption>
-</figure>
-<h2 id="绘制外壳平面图">绘制外壳平面图</h2>
-<p>绘制的外壳也是在原来的基础上进行相应的改动，原来的外壳信息如下：</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/%E3%80%90rhino%E3%80%91-00-%E5%BB%BA%E6%A8%A1%E5%8B%BA%E5%AD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/26/%E3%80%90rhino%E3%80%91-00-%E5%BB%BA%E6%A8%A1%E5%8B%BA%E5%AD%90/" class="post-title-link" itemprop="url">【rhino】-00-建模勺子</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-26 12:07:28 / 修改时间：15:39:37" itemprop="dateCreated datePublished" datetime="2022-01-26T12:07:28+08:00">2022-01-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>建模勺子是我做的第一个rhino的项目。也是直接照着网上照着步骤抄一下，中间遇到的问题也比较少，然后现在主要要做的事情就是整理一下中间遇到的问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/26/%E3%80%90rhino%E3%80%91-00-%E5%BB%BA%E6%A8%A1%E5%8B%BA%E5%AD%90/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/24/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E5%9D%9A%E6%8C%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/24/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E5%9D%9A%E6%8C%81/" class="post-title-link" itemprop="url">【札记】坚持</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-24 20:01:57 / 修改时间：22:16:29" itemprop="dateCreated datePublished" datetime="2022-01-24T20:01:57+08:00">2022-01-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转眼间，一个月又快要过去了。</p>
-<p>这一次写札记主要是因为下午看了罗翔老师和俞恩泰老师的探讨，具体的讨论的内容我已经忘掉了。但是，有一点我记得比较深。就是关于坚持的问题：</p>
-<p>我总是会堕入一种所谓的安逸的状态，去重复做一些简单的事情。但是，到头来，这种东西并不是我想要的，这种廉价产生的多巴胺，只会让多巴胺更加廉价。在经历了这么多事情之后，其实有些方向和目标我已经找到了，但是这些东西太难坚持了，被我浅尝则止地中断了，取而代之的是更容易更让我成迷上瘾的另一些事情。</p>
-<p>记得在大一的时候我就读到了村上春树的一篇文章，谈到他对长跑和写作的一些习惯。他说，他在做这两件事情的无论是哪一种时，都会选择不会超量的完成任务。遇到状态好的时候，他也不会选择去加班加点多做一些事情，而是适可而止。并且，在懈怠的时候，即使有利用去推演搪塞，也会坚持下去。我觉得这种生活方式才是比较理想的一种状态。</p>
-<p>我是一个常常不知道何时去收手的一个人，一件事情开始固然很艰难，但是我想在合适的时机，停下来，去做另一件事情，也不是一件简单的事情。这种状态的保持许需要不断、不断地训练的。</p>
-<p>我的生活好像就是在一个跷跷板上，不是倒向一边去向前，就是倒向另一边去懈怠。往往达不到村上所说的这种状态，我想得是需要找到另一个支点才能够平衡嘛？其实，我也在反思，我大一下的生活为什么会过的比较所谓的状态好，我觉得有很大一部分是因为做到了上面说的这种状态，或者说，绝大部分时间做到了基本的要求。可能，我在总结我大一的成功的时候有一些关于的误解，我认为只要做到了全身心投入到学习中就可以了，但是我忘记了我做的其他事情。</p>
-<p>我在中午的十一点回去淘米和煮米饭，在十一点半会去切菜、炒菜。在晚上五六点，如果有时间，我一定会出去跑步。在晚上，我会看《大问题》这本书等等，当让，其他的时间基本上都用在了学习上。综合考虑起来，这种适可而止的智慧才是我现在所欠缺的。</p>
-<p>关于如何去做到适可而止，我不知道。因为我发现上瘾的事情停不下来，而不上瘾的事情又坚持不下来。但是，有一种不上瘾的却能够坚持下来，可能是可以称之为热爱的东西。很痛苦，但是我能够走下去。</p>
-<p>现在，我发现有些真正该坚持下去的事情被我错过了，但好在我回头，又望见了他们。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/" class="post-title-link" itemprop="url">【Verilog学习】-06-组合电路</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-20 09:18:00" itemprop="dateCreated datePublished" datetime="2022-01-20T09:18:00+08:00">2022-01-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-21 17:07:46" itemprop="dateModified" datetime="2022-01-21T17:07:46+08:00">2022-01-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这一章主要对组合逻辑电路的设计做了一个复习，前面也有比较多的涉及，因此下面仅记录一些关键点。</p>
-<h2 id="硬件设计思路">硬件设计思路</h2>
-<hr />
-<p>这里与软件的涉及不同，硬件设计主要是逆向的思考，即由想要的输出决定输入(assign ringer = ··· )。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/" class="post-title-link" itemprop="url">【verilog学习】-05-其他语法特性</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-19 10:19:22" itemprop="dateCreated datePublished" datetime="2022-01-19T10:19:22+08:00">2022-01-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-20 09:19:09" itemprop="dateModified" datetime="2022-01-20T09:19:09+08:00">2022-01-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="三元运算符">三元运算符</h2>
-<hr />
-<p>与C一样，这是一些例子：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/17/%E3%80%90BC26%E3%80%91-00-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/%E3%80%90BC26%E3%80%91-00-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/" class="post-title-link" itemprop="url">【BC26】-00-数据传输</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-17 16:46:35" itemprop="dateCreated datePublished" datetime="2022-01-17T16:46:35+08:00">2022-01-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-27 19:11:43" itemprop="dateModified" datetime="2022-01-27T19:11:43+08:00">2022-01-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/%E5%A4%A7%E5%88%9B/" itemprop="url" rel="index"><span itemprop="name">大创</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="桌面和核心板的传输">桌面和核心板的传输</h2>
-<hr />
-<p>按照教程接好电路后不出现返回信息的可能原因：</p>
-<ul>
-<li>rx、tx接反</li>
-<li>波特率等信息未严格按要求设置
-<ol type="1">
-<li>bode rate：115200</li>
-<li>data bit：8</li>
-<li>stop bit：1</li>
-<li>无校验位</li>
-</ol></li>
-</ul>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220117182345771.png" alt="image-20220117182345771" /><figcaption>image-20220117182345771</figcaption>
-</figure>
-<h2 id="udp传输协议">UDP传输协议</h2>
-<hr />
-<p>这次把服务器弄好了，为了用这一个UDP的调试工具，把服务器的系统换成了Windows。但是，还是没有接受到数据，不知道是什么原因。这边显示了发送数据成功，但是服务器上并没有介绍到数据，不知道是那里的问题，感觉要不是指令的问题，要不就是云端的问题。这边的硬件应该是调试通了，明天再看看吧。</p>
-<p>问题找到了，就是云端的问题。</p>
-<h2 id="步骤bc26和阿里云平台通过udp协议通讯">步骤（BC26和阿里云平台通过UDP协议通讯）</h2>
-<hr />
-<ol type="1">
-<li><p>将移远的BC26模块的串口用USB转TTL模块与电脑相连接（电脑上需要先安装CH340驱动和串口调试助手进行串口调试），此部分可参照创思的B站视频[^1]。注意串口的方向，自己试一下，有可能是串口方向不对导致与模块无法通信。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118232730092.png" alt="与模块通信成功，这里使用的软件是XCOM串口调试助手" /><figcaption>与模块通信成功，这里使用的软件是XCOM串口调试助手</figcaption>
-</figure></li>
-<li><p>在测试完成本地没有问题之后，进行ALI云的设置。首先是创建一个ECS服务器，网上有很多的教程，用学生身份可以方便地注册一个[^2]。注意，注册的时候可以选择熟悉的服务器系统。这里debug用的是windows下的UDP调试软件[^3]（在创思的视频中也是用到了这个软件[^1]），因此，在申请服务器的时候，我也选择了Window2016 Server版本。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118233010182.png" alt="已近申请了服务器，点击控制台进入" /><figcaption>已近申请了服务器，点击控制台进入</figcaption>
-</figure>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118233335746.png" alt="进入控制台" /><figcaption>进入控制台</figcaption>
-</figure>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118233411018.png" alt="进入安全组" /><figcaption>进入安全组</figcaption>
-</figure></li>
-<li><p>在注册完成之后，最关键的一步是要在阿里云上把安全设置中的允许UDP设置以下，否则是接收不到相关的信息的，主要参考的步骤是这个[^4]。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118233632546.png" alt="添加信息" /><figcaption>添加信息</figcaption>
-</figure></li>
-<li><p>注册完之后，在服务器部署方面基本上就完成了。接下来是发送AT指令进行验证，这里主要也是参照的创思的教程[^1]，但是需要注意的是要用创思官方提供例程里面未被注释的指令，注释的指令不知道为什么不能用（很多其他的blog里面都是用的<code>AT+QSOC=1,2,1</code>这一条指令，但是我这里的不行，可能是运营商的问题，不太清楚）。</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">AT</span>+QIOPEN=<span class="number">1</span>,<span class="number">0</span>,&quot;UDP&quot;,&quot;<span class="number">12</span>.<span class="number">323</span>.<span class="number">3</span>.<span class="number">2</span>&quot;,<span class="number">1001</span>,<span class="number">0</span>,<span class="number">1</span>	//中间更换为你的服务器的IP地址</span><br><span class="line"><span class="built_in">AT</span>+QISEND=<span class="number">0</span>,&quot;<span class="number">11</span>&quot;</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure></li>
-<li><p>最后就可以看到结果了。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118232351707.png" alt="在服务器上，安装并打开这个软件，创建UDP" /><figcaption>在服务器上，安装并打开这个软件，创建UDP</figcaption>
-</figure>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220118225256825.png" alt="服务器上接受到数据的截图" /><figcaption>服务器上接受到数据的截图</figcaption>
-</figure></li>
-<li><p>利用创思提供的源码里面关于发送</p></li>
-</ol>
-<p>[^ 0]: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/abatei/p/12129966.html#:~:text=当通过%20AT%2BQIOPEN%20打开一个%20socket%20服务，可通过参数%20,来指定数据访问模式。%20在%20socket%20服务开始后，%20AT%2BQISWTMD%20可用于改变数据访问模式。">AT指令之 TCP/IP 命令 - abatei - 博客园 (cnblogs.com)</a> [^1]: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14J411P741?p=4">STM32开发板NB-IOT移远BC26 NB模块通物联网NBIOT阿里云MQTT 电脑看_哔哩哔哩_bilibili</a> [^2]: <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/762776">2020阿里云学生服务器申请地址购买攻略及配置选择-阿里云开发者社区 (aliyun.com)</a> [^3]: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/springsnow/p/9407147.html#_label2">TCP、UDP调试器 SocketToolV4.1 - springsnow - 博客园 (cnblogs.com)</a> [^4]: <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/770005">基于UDP上传数据到阿里云-阿里云开发者社区 (aliyun.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">【CAG-SLAM】-02-项目总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-17 16:03:53 / 修改时间：16:13:12" itemprop="dateCreated datePublished" datetime="2022-01-17T16:03:53+08:00">2022-01-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A7%91%E7%A0%94/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>给关于这个小项目，里面涉及到的内容其实并不复杂，但是也花费了我两周的时间去完成和整理，可能在和学长的其他模块进行组合的时候还会出现一些其他的问题。总之，并不是一次特别满意的开发经历，但是我也在过程中，学习了很多项目之外的东西。正如我正是为了这点醋，包的这顿饺子。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>

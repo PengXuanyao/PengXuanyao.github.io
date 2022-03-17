@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="PengXuanyao">
 <meta property="og:description" content="代码风格和规范 关于C语言的这个代码风格和规范的问题，其实在很早就一直困扰着我。没有系统性的归纳过。今天蹭着这机会就来系统地梳理一下。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220127230836982.png">
 <meta property="article:published_time" content="2022-01-27T03:32:10.000Z">
-<meta property="article:modified_time" content="2022-01-27T11:18:08.187Z">
+<meta property="article:modified_time" content="2022-01-30T10:03:34.199Z">
 <meta property="article:author" content="PengXuanyao">
 <meta property="article:tag" content="BC26">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220127230836982.png">
 
 
 <link rel="canonical" href="http://example.com/2022/01/27/%E3%80%90BC26%E3%80%91-01-%E4%BB%A3%E7%A0%81%E6%95%B4%E5%90%88%E5%8F%8A%E5%85%B6%E8%A7%84%E8%8C%83/">
@@ -120,7 +122,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E5%92%8C%E8%A7%84%E8%8C%83"><span class="nav-number">1.</span> <span class="nav-text">代码风格和规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E6%98%AF%E5%85%B3%E4%BA%8E%E8%BF%99%E4%B8%AA%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">首先是关于这个头文件的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">关于变量命名的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%91%BD%E5%90%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">关于函数命名的问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">模块化的定义</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E5%92%8C%E8%A7%84%E8%8C%83"><span class="nav-number">1.</span> <span class="nav-text">代码风格和规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E6%98%AF%E5%85%B3%E4%BA%8E%E8%BF%99%E4%B8%AA%E5%A4%B4%E6%96%87%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">首先是关于这个头文件的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">关于变量命名的问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%87%BD%E6%95%B0%E5%91%BD%E5%90%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">关于函数命名的问题：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">模块化的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E9%A9%B1%E5%8A%A8%E7%BC%96%E5%86%99"><span class="nav-number">3.</span> <span class="nav-text">串口驱动编写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="nav-number">3.1.</span> <span class="nav-text">整体思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">总体需求分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E6%80%9D%E8%B7%AF"><span class="nav-number">3.3.</span> <span class="nav-text">编程思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%AE%9A%E4%B9%89"><span class="nav-number">3.4.</span> <span class="nav-text">接口定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.5.</span> <span class="nav-text">编程实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.5.1.</span> <span class="nav-text">接口实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%AE%9E%E7%8E%B0%E5%9C%A8%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E4%B8%AD"><span class="nav-number">3.5.2.</span> <span class="nav-text">逻辑实现（在回调函数中）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E5%92%8C%E6%94%B9%E5%96%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.5.3.</span> <span class="nav-text">遇到的一些问题和改善方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -135,7 +137,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -146,7 +148,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -208,9 +210,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-01-27 11:32:10 / 修改时间：19:18:08" itemprop="dateCreated datePublished" datetime="2022-01-27T11:32:10+08:00">2022-01-27</time>
+      <time title="创建时间：2022-01-27 11:32:10" itemprop="dateCreated datePublished" datetime="2022-01-27T11:32:10+08:00">2022-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-30 18:03:34" itemprop="dateModified" datetime="2022-01-30T18:03:34+08:00">2022-01-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -249,6 +257,62 @@
 <h2 id="模块化的定义">模块化的定义</h2>
 <p>现在出现了一个新的层级，就是模块。</p>
 <p>以前的工程里面我都只是用的是一层的驱动，就是hardware。但是现在出现了新的一个层级，里面是需要继续调用hardware的函数，这样就让我的工程组织起来稍微又要麻烦一点。今天的事故主要出现在这个modules上，我一直想把这个BC26依旧当作这个hardware层级来处理，但是发现，无论如何都是要包含一大堆的底层的函数（例如usart等），想要解决这个问题及必须要引入新的一层的定义来处理这个事情。</p>
+<blockquote>
+<p>现在有一点小插曲，我需要先调试一下板卡，因为忘记带上足够的杜邦线，现在只能够先用一下J-Link来调试。</p>
+<p>首先一来就遇到了一个问题，应该是由于这个CubeMX更新造成的，生成的工程有问题：The Code is successily generaed under: D我的文档5大创(202105-codeKEILForTestTest Projct language : C but MDK-ARMV5.32project generation have a poblem。</p>
+<p>网上说这个问题是因为路径中包含了一些非法字符造成的，那应该问题不大。最后查明原因，就是因为这个问题导致的。</p>
+<p>然后又遇到一个问题是说：No Crotex-M Device found in JTAG chain Please check the JTAG cable and the...，这是由于没有选对J-Link的接口（在板子上用的串行接口SW，而不是JTAG）因此，在选项中选择切换过来后就对了。</p>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220127230836982.png" alt="J-Link Settings" /><figcaption>J-Link Settings</figcaption>
+</figure>
+</blockquote>
+<h2 id="串口驱动编写">串口驱动编写</h2>
+<p>今天的任务是把串口调通，代码看懂（20220128），串口这个东西，也是属于一直在模模糊糊用，但是一直没有搞明白的东西。今天看了一下他们厂家编写的串口的代码，遇到了一些看不懂的东西。</p>
+<p>首先，是这个寄存器的使用的问题。我看到源代码应该是直接定义使用了一个全局变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u16 USART_RX_STA = <span class="number">0</span>; <span class="comment">//接收状态标记</span></span><br></pre></td></tr></table></figure>
+<p>在后面的操作中，也是直接对这个定义的全局变量进行读值和写值的操作，这样是直接对相应的寄存器操作了吗？有一点迷惑，等一段时间再来看这个问题吧。:cry:</p>
+<h3 id="整体思路">整体思路</h3>
+<p>先写一下整体的思路，首先是通过CubeMX建立一个有串口初始化的空工程（例如初始化串口2，这个串口也是我们后面用来和BC26模块进行通信的串口），然后是开启串口的接受中断（在串口接受到信息后，向主机再发送一个相同的信息）这样就可以开启串口的使用了；在完成前述的初级功能之后，在进行printf函数的重写，通过串口1，能够直接在电脑上打印相应的字符串，说干就干。</p>
+<p>这个串口是直接就调通了，现在可以直接通过HAL_UART_TRANSMIT直接进行传输了，这种是通过阻塞的模式进行的。但是好像我看了一下正点原子的程序都是通过中断的方式进行的，这样就涉及到一个问题，就是缓存区的问题，如果是阻塞模式，就直接调用函数就行，而不需要先定义一个全局的缓存区。</p>
+<p>这里我的的思路是，还是像HAL库函数那样，先顶一个指针，当在主函数中用到相应的缓存区再声明，模块化函数还是最好不要出现全局变量（如果需要，就使用一个静态的全局变量），不知道这样会不会出现什么问题。</p>
+<p>现在是可以通过使用这个串口的阻塞模式进行任意的方式的收发了，但是现在还没有实现中断模式，现在看了一下，原来的工程里面也是进行的发送是用阻塞模式（使用transmit或者printf）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//UART发送信息的方式</span></span><br><span class="line">HAL_UART_Transmit(&amp;UART_Handler,(<span class="keyword">uint8_t</span>*)USART_RX_BUF,len,<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;您发送的消息为:\r\n&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>在UART进行接受的时候，是用的是中断的方式，因为不知道何时会发送消息过来。于是，在UART的初始化中需要加入下面的中断初始化代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HAL_NVIC_EnableIRQ(USART_IRQn);			   <span class="comment">// 使能USART1中断通道</span></span><br><span class="line">HAL_NVIC_SetPriority(USART_IRQn,<span class="number">3</span>,<span class="number">0</span>);  		<span class="comment">// 抢占优先级3，子优先级0</span></span><br></pre></td></tr></table></figure>
+<p>刚才看懂了源代码的意思，它定义一个最大接受的数据缓存的大小，如果说大小超过了，就需要进行重新的输入。这里默认是是一次发送一行数据，在接受完一行数据后就对数据进行保持和处理。</p>
+<p>但是原来的代码也有一个问题，就是它是在中断里面操作了数据的处理，然后又回到主函数中进行打印的操作，感觉有一点多余，反正在中断中都已经使用了大量的代码段了，为什么加一个打印还说效率不高呢，这不是捡芝麻丢西瓜吗，代码都不太好阅读了。</p>
+<h3 id="总体需求分析">总体需求分析</h3>
+<p>现在还是应该在写一个模块之前把这个整体的架构和思路想一遍，想清楚再写效率比较高，这里已经是搞清楚了收发的原理。在HAL处理了一个数据之后，需要把这个数据输出到一个缓冲区之中，然后再把接下来送进来的数据依次加进去，在读取到行结束标志（回车）的时候，才停下来。</p>
+<h3 id="编程思路">编程思路</h3>
+<p>总体的想法是这个HAL的buffer要保留下来，因为这个是每次输入进来都要用到，关键问题是每次接受完一行数据之后是应该在哪里处理，原本是通过一个全局变量判断其状态，在其状态显示已经接受完一行数据之后，在外部处理。</p>
+<p>我现在的想法是这个一行数据的buffer就不用这个uart里面的数组了，而是在外面的程序中定义一个数组，然后在uart里面定义一个指针，在初始化的时候就可以把这个指针指向外面定义的那一个空间，对其进行处理。这样的好处是需要的时候在定义一片空间，就不会造成资源的浪费。</p>
+<p>关于处理中断的这个操作，我觉得还是可以在中断外面进行操作，虽然有一点打脸，但是想了一下还是这样的操作会比较明晰。</p>
+<h3 id="接口定义">接口定义</h3>
+<p>外部接口：</p>
+<ul>
+<li>（全局变量）u8 UARTx_RX_STA：中断接收的状态，1：当前接收一个数据完成，0：当前接收数据还未完成。当接受完成之后，能否产生一个事件（？），或者说是轮询方式去查询（外部查询的方式有需要涉及到一个超时的问题）？并且在标志完成的时候，应该需要防止外面继续产生中断（关闭），当处理完这个之后在处理下一行代码。</li>
+<li>（初始化函数）void USARTx_UART_Init(u8* uartx_rx_buffer)：串口的初始化定义，需要定义一篇buffer，然后再传参进去；</li>
+<li>（全局变量）u8 uartx_rx_buffer[MAX_RX_NUMBER]：这个接收的buffer我放弃了，因为在中断中要对这个进行操作，所以说必须要用全局变量。</li>
+</ul>
+<p>其他的操作都是在内部操作了，包括中断操作的编写都应该在内部完成。当初始化之后，就相当于是只需要读取STA的状态就能够判断是否需要进行读出的操作。</p>
+<h3 id="编程实现">编程实现</h3>
+<p>注意点：</p>
+<ul>
+<li>在每次接收到一行的数据之后，会先后到来一个回车键（0x0d）和换行键（0x0a），因此，判断一行读进来的标志就是这两个键读了进来没有。</li>
+</ul>
+<h4 id="接口实现">接口实现</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接口定义</span></span><br><span class="line"><span class="comment">// 串口操作句柄</span></span><br><span class="line"><span class="keyword">extern</span> UART_HandleTypeDef huart1;</span><br><span class="line"><span class="keyword">extern</span> UART_HandleTypeDef huart2;</span><br><span class="line"><span class="comment">// 下面这两个全局变量是用来判断中断接收的状态的变量</span></span><br><span class="line"><span class="keyword">extern</span> u8 uart1_rx_flag;</span><br><span class="line"><span class="keyword">extern</span> u8 uart2_rx_flag;</span><br><span class="line"><span class="comment">// 下面两个全局变量是用来判断中断接收的数据的个数的变量</span></span><br><span class="line"><span class="keyword">extern</span> u8 uart1_rx_count;</span><br><span class="line"><span class="keyword">extern</span> u8 uart2_rx_count;</span><br><span class="line"><span class="comment">// 下面的全局变量是存放接收数据的缓存，其会接收一行缓存（以回车为接收结束的标志），前面的宏定义了最大的接收的数量。</span></span><br><span class="line"><span class="keyword">extern</span> u8 uart1_rx_buffer[MAX_RX_NUMBER]; <span class="comment">// 接受的一行数据后的buffer（以回车作为结束）</span></span><br><span class="line"><span class="keyword">extern</span> u8 uart2_rx_buffer[MAX_RX_NUMBER]; <span class="comment">// 接受的一行数据后的buffer（以回车作为结束）</span></span><br><span class="line"><span class="comment">// 下面两个函数是串口的初始化函数，在初始化中，定义和使能了串口的中断，因此，串口都是通过中断的方式工作的，接口也就是上方定义的全局变量。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">USART1_UART_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">USART2_UART_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="逻辑实现在回调函数中">逻辑实现（在回调函数中）</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (huart-&gt;Instance == USART1) <span class="comment">// 如果是串口1</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">static</span> u8 return_key_flag = FALSE;</span><br><span class="line">        <span class="keyword">if</span> (uart1_rx_flag == FALSE) <span class="comment">// 接收未完成</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (return_key_flag == TRUE) <span class="comment">// 已经接收到0x0d(回车键)</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 是否又接收到了换行键</span></span><br><span class="line">                <span class="keyword">if</span> (uart1_hal_rx_buffer == <span class="number">0x0a</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment">// 一次接收完毕</span></span><br><span class="line">                    uart1_rx_flag = TRUE;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="comment">// 发生错误，重新接收</span></span><br><span class="line">                &#123;</span><br><span class="line">                    uart1_rx_count = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                return_key_flag = FALSE;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="comment">// 还未接收到0x0d（回车键)</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (uart1_hal_rx_buffer == <span class="number">0x0d</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    return_key_flag = TRUE;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    uart1_rx_buffer[uart1_rx_count] = uart1_hal_rx_buffer;</span><br><span class="line">                    uart1_rx_count++;</span><br><span class="line">                    <span class="comment">// 如果超过最大值，缓存不够，重新开始</span></span><br><span class="line">                    <span class="keyword">if</span> (uart1_rx_count &gt; (MAX_RX_NUMBER - <span class="number">1</span>))</span><br><span class="line">                    &#123;</span><br><span class="line">                        uart1_rx_count = <span class="number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="遇到的一些问题和改善方式">遇到的一些问题和改善方式</h4>
+<p>接口定义没有变，但是要注意接口使用的时候需要手动地将其flag置位，这一点在源代码中有说，然后就是，新定义了两个变量用来存放count，便于自动化清零操作。</p>
+<h2 id="总结">总结</h2>
+<p>这次整理代码废了很大的力气，不过也有一些小小的收获：</p>
+<ul>
+<li>在写一个模块和代码之前，先想好需求，接口的定义等内容，然后再开始写代码这样的效率会高很多。</li>
+<li>在涉及到中断程序的时候，与外部的接口不可避免会用到全局变量。</li>
+<li>在涉及整体的程序框架的时候，可以使用一下状态机的编程思路。</li>
+</ul>
 
     </div>
 
