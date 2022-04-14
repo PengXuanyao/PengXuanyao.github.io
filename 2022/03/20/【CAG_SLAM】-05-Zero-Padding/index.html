@@ -28,7 +28,7 @@
 <meta property="og:description" content="任务描述  这是padding模块下的一个子模块，负责zero padding的输出。详细功能描述参考前面的【CAG_SLAM】-03-Padding Modules的信息。 端口定义     名称 方向 位宽（bits） 描述     clk in 1 时钟信号   rst in 1 reset信号   width in 12 图片宽">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-20T03:05:49.000Z">
-<meta property="article:modified_time" content="2022-03-31T12:54:19.836Z">
+<meta property="article:modified_time" content="2022-04-13T01:10:23.121Z">
 <meta property="article:author" content="PengXuanyao">
 <meta property="article:tag" content="verilog">
 <meta name="twitter:card" content="summary">
@@ -135,18 +135,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -216,7 +216,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-31 20:54:19" itemprop="dateModified" datetime="2022-03-31T20:54:19+08:00">2022-03-31</time>
+      <time title="修改时间：2022-04-13 09:10:23" itemprop="dateModified" datetime="2022-04-13T09:10:23+08:00">2022-04-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -328,12 +328,11 @@
 <p>重复。</p>
 <p>最后输出0，结束。</p>
 <h2 id="具体实现">具体实现</h2>
-<hr />
-<p>关于移位的下标问题：</p>
-<blockquote>
-<p>Variable Vector Part Select Another ability provided in Verilog HDl is to have variable part selects of a vector. This allows part selects to be put in for loops to select various parts of the vector. There are two special part-select operators: [<starting_bit>+:width] - part-select increments from starting bit [<starting_bit>-:width] - part-select decrements from starting bit The starting bit of the part select can be varied, but the width has to be constant.</p>
-</blockquote>
-<p>starting bit 可以是一个变量，但是width必须是一个固定值，再verilog学习-06中的再谈多路选择器这一个题目中可以看到。</p>
+<p>现在，理一下编程的思路。</p>
+<p>首先是输入部分有一个计数器，输出部分有一个计数器分别记录输入和输出在现在的状态；</p>
+<p>现在需要写一个三段式的状态机，一共有四个状态，IDLE，SEND_PICS，SEND_ZEROS，SEND_PICS，SEND_TRANSATION。开始写的五个状态和三个状态都是不太合理的，这里应该需要这四个状态。</p>
+<p>理清楚输入信号、内部寄存器之间的关系，输入信号使得整个系统打开（IDLE-&gt;SEND_ZEROS，计数器开始计数），然后，剩下的操作主要是交给计数器完成（输入信号可以控制计数器的暂停和继续），其他状态转移和变化也主要是通过计数器来操作完成。</p>
+<p>其中，SEND_ZEROS-&gt;SEND_PICS的转变通过观察<strong>输出</strong>计数器来完成，SEND_PICS-&gt;SEND_TRANSITION的转变主要通过观察<strong>输出</strong>计数器来完成，SEND_TRANSITION-&gt;SEND_PICS主要通过观察<strong>输入</strong>计数器来完成，SEND_ZEROS-&gt;SEND_PICS的转变主要通过<strong>输出</strong>寄存器或者axi的last信号来完成。</p>
 <h2 id="参考文献">参考文献</h2>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38649259/article/details/109324139">Verilog并行加法树实现_dawn‘s BLOG的博客-CSDN博客_verilog 加法树</a></li>

@@ -132,18 +132,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,308 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/" class="post-title-link" itemprop="url">【Verilog学习】-08-时序逻辑-基础触发器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 11:36:28" itemprop="dateCreated datePublished" datetime="2022-03-15T11:36:28+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-17 16:07:44" itemprop="dateModified" datetime="2022-03-17T16:07:44+08:00">2022-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="dff">1.DFF</h2>
+<hr />
+<p>Create a single D flip-flop.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,    <span class="comment">// Clocks are used in sequential circuits</span></span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> q );</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    	q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/" class="post-title-link" itemprop="url">【vivado】-00-install</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 10:40:31" itemprop="dateCreated datePublished" datetime="2022-03-15T10:40:31+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-17 19:48:23" itemprop="dateModified" datetime="2022-03-17T19:48:23+08:00">2022-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言">前言</h2>
+<p>这里开始终于着手把落下的工作开始真正一步一步地落实下去了，这两天的心情比较低落，主要是前期对自己的要求没有达到目标，导致现在的进展非常地缓慢。对科研和学习一定要高标准、严要求，没有什么是做不了的，大多数的问题都可以靠时间解决。一定要把时间安排妥当。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/08/%E3%80%90BC26%E3%80%91-03-%E5%AF%B9%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/08/%E3%80%90BC26%E3%80%91-03-%E5%AF%B9%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91/" class="post-title-link" itemprop="url">【BC26】-03-对接阿里云</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-08 20:30:23" itemprop="dateCreated datePublished" datetime="2022-03-08T20:30:23+08:00">2022-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-15 21:02:03" itemprop="dateModified" datetime="2022-03-15T21:02:03+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="mqtt-部分">MQTT 部分</h1>
+<h2 id="mqtt发送过程">MQTT发送过程</h2>
+<ol type="1">
+<li><code>AT+CGPADDR</code>，查询IP，获取到OK表示BC26状态正常</li>
+<li><code>AT+QMTCFG=&quot;aliauth&quot;,0,&quot;gg43bimZeb9&quot;,&quot;Lighting&quot;,&quot;2790aa518d49f0ed3955254f693c0c13&quot;</code>，配置阿里云</li>
+<li><code>AT+QMTOPEN=0,“iot-as-mqtt.cn-shanghai.aliyuncs.com”,1883</code>连接阿里云,在连接完成后马上需要用5发送连接设备指令，否者会自动断开</li>
+<li><code>AT+QMTCONN=0,&quot;Lighting&quot;</code>，连接设备，这里的lighting是阿里云自己定义的设备名称</li>
+<li><code>AT+QMTPUB=0,0,0,0,&quot;/sys/a1tW6nsMu2w/BC28/thing/event/property/post&quot;</code>,发布指令</li>
+<li><code>&#123;params:&#123;RoomHumidity:58.8&#125;&#125;</code>，具体数据</li>
+</ol>
+<h2 id="mqtt接收过程">MQTT接收过程</h2>
+<ol type="1">
+<li><code>AT+QMTSUB=0,1,&quot;/a1tW6nsMu2w/BC28/user/get&quot;,0</code>阿里云下发消息需要NB提前订阅阿里云的发布主题</li>
+</ol>
+<h2 id="mqtt最后断开设备或关闭网络">MQTT最后断开设备或关闭网络</h2>
+<ol type="1">
+<li><code>AT+QMTDISC=0</code>，断开设备</li>
+<li><code>AT+QMTCLOSE=0</code>，关闭网络（不要关闭）</li>
+</ol>
+<h1 id="云平台配置">云平台配置</h1>
+<p>直接在aliyun上，搜索物联网云平台即可。</p>
+<h1 id="代码以及具体实现">代码以及具体实现</h1>
+<h2 id="串口的问题">串口的问题</h2>
+<p>以前的串口存在一个问题，一次只能接收一行数据，必须要每次接收多行数据才行。因此，buffer再加一个维度，得到的一个二维的buffer用于接收多行的数据。</p>
+<p>逻辑是，以前在flag=true的时候，是直接忽略了下一次数据的输入。现在，去掉这一个限制，当前这个flag（一行数据接收完毕）的功能不用，其功能转化为判断是否接收完毕的功能，如果其值为false说明没有接收完毕，继续接收；如果为true（手动置位），说明当下这一批数据已经处理完成，不再需要，将数组清空，最后将其reset为false，进行新一轮数据的等待接收。</p>
+<h2 id="信息发送">信息发送</h2>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315205608885.png" alt="第一条指令标准接收情况" /><figcaption>第一条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315205855365.png" alt="第二条指令标准接收情况" /><figcaption>第二条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315210021168.png" alt="第三条指令标准接收情况" /><figcaption>第三条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315210107956.png" alt="第四条指令标准接收情况" /><figcaption>第四条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220315210154288.png" alt="发送信息" /><figcaption>发送信息</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JIANGYINGH/article/details/106795838">物联网通信之初识MQTT协议_JIANGYINGH的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.icode9.com/content-4-818090.html">NBIOT专栏之BC28串口连接阿里云物联网平台接发数据 (icode9.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/112095247">BC26连接阿里云，MQTT协议，AT流程和STM32代码实现_qlexcel的专栏-CSDN博客_bc26 阿里云</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -781,253 +1083,6 @@
 <li id="fn1"><p><a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/class/">C++类和对象（class和object） (biancheng.net)</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </section>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/%E3%80%90rhino%E3%80%91-01-%E5%BB%BA%E6%A8%A1%E9%A2%91%E8%B0%B1%E7%81%AF%E5%A4%96%E5%A3%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/26/%E3%80%90rhino%E3%80%91-01-%E5%BB%BA%E6%A8%A1%E9%A2%91%E8%B0%B1%E7%81%AF%E5%A4%96%E5%A3%B3/" class="post-title-link" itemprop="url">【rhino】-01-建模频谱灯外壳</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-26 15:20:18 / 修改时间：21:49:52" itemprop="dateCreated datePublished" datetime="2022-01-26T15:20:18+08:00">2022-01-26</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这里的这个项目是我从这学期开始，一直鸽到现在才弄的一个东西。这个频谱灯的电路和程序方面其实在去年的10月就已经调通了，但是呢，这个外壳一直没有设计。</p>
-<p>这里就有得用上一些大一学过的一些工图方面的知识来解决这些问题了。</p>
-<h2 id="尺寸分析">尺寸分析</h2>
-<p>尺寸分析主要是需要对频谱灯的电路板的定位孔进行一个测量，然后再外壳相应的位置预留固定孔即可。</p>
-<p>在AD中进行尺寸的测量会遇到一些问题，最主要的就是选点不知道为什么选不准，具体的例子如下：</p>
-<p>这里的想要测量的量是两个开关之间的距离，但是没有办法锁定到中见到中间（P+D+L的方式）</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220126180126310.png" alt="无法定位在圆孔中间" /><figcaption>无法定位在圆孔中间</figcaption>
-</figure>
-<p>但是，可以使用到P+D+D的方式可以但又是没有这种可以拉出来的效果。这样就麻烦了。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220126180731341.png" alt="利用P+D+D(Standard测量得到的结果" /><figcaption>利用P+D+D(Standard测量得到的结果</figcaption>
-</figure>
-<p>网上没有具体的解决方案，这里就只好暂且留一下这个问题了。</p>
-<p>下面是测量好的整个板子的尺寸信息，通过这个尺寸信息，将会进行相关的开槽了打孔。</p>
-<figure>
-<img src="https://gitee.com/pengxuanyao/pic-bed-for-picgo/raw/master/images/image-20220126214604882.png" alt="尺寸信息" /><figcaption>尺寸信息</figcaption>
-</figure>
-<h2 id="绘制外壳平面图">绘制外壳平面图</h2>
-<p>绘制的外壳也是在原来的基础上进行相应的改动，原来的外壳信息如下：</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/26/%E3%80%90rhino%E3%80%91-00-%E5%BB%BA%E6%A8%A1%E5%8B%BA%E5%AD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/26/%E3%80%90rhino%E3%80%91-00-%E5%BB%BA%E6%A8%A1%E5%8B%BA%E5%AD%90/" class="post-title-link" itemprop="url">【rhino】-00-建模勺子</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-26 12:07:28 / 修改时间：15:39:37" itemprop="dateCreated datePublished" datetime="2022-01-26T12:07:28+08:00">2022-01-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>建模勺子是我做的第一个rhino的项目。也是直接照着网上照着步骤抄一下，中间遇到的问题也比较少，然后现在主要要做的事情就是整理一下中间遇到的问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/26/%E3%80%90rhino%E3%80%91-00-%E5%BB%BA%E6%A8%A1%E5%8B%BA%E5%AD%90/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/24/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E5%9D%9A%E6%8C%81/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/24/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E5%9D%9A%E6%8C%81/" class="post-title-link" itemprop="url">【札记】坚持</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-24 20:01:57 / 修改时间：22:16:29" itemprop="dateCreated datePublished" datetime="2022-01-24T20:01:57+08:00">2022-01-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转眼间，一个月又快要过去了。</p>
-<p>这一次写札记主要是因为下午看了罗翔老师和俞恩泰老师的探讨，具体的讨论的内容我已经忘掉了。但是，有一点我记得比较深。就是关于坚持的问题：</p>
-<p>我总是会堕入一种所谓的安逸的状态，去重复做一些简单的事情。但是，到头来，这种东西并不是我想要的，这种廉价产生的多巴胺，只会让多巴胺更加廉价。在经历了这么多事情之后，其实有些方向和目标我已经找到了，但是这些东西太难坚持了，被我浅尝则止地中断了，取而代之的是更容易更让我成迷上瘾的另一些事情。</p>
-<p>记得在大一的时候我就读到了村上春树的一篇文章，谈到他对长跑和写作的一些习惯。他说，他在做这两件事情的无论是哪一种时，都会选择不会超量的完成任务。遇到状态好的时候，他也不会选择去加班加点多做一些事情，而是适可而止。并且，在懈怠的时候，即使有利用去推演搪塞，也会坚持下去。我觉得这种生活方式才是比较理想的一种状态。</p>
-<p>我是一个常常不知道何时去收手的一个人，一件事情开始固然很艰难，但是我想在合适的时机，停下来，去做另一件事情，也不是一件简单的事情。这种状态的保持许需要不断、不断地训练的。</p>
-<p>我的生活好像就是在一个跷跷板上，不是倒向一边去向前，就是倒向另一边去懈怠。往往达不到村上所说的这种状态，我想得是需要找到另一个支点才能够平衡嘛？其实，我也在反思，我大一下的生活为什么会过的比较所谓的状态好，我觉得有很大一部分是因为做到了上面说的这种状态，或者说，绝大部分时间做到了基本的要求。可能，我在总结我大一的成功的时候有一些关于的误解，我认为只要做到了全身心投入到学习中就可以了，但是我忘记了我做的其他事情。</p>
-<p>我在中午的十一点回去淘米和煮米饭，在十一点半会去切菜、炒菜。在晚上五六点，如果有时间，我一定会出去跑步。在晚上，我会看《大问题》这本书等等，当让，其他的时间基本上都用在了学习上。综合考虑起来，这种适可而止的智慧才是我现在所欠缺的。</p>
-<p>关于如何去做到适可而止，我不知道。因为我发现上瘾的事情停不下来，而不上瘾的事情又坚持不下来。但是，有一种不上瘾的却能够坚持下来，可能是可以称之为热爱的东西。很痛苦，但是我能够走下去。</p>
-<p>现在，我发现有些真正该坚持下去的事情被我错过了，但好在我回头，又望见了他们。</p>
 
       
     </div>
