@@ -132,7 +132,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -143,7 +143,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,296 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/12/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-01-%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/12/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-01-%E7%BB%84%E5%90%88%E9%80%BB%E8%BE%91/" class="post-title-link" itemprop="url">【Verilog学习】-01-组合逻辑</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-12 22:06:51" itemprop="dateCreated datePublished" datetime="2022-01-12T22:06:51+08:00">2022-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-01-13 09:02:17" itemprop="dateModified" datetime="2022-01-13T09:02:17+08:00">2022-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>今天，温习了一下，verilog的组合逻辑的知识，下面是一些新的理解和总结：</p>
+<ul>
+<li><p>要把~、|、^、&amp;这些符号看成是一个门，特别是以此作为assign的赋值的时候，其实就是生成了一个门，例如;</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assign</span> out = a|b;</span><br></pre></td></tr></table></figure></li>
+<li><p>wire类型的信号只能被一个信号驱动（例如，一个门的输出），但是可以同时给多个信号赋值。（只能做一次右端）</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> a,b,c,out,out_n；</span><br><span class="line"><span class="keyword">assign</span> out = a | b;			<span class="comment">//被一个信号（与门的输出驱动）</span></span><br><span class="line"><span class="keyword">assign</span> out_n = ~out;		<span class="comment">//可以去驱动多个信号</span></span><br><span class="line"><span class="keyword">assign</span> c = ~out | a;		<span class="comment">//驱动第二个信号</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/12/%E3%80%90CAG_SLAM%E3%80%91-01-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/12/%E3%80%90CAG_SLAM%E3%80%91-01-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7/" class="post-title-link" itemprop="url">【CAG_SLAM】-01-控制信号</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-12 20:42:53" itemprop="dateCreated datePublished" datetime="2022-01-12T20:42:53+08:00">2022-01-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-04-14 17:46:43" itemprop="dateModified" datetime="2022-04-14T17:46:43+08:00">2022-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这里的控制信号主要是基于上一次的比较树的项目的增加的。</p>
+<p>控制信号主要是包括对整个模块的一个启动、结束以及重置等状态的转移进行控制；</p>
+<h2 id="任务描述">任务描述</h2>
+<hr />
+<p>在模块的输入中，再加入一个使能信号rst_n和valid信号。在加入rst_n信号后，所有的寄存器需要重置，（eg.本模块是要输入72次，但是在输入20次后，如果rst信号被拉低，然后再拉高后，这时需要重新输入72个数据，并且需要把相关的数据进行重置，例如：初始化寄存器）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/01/12/%E3%80%90CAG_SLAM%E3%80%91-01-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/%E3%80%90python%E5%AD%A6%E4%B9%A0%E3%80%91-00-%E7%85%A7%E7%89%87%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/11/%E3%80%90python%E5%AD%A6%E4%B9%A0%E3%80%91-00-%E7%85%A7%E7%89%87%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">【python学习】-00-照片整理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-11 09:51:42" itemprop="dateCreated datePublished" datetime="2022-01-11T09:51:42+08:00">2022-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-23 16:13:38" itemprop="dateModified" datetime="2022-03-23T16:13:38+08:00">2022-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>这件事的起因是手机的内存已经爆炸了。想要找一个办法来把手机的内存清理一下，但是发现照片实在是太多了。桌面上的以前的照片也还没有清理干净，导致一团糟。想要去网上去学习一下用python写一个脚本自动帮我把照片按照月份放入响应的文件夹。其实也不难，但是还有一个问题是手机上的杂七杂八的缓存图像贼多，还得把这些不相干的照片做一个分类和清理。</p>
+<p>先是在CSDN找到了一个相关的教程，但是和我的需求有一点小小的不同（文件夹的组织方式不太一样），但我想还是先按着这个写一个小的脚本，然后再改正。链接如下：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38263568/article/details/104289603">python照片按时间自动分类_进阶中的菜鸟的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_24992725/article/details/107069631">用python进行图片整理_SSSimonYang的博客-CSDN博客_python整理照片</a></p>
+</blockquote>
+<hr />
+<h2 id="裂开vscode插件崩了">裂开，vscode插件崩了。</h2>
+<p>koroheaderfile无法生成头注释的问题，只能生成函数注释、不能生成头文件的注释，初步尝试了一下，应该是这个headerfile的设置有问题：</p>
+<p>问题解决了，在settings里面添加一个来这个来设置一下，不知道是哪里出了问题，以前那好像记得也没这玩意儿，感觉像可能某次不小心删掉了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;fileheader.configObj&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;autoAdd&quot;</span>: <span class="literal">true</span>, <span class="comment">// 自动添加头部注释开启才能自动添加</span></span><br><span class="line">    <span class="string">&quot;autoAlready&quot;</span>: <span class="literal">true</span>, <span class="comment">// 默认开启</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<hr />
+<p>通过这一篇博客可以看到如何去处理图片：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55266474">python初学者：照按照时间分类整理片工具 - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3b61923efdf1">基于Python快速整理微信视频与图片 - 简书 (jianshu.com)</a></p>
+<p>上面这是一个非常好的一个工具，能够自动地提取出图片中的日期等信息，但是不能够对视频做处理，因此还需要花时间去看一下相关的对视频处理的方法。</p>
+<hr />
+<p>搞了一下午，这玩意儿说来应该逻辑上是不太难的，为何总是在实践中出篓子。太难了,我.</p>
+<hr />
+<p>opts： 命令行的参数（选择的缩写）</p>
+<p>如果使用getopt函数的时候，需要使用到参数的&quot;h:d:o&quot;，不能够使用hdo连续的字符串，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">opts, args = getopt.getopt(sys.argv[<span class="number">1</span>:],<span class="string">&quot;h:d:o&quot;</span>)</span><br><span class="line"><span class="comment"># opts, args = getopt.getopt(sys.argv[1:],&quot;hdo&quot;)</span></span><br><span class="line"><span class="keyword">for</span> op,value <span class="keyword">in</span> opts:</span><br><span class="line">    <span class="keyword">if</span> op == <span class="string">&quot;-d&quot;</span>:</span><br><span class="line">        img_dir = value	<span class="comment"># 如果使用注释中的写法，将得不到value值</span></span><br><span class="line">    <span class="keyword">if</span> op == <span class="string">&quot;-o&quot;</span>:</span><br><span class="line">        out_dir = value</span><br><span class="line">    <span class="keyword">if</span> op == <span class="string">&quot;-h&quot;</span>:</span><br><span class="line">        usage()</span><br><span class="line">        sys.exit()</span><br></pre></td></tr></table></figure>
+<p>目前遇到的问题是如何用re.compile函数对字符串进行匹配，源代码是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date_re = re.<span class="built_in">compile</span>(<span class="string">r&#x27;((\d+):(\d+):(\d+)) \d+:\d+:\d+)&#x27;</span>)</span><br><span class="line">result = date_re.search(filedate)</span><br></pre></td></tr></table></figure>
+<p>其中的filedate的格式为</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2019</span>:<span class="number">10</span>:<span class="number">26</span> <span class="number">22</span>:<span class="number">11</span>:<span class="number">33</span></span><br></pre></td></tr></table></figure>
+<p>产生的问题是：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">re.error: <span class="title">unbalanced</span> <span class="title">parenthesis</span> <span class="title">at</span> <span class="title">position</span> 31</span></span><br></pre></td></tr></table></figure>
+<p>问题解决了，是上面的格式没有写对，多加了一个）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">date_re = re.<span class="built_in">compile</span>(<span class="string">r&#x27;((\d+):(\d+):(\d+) \d+:\d+:\d+)&#x27;</span>)</span><br><span class="line">result = date_re.search(filedate)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -894,101 +1184,8 @@ E=mc^2
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/03/%E3%80%90Hexo%E3%80%91-01-Hello%20World/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/03/%E3%80%90Hexo%E3%80%91-01-Hello%20World/" class="post-title-link" itemprop="url">【Hexo】-01-Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-03 23:15:02" itemprop="dateCreated datePublished" datetime="2022-01-03T23:15:02+08:00">2022-01-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-14 11:59:47" itemprop="dateModified" datetime="2022-01-14T11:59:47+08:00">2022-01-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
