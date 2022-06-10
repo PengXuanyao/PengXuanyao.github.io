@@ -132,7 +132,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -181,6 +181,139 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/05/%E3%80%90CAG-SLAM%E3%80%91-07-BA-Part/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/05/%E3%80%90CAG-SLAM%E3%80%91-07-BA-Part/" class="post-title-link" itemprop="url">【CAG_SLAM】-07-BA-Part</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-05 10:19:05" itemprop="dateCreated datePublished" datetime="2022-06-05T10:19:05+08:00">2022-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-06-06 09:39:18" itemprop="dateModified" datetime="2022-06-06T09:39:18+08:00">2022-06-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="整体模块功能图">整体模块功能图</h2>
+<figure>
+<img src="https://s2.loli.net/2022/06/05/Q6Bi13UfHJRoMpx.png" alt="BA_module" /><figcaption>BA_module</figcaption>
+</figure>
+<p>这里主要涉及到矩阵求逆、矩阵转置和矩阵乘法的操作，最后输出结果的矩阵。</p>
+<h2 id="矩阵求逆">矩阵求逆</h2>
+<p>矩阵求逆主要有两种方法，一种是利用伴随阵求逆矩阵的方法，还有其他方法是利用矩阵的L-U分解法等（L-U分解法具有更加广泛的应用范围，其可以并行计算）</p>
+<blockquote>
+<p><strong>L-U分解法</strong> <span class="math display">\[
+A = LU \\
+A^{-1} = U^{-1}L^{-1}
+\]</span> 其中，L是下三角阵，U是上三角阵。 <span class="math display">\[
+\begin{bmatrix}
+A_{11}    &amp; A_{12} \\
+A_{21}    &amp; A_{22}
+\end{bmatrix}
+= 
+\begin{bmatrix}
+L_{11}    &amp;  \\
+L_{21}    &amp; L_{22}
+\end{bmatrix}
+\times
+\begin{bmatrix}
+U_{11}    &amp; U_{12} \\
+      &amp; U_{22}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\left\{
+  \begin{array}{**lr**}
+  A_{11} = L_{11}U_{11} \\
+  A_{12} = L_{11}U_{12} \\
+  A_{21} = L_{21}U_{11} \\
+  A_{22} = L_{21}U_{12} + L_{22}U_{22}
+  \end{array}
+\right.
+\]</span></p>
+<p>上式表明，其可以作并行计算</p>
+</blockquote>
+<h2 id="fifo">FIFO</h2>
+<p>求FIFO深度需要考虑最坏的情形，读写的速率应该相差最大，也就是说需要找出最大的写速率和最小的读速率；不管什么场景，要确定FIFO的深度，关键在于计算出在突发读写这段时间内有多少个数据没有被读走。</p>
+<h3 id="最坏情况">最坏情况：</h3>
+<p>给定数据传输的速率，不给数据传输的方式，考虑最坏情况是下图的case-4（背靠背），连续读取了最多的数据，需要的FIFO是最大的。</p>
+<figure>
+<img src="https://pic1.zhimg.com/80/v2-27362d832a75aa595ca1bfb3566336bc_720w.jpg" alt="img" /><figcaption>img</figcaption>
+</figure>
+<h3 id="推导公式">推导公式：</h3>
+<ul>
+<li>写时钟周期为clkw</li>
+<li>读时钟周期为clkr</li>
+<li>在读时钟周期内，每x个周期内可以有y个数据读出FIFO，即读数据的读数率</li>
+<li>在写时钟周期内，每m个周期内就有<strong>n个数据</strong>写入FIFO</li>
+<li>背靠背“的情形下是FIFO读写的最坏情形，<strong>burst长度 B = 2*n</strong></li>
+</ul>
+<p>FIFO最小深度为： <span class="math display">\[
+depth = 2n - 2m\times\frac{y}{x} = B - B\times\frac{clkr}{clkw}\times\frac{y}{x}
+\]</span></p>
+<h3 id="总结">总结</h3>
+<p>要计算这里的FIFO深度的最坏情况，也就是要计算写操作burst的最大长度（当给定数据传输速率后，选择背靠背的传输方式为最大）。</p>
+<h3 id="参考资料">参考资料</h3>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/166177480">FIFO深度计算 - 知乎 (zhihu.com)</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/01/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-11-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-FSM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -212,7 +345,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-03 20:36:42" itemprop="dateModified" datetime="2022-06-03T20:36:42+08:00">2022-06-03</time>
+      <time title="修改时间：2022-06-03 20:44:11" itemprop="dateModified" datetime="2022-06-03T20:44:11+08:00">2022-06-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -241,320 +374,14 @@
 <h3 id="question">question</h3>
 <p>This is a Moore state machine with two states, one input, and one output. Implement this state machine. Notice that the reset state is B.</p>
 <p>This exercise is the same as <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/fsm1s">fsm1s</a>, but using asynchronous reset.</p>
-<figure>
-<img src="https://hdlbits.01xz.net/mw/images/7/70/Fsm1.png" alt="Fsm1.png" /><figcaption>Fsm1.png</figcaption>
-</figure>
-<h3 id="module-declaration">Module Declaration</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module top_module(</span><br><span class="line">    input clk,</span><br><span class="line">    input areset,    // Asynchronous reset to state B</span><br><span class="line">    input in,</span><br><span class="line">    output out);</span><br></pre></td></tr></table></figure>
-<h3 id="solution">Solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,    <span class="comment">// Asynchronous reset to state B</span></span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">output</span> out);<span class="comment">//  </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">parameter</span> A=<span class="number">1&#x27;b0</span>, B=<span class="number">1&#x27;b1</span>; </span><br><span class="line">    <span class="keyword">reg</span> state, next_state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span>    <span class="comment">// This is a combinational always block</span></span><br><span class="line">        <span class="comment">// State transition logic</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            A: next_state = in ? A : B;</span><br><span class="line">            B: next_state = in ? B : A;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk, <span class="keyword">posedge</span> areset) <span class="keyword">begin</span>    <span class="comment">// This is a sequential always block</span></span><br><span class="line">        <span class="comment">// State flip-flops with asynchronous reset</span></span><br><span class="line">        <span class="keyword">if</span> (areset) </span><br><span class="line">            state &lt;= B;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            state &lt;= next_state; </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Output logic</span></span><br><span class="line">    <span class="keyword">assign</span> out = state ? <span class="number">1&#x27;b1</span> : <span class="number">1&#x27;b0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="fsm1s">Fsm1s</h2>
-<h3 id="question-1">question</h3>
-<p>This is a Moore state machine with two states, one input, and one output. Implement this state machine. Notice that the reset state is B.</p>
-<p>This exercise is the same as <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/fsm1">fsm1</a>, but using synchronous reset.</p>
-<blockquote>
-<p>这道题有点怪，为什么答案是用阻塞赋值</p>
-</blockquote>
-<h3 id="module-declaration-1">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Note the Verilog-1995 module declaration syntax here:</span></span><br><span class="line"><span class="keyword">module</span> top_module(clk, reset, in, out);</span><br><span class="line">    <span class="keyword">input</span> clk;</span><br><span class="line">    <span class="keyword">input</span> reset;    <span class="comment">// Synchronous reset to state B</span></span><br><span class="line">    <span class="keyword">input</span> in;</span><br><span class="line">    <span class="keyword">output</span> out;</span><br></pre></td></tr></table></figure>
-<h3 id="answer">Answer</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Note the Verilog-1995 module declaration syntax here:</span></span><br><span class="line"><span class="keyword">module</span> top_module(clk, reset, in, out);</span><br><span class="line">    <span class="keyword">input</span> clk;</span><br><span class="line">    <span class="keyword">input</span> reset;    <span class="comment">// Synchronous reset to state B</span></span><br><span class="line">    <span class="keyword">input</span> in;</span><br><span class="line">    <span class="keyword">output</span> out;<span class="comment">//  </span></span><br><span class="line">    <span class="keyword">reg</span> out;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Fill in state name declarations</span></span><br><span class="line">	<span class="keyword">parameter</span> A = <span class="number">1&#x27;b0</span>, B = <span class="number">1&#x27;b1</span>;</span><br><span class="line">    <span class="keyword">reg</span> present_state, next_state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span>  </span><br><span class="line">            <span class="comment">// Fill in reset logic</span></span><br><span class="line">            present_state = B;</span><br><span class="line">            out = <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">end</span> <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">case</span> (present_state)</span><br><span class="line">                <span class="comment">// Fill in state transition logic</span></span><br><span class="line">                A : next_state = in ? A : B;</span><br><span class="line">                B : next_state = in ? B : A;</span><br><span class="line">            <span class="keyword">endcase</span></span><br><span class="line">			</span><br><span class="line">            <span class="comment">// State flip-flops</span></span><br><span class="line">            present_state = next_state;   </span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> (present_state)</span><br><span class="line">                <span class="comment">// Fill in output logic</span></span><br><span class="line">                A : out = <span class="number">1&#x27;b0</span>;</span><br><span class="line">                B : out = <span class="number">1&#x27;b1</span>;</span><br><span class="line">            <span class="keyword">endcase</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h2 id="fsm2">Fsm2</h2>
-<h3 id="question-2">question</h3>
-<p>This is a Moore state machine with two states, two inputs, and one output. Implement this state machine.</p>
-<p>This exercise is the same as <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/fsm2s">fsm2s</a>, but using asynchronous reset.</p>
-<figure>
-<img src="https://hdlbits.01xz.net/mw/images/b/b8/Fsmjk.png" alt="Fsmjk.png" /><figcaption>Fsmjk.png</figcaption>
-</figure>
-<h3 id="module-declaration-2">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,    <span class="comment">// Asynchronous reset to OFF</span></span><br><span class="line">    <span class="keyword">input</span> j,</span><br><span class="line">    <span class="keyword">input</span> k,</span><br><span class="line">    <span class="keyword">output</span> out); </span><br></pre></td></tr></table></figure>
-<h3 id="solution-1">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,    <span class="comment">// Asynchronous reset to OFF</span></span><br><span class="line">    <span class="keyword">input</span> j,</span><br><span class="line">    <span class="keyword">input</span> k,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//  </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">parameter</span> OFF=<span class="number">0</span>, ON=<span class="number">1</span>; </span><br><span class="line">    <span class="keyword">reg</span> state, next_state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">// State transition logic</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            OFF : next_state = j ? ON : OFF;</span><br><span class="line">            ON : next_state = k ? OFF : ON;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk, <span class="keyword">posedge</span> areset) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">// State flip-flops with asynchronous reset</span></span><br><span class="line">        <span class="keyword">if</span> (areset) </span><br><span class="line">            state &lt;= OFF;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Output logic</span></span><br><span class="line">    <span class="keyword">assign</span> out = (state == ON);</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h2 id="fsm2s">Fsm2s</h2>
-<h3 id="question-3">question</h3>
-<p>This is a Moore state machine with two states, two inputs, and one output. Implement this state machine.</p>
-<p>This exercise is the same as <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/fsm2">fsm2</a>, but using synchronous reset.</p>
-<p><img src="https://hdlbits.01xz.net/mw/images/5/5d/Fsmjks.png" alt="Fsmjks.png"  /></p>
-<h3 id="module-declaration-3">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,    <span class="comment">// Synchronous reset to OFF</span></span><br><span class="line">    <span class="keyword">input</span> j,</span><br><span class="line">    <span class="keyword">input</span> k,</span><br><span class="line">    <span class="keyword">output</span> out); </span><br></pre></td></tr></table></figure>
-<h3 id="solution-2">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,    <span class="comment">// Asynchronous reset to OFF</span></span><br><span class="line">    <span class="keyword">input</span> j,</span><br><span class="line">    <span class="keyword">input</span> k,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//  </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">parameter</span> OFF=<span class="number">0</span>, ON=<span class="number">1</span>; </span><br><span class="line">    <span class="keyword">reg</span> state, next_state;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">// State transition logic</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            OFF : next_state = j ? ON : OFF;</span><br><span class="line">            ON : next_state = k ? OFF : ON;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">// State flip-flops with asynchronous reset</span></span><br><span class="line">        <span class="keyword">if</span> (areset) </span><br><span class="line">            state &lt;= OFF;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Output logic</span></span><br><span class="line">    <span class="keyword">assign</span> out = (state == ON);</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h2 id="fsm3comb">Fsm3comb</h2>
-<h3 id="question-4">question</h3>
-<p>The following is the state transition table for a Moore state machine with one input, one output, and four states. Use the following state encoding: A=2'b00, B=2'b01, C=2'b10, D=2'b11.</p>
-<p><strong>Implement only the state transition logic and output logic</strong> (the combinational logic portion) for this state machine. Given the current state (<code>state</code>), compute the <code>next_state</code> and output (<code>out</code>) based on the state transition table.</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">State</th>
-<th style="text-align: left;">Next state</th>
-<th style="text-align: left;">Next state</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;">in=0</td>
-<td style="text-align: left;">in=1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">D</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Module Declaration</span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] state,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">1</span>:<span class="number">0</span>] next_state,</span><br><span class="line">    <span class="keyword">output</span> out); </span><br></pre></td></tr></table></figure>
-<h3 id="solution-3">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] state,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">1</span>:<span class="number">0</span>] next_state,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">parameter</span> A=<span class="number">0</span>, B=<span class="number">1</span>, C=<span class="number">2</span>, D=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// State transition logic: next_state = f(state, in)</span></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            A: next_state = in ? B : A;</span><br><span class="line">            B: next_state = in ? B : C;</span><br><span class="line">            C: next_state = in ? D : A;</span><br><span class="line">            D: next_state = in ? B : C;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// Output logic:  out = f(state) for a Moore state machine</span></span><br><span class="line">    <span class="keyword">assign</span> out = (state == D);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h2 id="fsm3onehot">Fsm3onehot</h2>
-<h3 id="question-5">question</h3>
-<p>The following is the state transition table for a Moore state machine with one input, one output, and four states. Use the following one-hot state encoding: A=4'b0001, B=4'b0010, C=4'b0100, D=4'b1000.</p>
-<p><strong>Derive state transition and output logic equations by inspection</strong> assuming a one-hot encoding. Implement only the state transition logic and output logic (the combinational logic portion) for this state machine. (The testbench will test with non-one hot inputs to make sure you're not trying to do something more complicated).</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">State</th>
-<th style="text-align: left;">Next state</th>
-<th style="text-align: left;">Next state</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;">in=0</td>
-<td style="text-align: left;">in=1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">D</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<h4 id="what-does-derive-equations-by-inspection-mean">What does &quot;derive equations by inspection&quot; mean?</h4>
-<p>One-hot state machine encoding guarantees that exactly one state bit is 1. This means that it is possible to determine whether the state machine is in a particular state by examining only <em>one</em> state bit, not <em>all</em> state bits. This leads to simple logic equations for the state transitions by examining the incoming edges for each state in the state transition diagram.</p>
-<p>For example, in the above state machine, how can the state machine can reach state A? It must use one of the two incoming edges: &quot;Currently in state A and in=0&quot; or &quot;Currently in state C and in = 0&quot;. Due to the one-hot encoding, the logic equation to test for &quot;currently in state A&quot; is simply the state bit for state A. This leads to the final logic equation for the next state of state bit A: <code>next_state[0] = state[0]&amp;(~in) | state[2]&amp;(~in)</code>. The one-hot encoding guarantees that at most one clause (product term) will be &quot;active&quot; at a time, so the clauses can just be ORed together.</p>
-<p>When an exercise asks for state transition equations &quot;by inspection&quot;, use this particular method. The judge will test with non-one-hot inputs to ensure your logic equations follow this method, rather that doing something else (such as resetting the FSM) for illegal (non-one-hot) combinations of the state bits.</p>
-<p>Although knowing this algorithm isn't necessary for RTL-level design (the logic synthesizer handles this), it is illustrative of why one-hot FSMs often have simpler logic (at the expense of more state bit storage), and this topic frequently shows up on exams in digital logic courses.</p>
-</blockquote>
-<h3 id="module-declaration-4">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] state,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] next_state,</span><br><span class="line">    <span class="keyword">output</span> out);</span><br></pre></td></tr></table></figure>
-<h3 id="solution-4">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] state,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] next_state,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">parameter</span> A=<span class="number">0</span>, B=<span class="number">1</span>, C=<span class="number">2</span>, D=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// State transition logic: Derive an equation for each state flip-flop.</span></span><br><span class="line">    <span class="keyword">assign</span> next_state[A] = state[A]&amp;(~in) | state[C]&amp;(~in);</span><br><span class="line">    <span class="keyword">assign</span> next_state[B] = state[A]&amp;(in) | state[B]&amp;(in) | state[D]&amp;(in);</span><br><span class="line">    <span class="keyword">assign</span> next_state[C] = state[B]&amp;(~in) | state[D]&amp;(~in);</span><br><span class="line">    <span class="keyword">assign</span> next_state[D] = state[C]&amp;in;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Output logic: </span></span><br><span class="line">    <span class="keyword">assign</span> out = state[D];</span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="fsm3">Fsm3</h2>
-<h3 id="question-6">question</h3>
-<p>See also: <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Fsm3comb">State transition logic for this FSM</a></p>
-<p>The following is the state transition table for a Moore state machine with one input, one output, and four states. Implement this state machine. Include an asynchronous reset that resets the FSM to state A.</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">State</th>
-<th style="text-align: left;">Next state</th>
-<th style="text-align: left;">Next state</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;">in=0</td>
-<td style="text-align: left;">in=1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">D</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="module-declaration-5">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> areset,</span><br><span class="line">    <span class="keyword">output</span> out); </span><br></pre></td></tr></table></figure>
-<h3 id="question-7">question</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> areset,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// State transition logic</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment">// State flip-flops with asynchronous reset</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Output logic</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="fsm3-1">Fsm3</h2>
-<h3 id="question-8">question</h3>
-<p>See also: <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Fsm3comb">State transition logic for this FSM</a></p>
-<p>The following is the state transition table for a Moore state machine with one input, one output, and four states. Implement this state machine. Include an asynchronous reset that resets the FSM to state A.</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">State</th>
-<th style="text-align: left;">Next state</th>
-<th style="text-align: left;">Next state</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;">in=0</td>
-<td style="text-align: left;">in=1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">D</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="module-declaration-6">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> areset,</span><br><span class="line">    <span class="keyword">output</span> out);</span><br></pre></td></tr></table></figure>
-<h3 id="solution-5">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> areset,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span>:<span class="number">0</span>] state;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span>:<span class="number">0</span>] next_state;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// State transition logic</span></span><br><span class="line">	<span class="keyword">parameter</span> A=<span class="number">0</span>, B=<span class="number">1</span>, C=<span class="number">2</span>, D=<span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// State transition logic: next_state = f(state, in)</span></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            A: next_state = in ? B : A;</span><br><span class="line">            B: next_state = in ? B : C;</span><br><span class="line">            C: next_state = in ? D : A;</span><br><span class="line">            D: next_state = in ? B : C;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// State flip-flops with asynchronous reset</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> areset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (areset) </span><br><span class="line">            state &lt;= A;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            state &lt;= next_state; </span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// Output logic:  out = f(state) for a Moore state machine</span></span><br><span class="line">    <span class="keyword">assign</span> out = (state == D);</span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* reference */</span></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">module top_module (</span></span><br><span class="line"><span class="comment">	input clk,</span></span><br><span class="line"><span class="comment">	input in,</span></span><br><span class="line"><span class="comment">	input areset,</span></span><br><span class="line"><span class="comment">	output out</span></span><br><span class="line"><span class="comment">);</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">	// Give state names and assignments. I&#x27;m lazy, so I like to use decimal numbers.</span></span><br><span class="line"><span class="comment">	// It doesn&#x27;t really matter what assignment is used, as long as they&#x27;re unique.</span></span><br><span class="line"><span class="comment">	parameter A=0, B=1, C=2, D=3;</span></span><br><span class="line"><span class="comment">	reg [1:0] state;		// Make sure state and next are big enough to hold the state encodings.</span></span><br><span class="line"><span class="comment">	reg [1:0] next;</span></span><br><span class="line"><span class="comment">    </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    // Combinational always block for state transition logic. Given the current state and inputs,</span></span><br><span class="line"><span class="comment">    // what should be next state be?</span></span><br><span class="line"><span class="comment">    // Combinational always block: Use blocking assignments.    </span></span><br><span class="line"><span class="comment">    always@(*) begin</span></span><br><span class="line"><span class="comment">		case (state)</span></span><br><span class="line"><span class="comment">			A: next = in ? B : A;</span></span><br><span class="line"><span class="comment">			B: next = in ? B : C;</span></span><br><span class="line"><span class="comment">			C: next = in ? D : A;</span></span><br><span class="line"><span class="comment">			D: next = in ? B : C;</span></span><br><span class="line"><span class="comment">		endcase</span></span><br><span class="line"><span class="comment">    end</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    // Edge-triggered always block (DFFs) for state flip-flops. Asynchronous reset.</span></span><br><span class="line"><span class="comment">    always @(posedge clk, posedge areset) begin</span></span><br><span class="line"><span class="comment">		if (areset) state &lt;= A;</span></span><br><span class="line"><span class="comment">        else state &lt;= next;</span></span><br><span class="line"><span class="comment">	end</span></span><br><span class="line"><span class="comment">		</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">		</span></span><br><span class="line"><span class="comment">	// Combinational output logic. In this problem, an assign statement is the simplest.		</span></span><br><span class="line"><span class="comment">	assign out = (state==D);</span></span><br><span class="line"><span class="comment">	</span></span><br><span class="line"><span class="comment">endmodule</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-<h2 id="fsm3s">Fsm3s</h2>
-<h3 id="question-9">question</h3>
-<p>See also: <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Fsm3comb">State transition logic for this FSM</a></p>
-<p>The following is the state transition table for a Moore state machine with one input, one output, and four states. Implement this state machine. Include a synchronous reset that resets the FSM to state A. (This is the same problem as <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Fsm3">Fsm3</a> but with a synchronous reset.)</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">State</th>
-<th style="text-align: left;">Next state</th>
-<th style="text-align: left;">Next state</th>
-<th>Output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;">in=0</td>
-<td style="text-align: left;">in=1</td>
-<td></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">A</td>
-<td style="text-align: left;">D</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">D</td>
-<td style="text-align: left;">C</td>
-<td style="text-align: left;">B</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<figure>
-<img src="https://hdlbits.01xz.net/mw/images/8/89/Fsm3.png" alt="Fsm3.png" /><figcaption>Fsm3.png</figcaption>
-</figure>
-<h3 id="module-declaration-7">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">output</span> out); </span><br></pre></td></tr></table></figure>
-<h3 id="solution-6">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">output</span> out); <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// State transition logic</span></span><br><span class="line">    <span class="keyword">parameter</span> A = <span class="number">2&#x27;b00</span>, B = <span class="number">2&#x27;b01</span>, C = <span class="number">2&#x27;b10</span>, D = <span class="number">2&#x27;b11</span>;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">1</span>:<span class="number">0</span>] state, next_state;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (state) </span><br><span class="line">            A : next_state = in ? B : A;</span><br><span class="line">            B : next_state = in ? B : C;</span><br><span class="line">            C : next_state = in ? D : A;</span><br><span class="line">            D : next_state = in ? B : C;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// State flip-flops with synchronous reset</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            state &lt;= A;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// Output logic</span></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            A : out = <span class="number">0</span>;</span><br><span class="line">            B : out = <span class="number">0</span>;</span><br><span class="line">            C : out = <span class="number">0</span>;</span><br><span class="line">            D : out = <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
-<h3 id="debug">debug</h3>
-<p>开始设置state、next_state的位宽出现了问题：忘记写[1:0]。</p>
-<h2 id="examsece241-2013-q4">Exams/ece241 2013 q4</h2>
-<h3 id="question-10">question</h3>
-<figure>
-<embed src="https://hdlbits.01xz.net/mw/thumb.php?f=Ece241_2013_q4.png&amp;width=740" /><figcaption>Ece241 2013 q4.png</figcaption>
-</figure>
-<p>Also include an active-high synchronous reset that resets the state machine to a state equivalent to if the water level had been low for a long time (no sensors asserted, and all four outputs asserted).</p>
-<h3 id="module-declaration-8">Module Declaration</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">1</span>] s,</span><br><span class="line">    <span class="keyword">output</span> fr3,</span><br><span class="line">    <span class="keyword">output</span> fr2,</span><br><span class="line">    <span class="keyword">output</span> fr1,</span><br><span class="line">    <span class="keyword">output</span> dfr</span><br><span class="line">); </span><br></pre></td></tr></table></figure>
-<h3 id="solution-7">solution</h3>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">1</span>] s,</span><br><span class="line">    <span class="keyword">output</span> fr3,</span><br><span class="line">    <span class="keyword">output</span> fr2,</span><br><span class="line">    <span class="keyword">output</span> fr1,</span><br><span class="line">    <span class="keyword">output</span> dfr</span><br><span class="line">); </span><br><span class="line">    <span class="keyword">parameter</span> IDLE = <span class="number">3&#x27;b001</span>, S1_UP = <span class="number">3&#x27;b010</span>, S1_DOWN = <span class="number">3&#x27;b011</span>, S2_UP = <span class="number">3&#x27;b100</span> , S2_DOWN = <span class="number">3&#x27;b101</span>, S3 = <span class="number">3&#x27;b110</span>; </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] state, next_state;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            IDLE: </span><br><span class="line">                <span class="keyword">case</span> (s)</span><br><span class="line">                    <span class="number">3&#x27;b001</span>: next_state = S1_UP;</span><br><span class="line">                    <span class="number">3&#x27;b011</span>: next_state = S2_UP;</span><br><span class="line">                    <span class="number">3&#x27;b111</span>: next_state = S3;</span><br><span class="line">                    <span class="keyword">default</span>: next_state = IDLE; <span class="comment">/*开始出现bug是所有的这个位置没加default*/</span></span><br><span class="line">                <span class="keyword">endcase</span></span><br><span class="line">            S1_UP: </span><br><span class="line">                <span class="keyword">case</span> (s)</span><br><span class="line">                    <span class="number">3&#x27;b000</span>: next_state = IDLE;</span><br><span class="line">                    <span class="number">3&#x27;b011</span>: next_state = S2_UP;</span><br><span class="line">                    <span class="number">3&#x27;b111</span>: next_state = S3;</span><br><span class="line">                    <span class="keyword">default</span>: next_state = S1_UP;</span><br><span class="line">                <span class="keyword">endcase</span></span><br><span class="line">            S1_DOWN: </span><br><span class="line">                <span class="keyword">case</span> (s)</span><br><span class="line">                    <span class="number">3&#x27;b000</span>: next_state = IDLE;</span><br><span class="line">                    <span class="number">3&#x27;b011</span>: next_state = S2_UP;</span><br><span class="line">                    <span class="number">3&#x27;b111</span>: next_state = S3;</span><br><span class="line">                    <span class="keyword">default</span>: next_state = S1_DOWN;</span><br><span class="line">                <span class="keyword">endcase</span></span><br><span class="line">            S2_UP: </span><br><span class="line">                <span class="keyword">case</span> (s)</span><br><span class="line">                    <span class="number">3&#x27;b000</span>: next_state = IDLE;</span><br><span class="line">                    <span class="number">3&#x27;b001</span>: next_state = S1_DOWN;</span><br><span class="line">                    <span class="number">3&#x27;b111</span>: next_state = S3;</span><br><span class="line">                    <span class="keyword">default</span>: next_state = S2_UP;</span><br><span class="line">                <span class="keyword">endcase</span></span><br><span class="line">            S2_DOWN: </span><br><span class="line">                <span class="keyword">case</span> (s)</span><br><span class="line">                    <span class="number">3&#x27;b000</span>: next_state = IDLE;</span><br><span class="line">                    <span class="number">3&#x27;b001</span>: next_state = S1_DOWN;</span><br><span class="line">                    <span class="number">3&#x27;b111</span>: next_state = S3;</span><br><span class="line">                    <span class="keyword">default</span>: next_state = S2_DOWN;</span><br><span class="line">                <span class="keyword">endcase</span></span><br><span class="line">            S3: </span><br><span class="line">                <span class="keyword">case</span> (s)</span><br><span class="line">                    <span class="number">3&#x27;b000</span>: next_state = IDLE;</span><br><span class="line">                    <span class="number">3&#x27;b001</span>: next_state = S1_DOWN;</span><br><span class="line">                    <span class="number">3&#x27;b011</span>: next_state = S2_DOWN;</span><br><span class="line">                    <span class="keyword">default</span>: next_state = S3;</span><br><span class="line">                <span class="keyword">endcase</span></span><br><span class="line">            <span class="keyword">default</span>: next_state = IDLE; <span class="comment">/*开始出现bug是所有case这个位置没加default*/</span></span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            state &lt;= IDLE;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            state &lt;= next_state;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (state)</span><br><span class="line">            IDLE: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b1111</span>;</span><br><span class="line">            S1_UP: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0110</span>;</span><br><span class="line">            S1_DOWN: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0111</span>;</span><br><span class="line">            S2_UP: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0010</span>;</span><br><span class="line">            S2_DOWN: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0011</span>;</span><br><span class="line">            S3: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0000</span>;</span><br><span class="line">            <span class="keyword">default</span>:  &#123;fr3, fr2, fr1, dfr&#125; = &#x27;x;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*reference solution*/</span></span><br><span class="line"><span class="comment">/*参考答案中，next_state的表达式是从状态发生顺序转变的角度考虑，每一个状态只能够转换到相临近的两个状态，上升或者下降*/</span></span><br><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">	<span class="keyword">input</span> clk,</span><br><span class="line">	<span class="keyword">input</span> reset,</span><br><span class="line">	<span class="keyword">input</span> [<span class="number">3</span>:<span class="number">1</span>] s,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> fr3,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> fr2,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> fr1,</span><br><span class="line">	<span class="keyword">output</span> <span class="keyword">reg</span> dfr</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Give state names and assignments. I&#x27;m lazy, so I like to use decimal numbers.</span></span><br><span class="line">	<span class="comment">// It doesn&#x27;t really matter what assignment is used, as long as they&#x27;re unique.</span></span><br><span class="line">	<span class="comment">// We have 6 states here.</span></span><br><span class="line">	<span class="keyword">parameter</span> A2=<span class="number">0</span>, B1=<span class="number">1</span>, B2=<span class="number">2</span>, C1=<span class="number">3</span>, C2=<span class="number">4</span>, D1=<span class="number">5</span>;</span><br><span class="line">	<span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] state, next;		<span class="comment">// Make sure these are big enough to hold the state encodings.</span></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Edge-triggered always block (DFFs) for state flip-flops. Synchronous reset.	</span></span><br><span class="line">	<span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">		<span class="keyword">if</span> (reset) state &lt;= A2;</span><br><span class="line">		<span class="keyword">else</span> state &lt;= next;</span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Combinational always block for state transition logic. Given the current state and inputs,</span></span><br><span class="line">    <span class="comment">// what should be next state be?</span></span><br><span class="line">    <span class="comment">// Combinational always block: Use blocking assignments.    </span></span><br><span class="line">	<span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">		<span class="keyword">case</span> (state)</span><br><span class="line">			A2: next = s[<span class="number">1</span>] ? B1 : A2;</span><br><span class="line">			B1: next = s[<span class="number">2</span>] ? C1 : (s[<span class="number">1</span>] ? B1 : A2);</span><br><span class="line">			B2: next = s[<span class="number">2</span>] ? C1 : (s[<span class="number">1</span>] ? B2 : A2);</span><br><span class="line">			C1: next = s[<span class="number">3</span>] ? D1 : (s[<span class="number">2</span>] ? C1 : B2);</span><br><span class="line">			C2: next = s[<span class="number">3</span>] ? D1 : (s[<span class="number">2</span>] ? C2 : B2);</span><br><span class="line">			D1: next = s[<span class="number">3</span>] ? D1 : C2;</span><br><span class="line">			<span class="keyword">default</span>: next = &#x27;x;</span><br><span class="line">		<span class="keyword">endcase</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Combinational output logic. In this problem, a procedural block (combinational always block) </span></span><br><span class="line">	<span class="comment">// is more convenient. Be careful not to create a latch.</span></span><br><span class="line">	<span class="keyword">always</span>@(*) <span class="keyword">begin</span></span><br><span class="line">		<span class="keyword">case</span> (state)</span><br><span class="line">			A2: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b1111</span>;</span><br><span class="line">			B1: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0110</span>;</span><br><span class="line">			B2: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0111</span>;</span><br><span class="line">			C1: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0010</span>;</span><br><span class="line">			C2: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0011</span>;</span><br><span class="line">			D1: &#123;fr3, fr2, fr1, dfr&#125; = <span class="number">4&#x27;b0000</span>;</span><br><span class="line">			<span class="keyword">default</span>: &#123;fr3, fr2, fr1, dfr&#125; = &#x27;x;</span><br><span class="line">		<span class="keyword">endcase</span></span><br><span class="line">	<span class="keyword">end</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="debug-1">debug</h3>
-<ul>
-<li>注意case要考虑defualt的情况（特别时涉及的不确定输入有多个时，例如3位八种情况，其中3种有效，其他5种（default）也要考虑）</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/01/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-11-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-FSM/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1218,93 +1045,6 @@
 <p>注意：在破解的时候，不能用<strong>查找后</strong>得到的目录，要在源目录下运行脚本，否者将会失效。</p>
 <h2 id="referrence">Referrence</h2>
 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1624946">ModelSim的安装、破解、使用（缩放算法仿真） - 云+社区 - 腾讯云 (tencent.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/05/%E3%80%90CAG-SLAM%E3%80%91-06-AXI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/05/%E3%80%90CAG-SLAM%E3%80%91-06-AXI/" class="post-title-link" itemprop="url">【CAG_SLAM】-06-AXI</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-05 11:01:57" itemprop="dateCreated datePublished" datetime="2022-04-05T11:01:57+08:00">2022-04-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-14 11:29:40" itemprop="dateModified" datetime="2022-04-14T11:29:40+08:00">2022-04-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="axi">AXI</h2>
-<p>主要参考了一些资料直接进行实践。</p>
-<h2 id="referrence">Referrence</h2>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23274715/article/details/102500233">AXI总线介绍_theboynoName的博客-CSDN博客</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/152283168">从零学习AXI4总线(二)：AXI4-Stream 介绍 - 知乎 (zhihu.com)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/milianke/p/15145574.html">05AXI4总线axi-stream(AXI4总线实战) - 米联客(milianke) - 博客园 (cnblogs.com)</a></li>
-</ol>
 
       
     </div>
