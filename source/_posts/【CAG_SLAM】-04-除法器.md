@@ -133,4 +133,5 @@ endmodule
 [^1]: [Division in Verilog | Project F - FPGA Development](https://projectf.io/posts/division-in-verilog/)
 [^2]: [vhdl - Easy way of dividing an integer by 3 - Stack Overflow](https://stackoverflow.com/questions/33006842/easy-way-of-dividing-an-integer-by-3/33006927#33006927?newreg=ade5853a091141fda460a6d43d0cef97)
 [^ 3]: [Bit Twiddling Hacks (stanford.edu)](http://graphics.stanford.edu/~seander/bithacks.html#ModulusDivisionEasy)
-[^4]: [Is it possible to shift more than 1 bit per cycle in verilog? - Stack Overflow](https://stackoverflow.com/questions/36091140/is-it-possible-to-shift-more-than-1-bit-per-cycle-in-verilog)
+
+其他：[Is it possible to shift more than 1 bit per cycle in verilog? - Stack Overflow](https://stackoverflow.com/questions/36091140/is-it-possible-to-shift-more-than-1-bit-per-cycle-in-verilog)
