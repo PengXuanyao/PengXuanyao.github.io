@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="增加YoLov5检测功能 目前能够识别人脸和情绪，在学习过程中，希望检测环境中的手机等电子设备的使用情况，来评估整体学习环境。 目前想法是将图片载入yolov5网络中进行识别，但是可能会存在一个检测到物品后的标记框颜色跳动的问题。暂时想到的解决办法是将标记的颜色设定为特定顺序，避免在持续跳动的问题（可能依然会存在识别物体发生变化时，颜色闪烁的情况）。 模型部署 模型导入debug 模型部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【IntelCup】-07-15">
+<meta property="og:url" content="http://example.com/2022/07/15/%E3%80%90IntelCup%E3%80%91-07-15/index.html">
+<meta property="og:site_name" content="PengXuanyao">
+<meta property="og:description" content="增加YoLov5检测功能 目前能够识别人脸和情绪，在学习过程中，希望检测环境中的手机等电子设备的使用情况，来评估整体学习环境。 目前想法是将图片载入yolov5网络中进行识别，但是可能会存在一个检测到物品后的标记框颜色跳动的问题。暂时想到的解决办法是将标记的颜色设定为特定顺序，避免在持续跳动的问题（可能依然会存在识别物体发生变化时，颜色闪烁的情况）。 模型部署 模型导入debug 模型部">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-15T02:10:44.000Z">
+<meta property="article:modified_time" content="2022-07-15T04:15:49.325Z">
+<meta property="article:author" content="PengXuanyao">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/07/15/%E3%80%90IntelCup%E3%80%91-07-15/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/07/15/%E3%80%90IntelCup%E3%80%91-07-15/","path":"2022/07/15/【IntelCup】-07-15/","title":"【IntelCup】-07-15"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【IntelCup】-07-15 | PengXuanyao</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">PengXuanyao</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">天地交，万物通</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0yolov5%E6%A3%80%E6%B5%8B%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">增加YoLov5检测功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">模型部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%AF%BC%E5%85%A5debug"><span class="nav-number">2.1.</span> <span class="nav-text">模型导入debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85pyaudio%E5%87%BA%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">安装pyaudio出问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tips"><span class="nav-number">4.</span> <span class="nav-text">Tips</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PengXuanyao"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">PengXuanyao</p>
+  <div class="site-description" itemprop="description">This is my personal blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/15/%E3%80%90IntelCup%E3%80%91-07-15/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【IntelCup】-07-15
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-07-15 10:10:44 / 修改时间：12:15:49" itemprop="dateCreated datePublished" datetime="2022-07-15T10:10:44+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InterlCup/" itemprop="url" rel="index"><span itemprop="name">InterlCup</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="增加yolov5检测功能">增加YoLov5检测功能</h2>
+<p>目前能够识别人脸和情绪，在学习过程中，希望检测环境中的手机等电子设备的使用情况，来评估整体学习环境。</p>
+<p>目前想法是将图片载入yolov5网络中进行识别，但是可能会存在一个检测到物品后的标记框颜色跳动的问题。暂时想到的解决办法是将标记的颜色设定为特定顺序，避免在持续跳动的问题（可能依然会存在识别物体发生变化时，颜色闪烁的情况）。</p>
+<h2 id="模型部署">模型部署</h2>
+<h3 id="模型导入debug">模型导入debug</h3>
+<p>模型部署中，首先遇到的一个问题还是<strong>python导入包</strong>的问题，不太明白为什么有时候又检测不到包了。</p>
+<p>实际的问题是这样的：有一个如下的文件的目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">│  demo.py</span><br><span class="line">│</span><br><span class="line">├─models</span><br><span class="line">│  │  common.py</span><br><span class="line">│  │  experimental.py</span><br><span class="line">│  │  yolo.py</span><br><span class="line">│  │  yolov5l.yaml</span><br><span class="line">│  │  yolov5m.yaml</span><br><span class="line">│  │  yolov5s.yaml</span><br><span class="line">│  │  yolov5x.yaml</span><br><span class="line">│  │</span><br><span class="line">│  └─__pycache__</span><br><span class="line">│          common.cpython-37.pyc</span><br><span class="line">│          experimental.cpython-37.pyc</span><br><span class="line">│</span><br><span class="line">├─samples</span><br><span class="line">│  └─images</span><br><span class="line">│          bus.jpg</span><br><span class="line">│          dog.jpg</span><br><span class="line">│          eagle.jpg</span><br><span class="line">│          giraffe.jpg</span><br><span class="line">│          horses.jpg</span><br><span class="line">│          none.jpg</span><br><span class="line">│          person.jpg</span><br><span class="line">│          zidane.jpg</span><br><span class="line">│</span><br><span class="line">├─utils</span><br><span class="line">│      activations.py</span><br><span class="line">│      autoanchor.py</span><br><span class="line">│      datasets.py</span><br><span class="line">│      general.py</span><br><span class="line">│      google_utils.py</span><br><span class="line">│      metrics.py</span><br><span class="line">│      plots.py</span><br><span class="line">│      torch_utils.py</span><br><span class="line">│</span><br><span class="line">└─YoloV5Detector</span><br><span class="line">    │  V5Detector.py</span><br><span class="line">    │  __init__.py</span><br><span class="line">    │</span><br><span class="line">    └─__pycache__</span><br><span class="line">            V5Detector.cpython-37.pyc</span><br><span class="line">            __init__.cpython-37.pyc</span><br></pre></td></tr></table></figure>
+<p>然后是<code>models\common.py</code>需要导入<code>utils\datasets.py</code>，直接在最外层运行main.py会出现导入不了，报错的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># models.common.py 中进行导入</span></span><br><span class="line"><span class="keyword">from</span> utils.datasets <span class="keyword">import</span> letterbox </span><br><span class="line">ModuleNotFoundError: No module named <span class="string">&#x27;utils.datasets&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>最后问题解决，有一点小小的离谱，这个utils和CV2里面的utils是冲突了，吧这个utils改成yolo_utils，游戏结束。</p>
+<h3 id="安装pyaudio出问题">安装pyaudio出问题</h3>
+<p>错误提示为：<code>error: Microsoft Visual C++ 14.0 or greater is required. Get it with "Microsoft C++ Build Tools"</code></p>
+<p>但是根据其给的网站安装相关的工具，并且重启后还没有解决问题。</p>
+<p>最后解决问题的办法是：上官网下载whl文件，安装后就好了。主要参考了这个博客：<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43411654/article/details/111636206">Python中Pyaudio安装失败的解决办法_段云oO的博客-CSDN博客_pyaudio安装失败</a></p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/400545131">YOLOv5-Lite：更轻更快易于部署的YOLOv5
+- 知乎 (zhihu.com)</a>
+<ul>
+<li>这篇文章讲的会深入一些，如果只是运用，不探究原理可以掠过</li>
+</ul></li>
+<li><a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1821880">超越YOLOv5！1.3M超轻量，又好又快！目标检测神器来了
+- 腾讯云开发者社区-腾讯云 (tencent.com)</a>
+<ul>
+<li>轻量化的yolo算法，速度很快，暂时不知道检测的范围是否包括需要的手机等</li>
+</ul></li>
+<li>[<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42073654/article/details/119334572">Yolo部署落地系列教程]（2）Yolov5之Pytorch部署_是小晰瓜啊的博客-CSDN博客_yolov5部署</a>
+<ul>
+<li>该文章将yolov5封装成为了函数进行调用，可以试一试。</li>
+<li>暂时选取这个链接的方案，由于该方法直接封装好了Detect类，可以方便调用，目前来看应该是最快的方案</li>
+</ul></li>
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/guluC/article/details/122683269">将Yolov5的detect.py修改为可以直接调用的函数_guluC的博客-CSDN博客_调用yolov5的detect</a>
+<ul>
+<li>同样是封装成为了函数，可能比上面封装好一些</li>
+</ul></li>
+</ul>
+<h2 id="tips">Tips</h2>
+<ul>
+<li>如果带有中文字符，会使OpenCV的cv2.imread()函数读取不了待检测图片或视频</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/12/%E3%80%90IntelCup%E3%80%91-07-12/" rel="prev" title="【IntelCup】-07-12-AND-07-13">
+                  <i class="fa fa-chevron-left"></i> 【IntelCup】-07-12-AND-07-13
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/15/%E3%80%90ZYNQ7010%E3%80%91-01-BreathLed/" rel="next" title="【ZYNQ7010】-01-BreathLed">
+                  【ZYNQ7010】-01-BreathLed <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PengXuanyao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

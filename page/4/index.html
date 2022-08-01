@@ -132,18 +132,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -181,7 +181,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/17/%E3%80%90CAG_SLAM%E3%80%91-04-%E9%99%A4%E6%B3%95%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -194,7 +194,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/" class="post-title-link" itemprop="url">【Verilog学习】-06-组合电路</a>
+          <a href="/2022/03/17/%E3%80%90CAG_SLAM%E3%80%91-04-%E9%99%A4%E6%B3%95%E5%99%A8/" class="post-title-link" itemprop="url">【CAG_SLAM】-04-除法器</a>
         </h2>
 
         <div class="post-meta-container">
@@ -205,7 +205,293 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-01-20 09:18:00" itemprop="dateCreated datePublished" datetime="2022-01-20T09:18:00+08:00">2022-01-20</time>
+      <time title="创建时间：2022-03-17 11:06:10" itemprop="dateCreated datePublished" datetime="2022-03-17T11:06:10+08:00">2022-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-04-14 19:48:58" itemprop="dateModified" datetime="2022-04-14T19:48:58+08:00">2022-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="除法器基本思路">除法器基本思路</h2>
+<hr />
+<p>对于变量输入的除法中，使用最基础的除法器<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
+<p>对于更加具体的除法器的设计可以采用更加灵活的方案：</p>
+<p>例如：设计 X / 24 的除法器时，将其分解为 X / 8 * (1 / 4 + 1 / 16 + 1/64 + ···)的形式。，通过加法和移位操作进行处理<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。对于其他的被除数，都可以表示为1 / 2 ^ a 的形式进行处理。</p>
+<p>跟多的除法器的原理参见一些Stanford的内容[^ 3]。</p>
+<h2 id="除法器的实现">除法器的实现</h2>
+<hr />
+<p>关于除法器的设计过程，非常地不顺利，并且第一次设计出来的方案也并不好。这主要是由于读别人的代码少了，输入不够，导致自己的输出并没能达到老师的要求。最后，通过查阅StackOverflow等网站的文章，勉强搞定了设计。这里简单总结一下经验教训：</p>
+<ul>
+<li>思考要谨慎，不要因为一时的得失而忘形或失意。</li>
+<li>做事之前一定要有相关的输入，借鉴和思考别人的经验</li>
+<li>时间安排要合理一些</li>
+</ul>
+<h3 id="最后方案">最后方案</h3>
+<hr />
+<p>A / 24 = A / 8 / 3 = A / 8 * (1 / 4 + 1/ 16 + 1 / 64 + ··· ) = A &gt;&gt; 3 * ( A &gt;&gt; 2 + A &gt;&gt; 4 + A &gt;&gt; 6 ···) = A &gt;&gt; 5 + A &gt;&gt; 7 + A &gt;&gt; 9 ···</p>
+<p>最后注意24的整数倍时存在一个舍入误差即可；verilog中的reg并不是一定是寄存器register，其只是一个存储单元，可以改变內部值，相当于是一个变量。</p>
+<h3 id="源代码">源代码</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">`<span class="meta-keyword">timescale</span> 1ns / 1ps</span></span><br><span class="line"><span class="comment">//////////////////////////////////////////////////////////////////////////////////</span></span><br><span class="line"><span class="comment">// Company: </span></span><br><span class="line"><span class="comment">// Engineer: </span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// Create Date: 2022/03/17 19:46:06</span></span><br><span class="line"><span class="comment">// Design Name: </span></span><br><span class="line"><span class="comment">// Module Name: div_24</span></span><br><span class="line"><span class="comment">// Project Name: </span></span><br><span class="line"><span class="comment">// Target Devices: </span></span><br><span class="line"><span class="comment">// Tool Versions: </span></span><br><span class="line"><span class="comment">// Description: </span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// Dependencies: </span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">// Revision:</span></span><br><span class="line"><span class="comment">// Revision 0.01 - File Created</span></span><br><span class="line"><span class="comment">// Additional Comments:</span></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="comment">//////////////////////////////////////////////////////////////////////////////////</span></span><br><span class="line"><span class="keyword">module</span> div_24#(</span><br><span class="line">    <span class="keyword">parameter</span> DW = <span class="number">12</span>,	<span class="comment">// data width</span></span><br><span class="line">	<span class="keyword">parameter</span> RW = <span class="number">5</span> 	<span class="comment">// remainder datawidth, independing on the divisor(eg.for 24 &lt; 32 -&gt; 5)</span></span><br><span class="line">)(</span><br><span class="line">    <span class="keyword">input</span> clk_i,</span><br><span class="line">    <span class="keyword">input</span> rst_n_i,</span><br><span class="line">    <span class="keyword">input</span> valid_i,</span><br><span class="line">    <span class="keyword">input</span> [DW - <span class="number">1</span> : <span class="number">0</span>] d_i,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> div_busy_o,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> valid_o,</span><br><span class="line">    <span class="keyword">output</span> [DW - <span class="number">1</span> : <span class="number">0</span>] result_o,</span><br><span class="line">    <span class="keyword">output</span> [DW-<span class="number">1</span> : <span class="number">0</span>] remainder_o</span><br><span class="line">    );</span><br><span class="line">    <span class="comment">// d and result is the extended of d_i and result, with DW with of the decimal</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>*DW - <span class="number">1</span> : <span class="number">0</span>] d = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">reg</span> [DW - <span class="number">1</span>:<span class="number">0</span>] remainder_origin = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">wire</span> [DW - <span class="number">1</span>:<span class="number">0</span>] remainder;</span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">2</span>*DW-<span class="number">1</span> : <span class="number">0</span>] result;</span><br><span class="line">    <span class="comment">// get the data</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk_i) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (!rst_n_i) <span class="keyword">begin</span></span><br><span class="line">            d &lt;= <span class="number">0</span>;</span><br><span class="line">            div_busy_o &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (valid_i &amp;&amp; !div_busy_o) <span class="keyword">begin</span></span><br><span class="line">				<span class="comment">// add 1 used to offset the round-off error</span></span><br><span class="line">            d[<span class="number">2</span>*DW - <span class="number">1</span> : DW] &lt;= d_i + <span class="number">1&#x27;b1</span>;</span><br><span class="line">            div_busy_o &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (div_busy_o) <span class="keyword">begin</span></span><br><span class="line">            div_busy_o &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	<span class="comment">// calculate the result</span></span><br><span class="line">    <span class="keyword">assign</span> result = ( d &gt;&gt; <span class="number">5</span> ) + ( d &gt;&gt; <span class="number">7</span> ) + ( d &gt;&gt; <span class="number">9</span> ) + ( d &gt;&gt; <span class="number">11</span> ) + ( d &gt;&gt; <span class="number">13</span> ) + ( d &gt;&gt; <span class="number">15</span> );</span><br><span class="line">    <span class="comment">// result for output</span></span><br><span class="line">    <span class="keyword">assign</span> result_o = result[<span class="number">2</span>*DW-<span class="number">1</span> : DW];</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="comment">// get result for calculate remainder</span></span><br><span class="line">		  <span class="keyword">if</span> (!rst_n_i) <span class="keyword">begin</span></span><br><span class="line">			  remainder_origin = <span class="number">0</span>;</span><br><span class="line">		  <span class="keyword">end</span></span><br><span class="line">		  <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">			  remainder_origin = result[<span class="number">2</span>*DW-<span class="number">1</span> : DW];</span><br><span class="line">		  <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// calculate remainder</span></span><br><span class="line">	 <span class="comment">// - A = + ~A + 1&#x27;B1 -&gt; + ~ A = - A - 1&#x27;B1 ; -1&#x27;B1 TO OFFSET line51 +1&#x27;B1 </span></span><br><span class="line">    <span class="keyword">assign</span> remainder = d[<span class="number">2</span>*DW-<span class="number">1</span>:DW] - (remainder_origin &lt;&lt; <span class="number">3</span>) + ~(remainder_origin &lt;&lt; <span class="number">4</span>);</span><br><span class="line">    <span class="comment">// remainder for output</span></span><br><span class="line">    <span class="keyword">assign</span> remainder_o = remainder[DW - <span class="number">1</span>:<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// set valid_o</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk_i) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (div_busy_o) <span class="keyword">begin</span></span><br><span class="line">            valid_o &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            valid_o &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考文献">参考文献</h2>
+<hr />
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a target="_blank" rel="noopener" href="https://projectf.io/posts/division-in-verilog/">Division in Verilog | Project F - FPGA Development</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/33006842/easy-way-of-dividing-an-integer-by-3/33006927#33006927?newreg=ade5853a091141fda460a6d43d0cef97">vhdl - Easy way of dividing an integer by 3 - Stack Overflow</a> [^ 3]: <a target="_blank" rel="noopener" href="http://graphics.stanford.edu/~seander/bithacks.html#ModulusDivisionEasy">Bit Twiddling Hacks (stanford.edu)</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/" class="post-title-link" itemprop="url">【Verilog学习】-08-时序逻辑-基础触发器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 11:36:28" itemprop="dateCreated datePublished" datetime="2022-03-15T11:36:28+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 21:55:46" itemprop="dateModified" datetime="2022-07-15T21:55:46+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="dff">1.DFF</h2>
+<hr />
+<p>Create a single D flip-flop.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,    <span class="comment">// Clocks are used in sequential circuits</span></span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> q );</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/" class="post-title-link" itemprop="url">【vivado】-00-install</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 10:40:31" itemprop="dateCreated datePublished" datetime="2022-03-15T10:40:31+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-18 19:40:08" itemprop="dateModified" datetime="2022-07-18T19:40:08+08:00">2022-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言">前言</h2>
+<p>这里开始终于着手把落下的工作开始真正一步一步地落实下去了，这两天的心情比较低落，主要是前期对自己的要求没有达到目标，导致现在的进展非常地缓慢。对科研和学习一定要高标准、严要求，没有什么是做不了的，大多数的问题都可以靠时间解决。一定要把时间安排妥当。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/08/%E3%80%90BC26%E3%80%91-03-%E5%AF%B9%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/08/%E3%80%90BC26%E3%80%91-03-%E5%AF%B9%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91/" class="post-title-link" itemprop="url">【BC26】-03-对接阿里云</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-08 20:30:23" itemprop="dateCreated datePublished" datetime="2022-03-08T20:30:23+08:00">2022-03-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -220,7 +506,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
         </span>
     </span>
 
@@ -234,13 +520,144 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>这一章主要对组合逻辑电路的设计做了一个复习，前面也有比较多的涉及，因此下面仅记录一些关键点。</p>
-<h2 id="硬件设计思路">硬件设计思路</h2>
+          <h1 id="mqtt-部分">MQTT 部分</h1>
+<h2 id="mqtt发送过程">MQTT发送过程</h2>
+<ol type="1">
+<li><code>AT+CGPADDR</code>，查询IP，获取到OK表示BC26状态正常</li>
+<li><code>AT+QMTCFG=&quot;aliauth&quot;,0,&quot;gg43bimZeb9&quot;,&quot;Lighting&quot;,&quot;2790aa518d49f0ed3955254f693c0c13&quot;</code>，配置阿里云</li>
+<li><code>AT+QMTOPEN=0,“iot-as-mqtt.cn-shanghai.aliyuncs.com”,1883</code>连接阿里云,在连接完成后马上需要用5发送连接设备指令，否者会自动断开</li>
+<li><code>AT+QMTCONN=0,&quot;Lighting&quot;</code>，连接设备，这里的lighting是阿里云自己定义的设备名称</li>
+<li><code>AT+QMTPUB=0,0,0,0,&quot;/sys/a1tW6nsMu2w/BC28/thing/event/property/post&quot;</code>,发布指令</li>
+<li><code>&#123;params:&#123;RoomHumidity:58.8&#125;&#125;</code>，具体数据</li>
+</ol>
+<h2 id="mqtt接收过程">MQTT接收过程</h2>
+<ol type="1">
+<li><code>AT+QMTSUB=0,1,&quot;/a1tW6nsMu2w/BC28/user/get&quot;,0</code>阿里云下发消息需要NB提前订阅阿里云的发布主题</li>
+</ol>
+<h2 id="mqtt最后断开设备或关闭网络">MQTT最后断开设备或关闭网络</h2>
+<ol type="1">
+<li><code>AT+QMTDISC=0</code>，断开设备</li>
+<li><code>AT+QMTCLOSE=0</code>，关闭网络（不要关闭）</li>
+</ol>
+<h1 id="云平台配置">云平台配置</h1>
+<p>直接在aliyun上，搜索物联网云平台即可。</p>
+<h1 id="代码以及具体实现">代码以及具体实现</h1>
+<h2 id="串口的问题">串口的问题</h2>
+<p>以前的串口存在一个问题，一次只能接收一行数据，必须要每次接收多行数据才行。因此，buffer再加一个维度，得到的一个二维的buffer用于接收多行的数据。</p>
+<p>逻辑是，以前在flag=true的时候，是直接忽略了下一次数据的输入。现在，去掉这一个限制，当前这个flag（一行数据接收完毕）的功能不用，其功能转化为判断是否接收完毕的功能，如果其值为false说明没有接收完毕，继续接收；如果为true（手动置位），说明当下这一批数据已经处理完成，不再需要，将数组清空，最后将其reset为false，进行新一轮数据的等待接收。</p>
+<h2 id="信息发送">信息发送</h2>
+<figure>
+<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220315205608885.png" alt="第一条指令标准接收情况" /><figcaption>第一条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220315205855365.png" alt="第二条指令标准接收情况" /><figcaption>第二条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220315210021168.png" alt="第三条指令标准接收情况" /><figcaption>第三条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220315210107956.png" alt="第四条指令标准接收情况" /><figcaption>第四条指令标准接收情况</figcaption>
+</figure>
+<figure>
+<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220315210154288.png" alt="发送信息" /><figcaption>发送信息</figcaption>
+</figure>
+<h2 id="参考资料">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JIANGYINGH/article/details/106795838">物联网通信之初识MQTT协议_JIANGYINGH的博客-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.icode9.com/content-4-818090.html">NBIOT专栏之BC28串口连接阿里云物联网平台接发数据 (icode9.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qlexcel/article/details/112095247">BC26连接阿里云，MQTT协议，AT流程和STM32代码实现_qlexcel的专栏-CSDN博客_bc26 阿里云</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/28/%E3%80%90CAG_SLAM%E3%80%91-03-Padding-Modules/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/28/%E3%80%90CAG_SLAM%E3%80%91-03-Padding-Modules/" class="post-title-link" itemprop="url">【CAG_SLAM】-03-Padding-Modules</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-28 16:24:45" itemprop="dateCreated datePublished" datetime="2022-02-28T16:24:45+08:00">2022-02-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-04-14 17:46:43" itemprop="dateModified" datetime="2022-04-14T17:46:43+08:00">2022-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="功能描述">功能描述</h2>
 <hr />
-<p>这里与软件的涉及不同，硬件设计主要是逆向的思考，即由想要的输出决定输入(assign ringer = ··· )。</p>
+<p>对输入的图像信号进行裁边和填充0的操作，裁边的具体操作为，保持裁边后的图像的可以被分成整数个24*24（像素为单位）的block，裁边选择的方向是上边和右边的部分；裁边完成后，将图像四周用0进行padding，宽度为21像素。</p>
+<p>每次进行像素的输入是通过每次输入4个像素（4<code>*</code>8bit），一直输入完所有的像素，再进行裁边的操作。图像数据的大小可以提前知道，例如（1241<code>*</code>376，1242<code>*</code>375）两种情况。因此，可以等到所有数据输入完成再进行裁边，或者边输入，边裁边输出。</p>
+<p>输入包括图像的大小（宽和高），fast_busy是否繁忙，若繁忙，则需要等待，还有一个有效的valid_i信号;</p>
+<p>输出包括本模块的busy和valid，以及每次四个像素进行输出</p>
+<p><img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220228163415745.png" alt="padding模块功能示意图" />
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/01/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-06-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF/#more" rel="contents">
+              <a class="btn" href="/2022/02/28/%E3%80%90CAG_SLAM%E3%80%91-03-Padding-Modules/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -271,7 +688,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/23/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E6%97%A0%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -284,7 +701,82 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/" class="post-title-link" itemprop="url">【Verilog学习】-05-其他语法特性</a>
+          <a href="/2022/02/23/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E6%97%A0%E9%A2%98/" class="post-title-link" itemprop="url">【札记】无题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-02-23 12:46:00 / 修改时间：12:49:10" itemprop="dateCreated datePublished" datetime="2022-02-23T12:46:00+08:00">2022-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一个小问题">一个小问题</h2>
+<p>以前的经验总结中，可能重点放在了改掉坏毛病上面，但是最近发现，可能坚持一个好习惯的效果更好。锻炼虽然会用一点时间，但是可以显著地提高2-3倍的效率，这样是非常划算的交易。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/02/12/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-07-testbench/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/12/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-07-testbench/" class="post-title-link" itemprop="url">【Verilog学习】-07-testbench</a>
         </h2>
 
         <div class="post-meta-container">
@@ -295,14 +787,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-01-19 10:19:22" itemprop="dateCreated datePublished" datetime="2022-01-19T10:19:22+08:00">2022-01-19</time>
+      <time title="创建时间：2022-02-12 21:05:35" itemprop="dateCreated datePublished" datetime="2022-02-12T21:05:35+08:00">2022-02-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-06-24 20:55:36" itemprop="dateModified" datetime="2022-06-24T20:55:36+08:00">2022-06-24</time>
+      <time title="修改时间：2022-03-15 11:36:33" itemprop="dateModified" datetime="2022-03-15T11:36:33+08:00">2022-03-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -324,17 +816,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="三元运算符">三元运算符</h2>
+          <h2 id="testbench">testbench</h2>
+<p>textbench的写法中，主要就是对信号进行初始化（时钟，输入数据等），时钟信号的生成。这里这介绍一些基础的用法。在后面，要结合python写一下脚本对结果进行一些比对等。</p>
+<h2 id="基础写法">基础写法</h2>
+<h3 id="section"></h3>
+<p>这个是延时的符号，表示延时多久才进行操作，只能在仿真中使用，没有对应实际的电路。</p>
+<h3 id="产生时钟1">产生时钟<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></h3>
+<h3 id="方法1">方法1</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( );</span><br><span class="line">    <span class="keyword">parameter</span> clk_period = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">forever</span></span><br><span class="line">            <span class="variable">#(clk_period/2)</span> clk = ~clk;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    dut dut_inst1(clk);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="方法2">方法2</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( );</span><br><span class="line">    <span class="keyword">parameter</span> clk_period = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> <span class="variable">#(clk_period/2)</span> clk = ~clk;</span><br><span class="line">    dut dut_inst1(clk);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="编写激励2">编写激励<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h3>
+<p>基础的部分还是通过延时来解决。</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module ( <span class="keyword">output</span> <span class="keyword">reg</span> A, <span class="keyword">output</span> <span class="keyword">reg</span> B );<span class="comment">//</span></span><br><span class="line">	<span class="keyword">parameter</span> A_period_1 = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">parameter</span> A_period_2 = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">parameter</span> B_period_1 = <span class="number">15</span>;</span><br><span class="line">    <span class="keyword">parameter</span> B_period_2 = <span class="number">25</span>;</span><br><span class="line">    <span class="comment">// generate input patterns here</span></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">		A = <span class="number">0</span>;</span><br><span class="line">        #A_period_1;</span><br><span class="line">        A = <span class="number">1</span>;</span><br><span class="line">        #A_period_2;</span><br><span class="line">        A = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">	<span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">		B = <span class="number">0</span>;</span><br><span class="line">        #B_period_1;</span><br><span class="line">        B = <span class="number">1</span>;</span><br><span class="line">        #B_period_2;</span><br><span class="line">        B = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="一个简单的testbench">一个简单的testbench</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module();</span><br><span class="line">    <span class="keyword">parameter</span> clk_period = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">reg</span> in;</span><br><span class="line">    <span class="keyword">reg</span> clk;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] s;</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] qs [<span class="number">7</span>:<span class="number">0</span>];	<span class="comment">//最开始这里搞错了，应该是7：0才有8个数</span></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] i = <span class="number">3&#x27;d1</span>;</span><br><span class="line">    <span class="keyword">reg</span> out;</span><br><span class="line">	<span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">        clk = <span class="number">0</span>;</span><br><span class="line">        qs[<span class="number">0</span>] = <span class="number">3&#x27;d2</span>;</span><br><span class="line">        qs[<span class="number">1</span>] = <span class="number">3&#x27;d6</span>;</span><br><span class="line">        qs[<span class="number">2</span>] = <span class="number">3&#x27;d2</span>;</span><br><span class="line">        qs[<span class="number">3</span>] = <span class="number">3&#x27;d7</span>;</span><br><span class="line">        qs[<span class="number">4</span>] = <span class="number">3&#x27;d0</span>;</span><br><span class="line">        s = qs[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">forever</span></span><br><span class="line">            <span class="variable">#(clk_period/2)</span> clk = ~clk;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">initial</span> <span class="keyword">begin</span></span><br><span class="line">    	in = <span class="number">0</span>;</span><br><span class="line">        <span class="variable">#(2*clk_period)</span>;</span><br><span class="line">        in = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">#(clk_period)</span>;</span><br><span class="line">        in = <span class="number">0</span>;</span><br><span class="line">        <span class="variable">#(clk_period)</span>;</span><br><span class="line">        in = <span class="number">1</span>;</span><br><span class="line">        <span class="variable">#(3*clk_period)</span>;</span><br><span class="line">        in = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span>(i&lt;<span class="number">3&#x27;d4</span>)<span class="keyword">begin</span></span><br><span class="line">            s &lt;= qs[i];</span><br><span class="line">            i &lt;= i + <span class="number">3&#x27;d1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            s &lt;= qs[<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    q7 inst(</span><br><span class="line">    clk,</span><br><span class="line">    in,</span><br><span class="line">    s,</span><br><span class="line">    out</span><br><span class="line">	);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<section class="footnotes">
 <hr />
-<p>与C一样，这是一些例子：
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/19/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-05-%E5%85%B6%E4%BB%96%E8%AF%AD%E6%B3%95%E7%89%B9%E6%80%A7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<ol>
+<li id="fn1"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/flomingo1/article/details/102676669">Verilog仿真时钟产生方法学习_flomingo1的专栏-CSDN博客_verilog时钟信号怎么产生</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wordwarwordwar/article/details/53885209">Verilog testbench总结(一)_坚持-CSDN博客_testbench怎么写</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</section>
+
       
     </div>
 
@@ -360,7 +865,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/17/%E3%80%90BC26%E3%80%91-00-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/30/%E3%80%90BC26%E3%80%91-02-%E5%8A%9F%E8%83%BD%E5%AE%8C%E5%96%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -373,7 +878,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/%E3%80%90BC26%E3%80%91-00-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/" class="post-title-link" itemprop="url">【BC26】-00-数据传输</a>
+          <a href="/2022/01/30/%E3%80%90BC26%E3%80%91-02-%E5%8A%9F%E8%83%BD%E5%AE%8C%E5%96%84/" class="post-title-link" itemprop="url">【BC26】-02-功能完善</a>
         </h2>
 
         <div class="post-meta-container">
@@ -384,7 +889,190 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-01-17 16:46:35" itemprop="dateCreated datePublished" datetime="2022-01-17T16:46:35+08:00">2022-01-17</time>
+      <time title="创建时间：2022-01-30 18:26:02" itemprop="dateCreated datePublished" datetime="2022-01-30T18:26:02+08:00">2022-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-04-21 22:30:14" itemprop="dateModified" datetime="2022-04-21T22:30:14+08:00">2022-04-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="功能描述">功能描述</h2>
+<hr />
+<p>本次项目需要完成的BC26收发模块的功能：</p>
+<ul>
+<li>整体：能够通过单片机用UART2和BC26模块进行通信，能够将数据收发传送到BC26模块并发送出去。</li>
+<li>BC26模块的初始化</li>
+<li>BC26模块进行数据的发送</li>
+<li>BC26模块进行数据的接收（中断？）</li>
+</ul>
+<h2 id="接口定义">接口定义</h2>
+<hr />
+<p>status BC26_Init(void); 进行模块的初始化（原来的程序有一点冗长，主要调试信息太多了，做了一些简化）</p>
+<p>status BC26_SendMessageUDP(char *); 通过UDP方式进行数据的发送</p>
+<p>status BC26_ReceiveMessageUDP(void)； 通过UDP方式进行数据的接收（通过向上位机打印来验证）</p>
+<h2 id="编程思路">编程思路</h2>
+<hr />
+<p>将BC的接口定义完成之后，为了简化接收的步骤，封装一个串口发送和接收字符串的函数。</p>
+<p>然后将原来的函数进行一波简化应该就可以用了。</p>
+<h2 id="编程实现">编程实现</h2>
+<hr />
+<ul>
+<li><p>遇到的第一个问题是在封装了发送字符串的函数后，没有办法进行系统时钟的设置，在设置的时候直接进入了Error_Handle();。</p>
+<p>解决方法：重新启动一下这个CubeMX来进行重置，然后就可以work了，不太清楚是哪里出现了问题，应该是Clock的配置出现了问题。</p></li>
+<li><p>现在是需要继续封装一个接收字符串的函数，在flag为true的时候读取出来字符串，然后，可能要改一下前面的</p></li>
+</ul>
+<h2 id="新的想法">新的想法</h2>
+<p>现在的问题有，这里的串口收数据是连续接收，没有固定长度，在接收完一个包之后，再进行下一个包的处理。关键的问题就是，需要通过<strong>中断空闲中断</strong>来解决问题（STM32能够支持）。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/%E3%80%90%E8%93%9D%E6%A1%A5%E6%9D%AF%E3%80%91-00-%E5%BC%80%E5%8F%91%E6%9D%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/27/%E3%80%90%E8%93%9D%E6%A1%A5%E6%9D%AF%E3%80%91-00-%E5%BC%80%E5%8F%91%E6%9D%BF/" class="post-title-link" itemprop="url">【蓝桥杯】-00-开发板</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-27 12:47:19" itemprop="dateCreated datePublished" datetime="2022-01-27T12:47:19+08:00">2022-01-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-17 16:26:47" itemprop="dateModified" datetime="2022-07-17T16:26:47+08:00">2022-07-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>蓝桥杯嵌入式比赛. -基础入门视频 教程(G4版) 百度网盘链接:
+https://pan.baidu.com/s/1DGowydn5Yki7p3q0tJG5XA提 取码: QKRM
+阿里云盘链接: https://www.aliyundrive.com/s/ZuB7FzFAfmx
+请尽快下载阅读"必读须知”，严格 按照“必读须知”进行观看视频教程 的操作。
+开发板资料包: 蓝桥杯嵌入式比赛--开发板资料包(G4版) 百度网盘链接:
+https://pan.baidu.com/s/ 1DkCWprR_-|Vf4puezfG8vQ提取码: QDG4
+阿里云盘链接: https://www.aliyundrive.com/s/ao4XHgUZyDp</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/27/%E3%80%90BC26%E3%80%91-01-%E4%BB%A3%E7%A0%81%E6%95%B4%E5%90%88%E5%8F%8A%E5%85%B6%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/27/%E3%80%90BC26%E3%80%91-01-%E4%BB%A3%E7%A0%81%E6%95%B4%E5%90%88%E5%8F%8A%E5%85%B6%E8%A7%84%E8%8C%83/" class="post-title-link" itemprop="url">【BC26】-01-代码整合及其规范</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-01-27 11:32:10" itemprop="dateCreated datePublished" datetime="2022-01-27T11:32:10+08:00">2022-01-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -417,659 +1105,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="桌面和核心板的传输">桌面和核心板的传输</h2>
-<hr />
-<p>按照教程接好电路后不出现返回信息的可能原因：</p>
-<ul>
-<li>rx、tx接反</li>
-<li>波特率等信息未严格按要求设置
-<ol type="1">
-<li>bode rate：115200</li>
-<li>data bit：8</li>
-<li>stop bit：1</li>
-<li>无校验位</li>
-</ol></li>
-</ul>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220117182345771.png" alt="image-20220117182345771" /><figcaption>image-20220117182345771</figcaption>
-</figure>
-<h2 id="udp传输协议">UDP传输协议</h2>
-<hr />
-<p>这次把服务器弄好了，为了用这一个UDP的调试工具，把服务器的系统换成了Windows。但是，还是没有接受到数据，不知道是什么原因。这边显示了发送数据成功，但是服务器上并没有介绍到数据，不知道是那里的问题，感觉要不是指令的问题，要不就是云端的问题。这边的硬件应该是调试通了，明天再看看吧。</p>
-<p>问题找到了，就是云端的问题。</p>
-<h2 id="步骤bc26和阿里云平台通过udp协议通讯">步骤（BC26和阿里云平台通过UDP协议通讯）</h2>
-<hr />
-<ol type="1">
-<li><p>将移远的BC26模块的串口用USB转TTL模块与电脑相连接（电脑上需要先安装CH340驱动和串口调试助手进行串口调试），此部分可参照创思的B站视频[^1]。注意串口的方向，自己试一下，有可能是串口方向不对导致与模块无法通信。</p>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118232730092.png" alt="与模块通信成功，这里使用的软件是XCOM串口调试助手" /><figcaption>与模块通信成功，这里使用的软件是XCOM串口调试助手</figcaption>
-</figure></li>
-<li><p>在测试完成本地没有问题之后，进行ALI云的设置。首先是创建一个ECS服务器，网上有很多的教程，用学生身份可以方便地注册一个[^2]。注意，注册的时候可以选择熟悉的服务器系统。这里debug用的是windows下的UDP调试软件[^3]（在创思的视频中也是用到了这个软件[^1]），因此，在申请服务器的时候，我也选择了Window2016 Server版本。</p>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118233010182.png" alt="已近申请了服务器，点击控制台进入" /><figcaption>已近申请了服务器，点击控制台进入</figcaption>
-</figure>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118233335746.png" alt="进入控制台" /><figcaption>进入控制台</figcaption>
-</figure>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118233411018.png" alt="进入安全组" /><figcaption>进入安全组</figcaption>
-</figure></li>
-<li><p>在注册完成之后，最关键的一步是要在阿里云上把安全设置中的允许UDP设置以下，否则是接收不到相关的信息的，主要参考的步骤是这个[^4]。</p>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118233632546.png" alt="添加信息" /><figcaption>添加信息</figcaption>
-</figure></li>
-<li><p>注册完之后，在服务器部署方面基本上就完成了。接下来是发送AT指令进行验证，这里主要也是参照的创思的教程[^1]，但是需要注意的是要用创思官方提供例程里面未被注释的指令，注释的指令不知道为什么不能用（很多其他的blog里面都是用的<code>AT+QSOC=1,2,1</code>这一条指令，但是我这里的不行，可能是运营商的问题，不太清楚）。</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">AT</span>+QIOPEN=<span class="number">1</span>,<span class="number">0</span>,&quot;UDP&quot;,&quot;<span class="number">12</span>.<span class="number">323</span>.<span class="number">3</span>.<span class="number">2</span>&quot;,<span class="number">1001</span>,<span class="number">0</span>,<span class="number">1</span>	//中间更换为你的服务器的IP地址</span><br><span class="line"><span class="built_in">AT</span>+QISEND=<span class="number">0</span>,&quot;<span class="number">11</span>&quot;</span><br><span class="line">hello world</span><br></pre></td></tr></table></figure></li>
-<li><p>最后就可以看到结果了。</p>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118232351707.png" alt="在服务器上，安装并打开这个软件，创建UDP" /><figcaption>在服务器上，安装并打开这个软件，创建UDP</figcaption>
-</figure>
-<figure>
-<img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220118225256825.png" alt="服务器上接受到数据的截图" /><figcaption>服务器上接受到数据的截图</figcaption>
-</figure></li>
-<li><p>利用创思提供的源码里面关于发送</p></li>
-</ol>
-<p>[^ 0]: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/abatei/p/12129966.html#:~:text=当通过%20AT%2BQIOPEN%20打开一个%20socket%20服务，可通过参数%20,来指定数据访问模式。%20在%20socket%20服务开始后，%20AT%2BQISWTMD%20可用于改变数据访问模式。">AT指令之 TCP/IP 命令 - abatei - 博客园 (cnblogs.com)</a> [^1]: <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14J411P741?p=4">STM32开发板NB-IOT移远BC26 NB模块通物联网NBIOT阿里云MQTT 电脑看_哔哩哔哩_bilibili</a> [^2]: <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/762776">2020阿里云学生服务器申请地址购买攻略及配置选择-阿里云开发者社区 (aliyun.com)</a> [^3]: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/springsnow/p/9407147.html#_label2">TCP、UDP调试器 SocketToolV4.1 - springsnow - 博客园 (cnblogs.com)</a> [^4]: <a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/770005">基于UDP上传数据到阿里云-阿里云开发者社区 (aliyun.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" class="post-title-link" itemprop="url">【CAG-SLAM】-02-项目总结</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-17 16:03:53 / 修改时间：16:13:12" itemprop="dateCreated datePublished" datetime="2022-01-17T16:03:53+08:00">2022-01-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%A7%91%E7%A0%94/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>给关于这个小项目，里面涉及到的内容其实并不复杂，但是也花费了我两周的时间去完成和整理，可能在和学长的其他模块进行组合的时候还会出现一些其他的问题。总之，并不是一次特别满意的开发经历，但是我也在过程中，学习了很多项目之外的东西。正如我正是为了这点醋，包的这顿饺子。</p>
+          <h2 id="代码风格和规范">代码风格和规范</h2>
+<p>关于C语言的这个代码风格和规范的问题，其实在很早就一直困扰着我。没有系统性的归纳过。今天蹭着这机会就来系统地梳理一下。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/17/%E3%80%90%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86%E3%80%91-00-%E7%94%B5%E5%AD%90%E4%B9%A6%E8%B5%84%E6%BA%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/17/%E3%80%90%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86%E3%80%91-00-%E7%94%B5%E5%AD%90%E4%B9%A6%E8%B5%84%E6%BA%90/" class="post-title-link" itemprop="url">【杂七杂八】-00-资源链接</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-17 09:37:46" itemprop="dateCreated datePublished" datetime="2022-01-17T09:37:46+08:00">2022-01-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-21 16:38:59" itemprop="dateModified" datetime="2022-03-21T16:38:59+08:00">2022-03-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="常用链接">常用链接</h2>
-<hr />
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.pdfdrive.com/">PDF Drive - Search and download PDF files for free.</a></li>
-<li><a target="_blank" rel="noopener" href="https://bookvoo.com/">BookVoo - PDF files are free to download.</a></li>
-</ol>
-<h2 id="其他">其他</h2>
-<hr />
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/cfunction/article/details/108591734">VScode配置latex+代码片段让写作起飞_「已注销」的博客-CSDN博客</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/" class="post-title-link" itemprop="url">【Verilog学习】-04-程序</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-16 21:02:43" itemprop="dateCreated datePublished" datetime="2022-01-16T21:02:43+08:00">2022-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-21 15:26:33" itemprop="dateModified" datetime="2022-01-21T15:26:33+08:00">2022-01-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这里的取题目名字程序其实不是特别好，这里应该主要是procedure，也就是always、initial等其他模块包含的那一段代码。</p>
-<h2 id="always组合电路">always(组合电路)</h2>
-<hr />
-<p>always模块可以用来生成组合电路，其和块外面的assign有着相同的作用，主要是语法方面有着一定的区别。</p>
-<p>在always块中使用组合逻辑，输出（也就是被驱动的等式的左边）需要用寄存器类型的变量。例如下面两种写法的功能是一样的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/14/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-03-%E6%A8%A1%E5%9D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/14/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-03-%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">【Verilog学习】-03-模块</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-14 15:40:04 / 修改时间：22:58:01" itemprop="dateCreated datePublished" datetime="2022-01-14T15:40:04+08:00">2022-01-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="verilog模块的实例化">verilog模块的实例化</h2>
-<h3 id="模块的信号连接">模块的信号连接</h3>
-<p>模块的信号的连接有两种方式：一种是通过位置（顺序）来进行连接，另一种是通过名称来进行连接。顺序连接的方式和C语言的函数的用法类似，直接按顺序写，例如：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/14/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-03-%E6%A8%A1%E5%9D%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/14/%E3%80%90Hexo%E3%80%91-05-%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/14/%E3%80%90Hexo%E3%80%91-05-%E5%9C%A8github%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">【Hexo】-05-在github上搭建完整的博客</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-01-14 09:39:53 / 修改时间：15:41:40" itemprop="dateCreated datePublished" datetime="2022-01-14T09:39:53+08:00">2022-01-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="在github上完整的搭建一个博客">在github上完整的搭建一个博客</h2>
-<ol type="1">
-<li><p>安装好<a target="_blank" rel="noopener" href="https://nodejs.org/en/">Node.js (nodejs.org)</a>，<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/index.html">Hexo</a>，顺序不要变。因为在安装Hexo时，可以用到npm指令。</p></li>
-<li><p>在安装完成Hexo之后，继续安装next主题 <a target="_blank" rel="noopener" href="http://theme-next.iissnan.com/">NexT 使用文档 (iissnan.com)</a></p></li>
-<li><p>美化主题</p></li>
-<li><p>支持数学公式：<a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/third-party-services/math-equations">Math Equations | NexT (theme-next.js.org)</a></p>
-<blockquote>
-<p>这里上次出现很多莫名奇妙的问题，就是没有看官方文档，导致装了一大堆东西，进而导致了冲突。</p>
-</blockquote></li>
-<li><p>在github上进行部署</p></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/13/%E3%80%90Hexo%E3%80%91-04-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/13/%E3%80%90Hexo%E3%80%91-04-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/" class="post-title-link" itemprop="url">【Hexo】-04-数学公式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-13 20:30:26" itemprop="dateCreated datePublished" datetime="2022-01-13T20:30:26+08:00">2022-01-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-14 15:41:26" itemprop="dateModified" datetime="2022-01-14T15:41:26+08:00">2022-01-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="请参照next官方文档进行设置">请参照next官方文档进行设置</h2>
-<p><a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/third-party-services/math-equations">Math Equations | NexT (theme-next.js.org)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/13/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-02-%E5%90%91%E9%87%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/13/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-02-%E5%90%91%E9%87%8F/" class="post-title-link" itemprop="url">【Verilog学习】-02-向量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-01-13 14:30:42" itemprop="dateCreated datePublished" datetime="2022-01-13T14:30:42+08:00">2022-01-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-14 17:46:43" itemprop="dateModified" datetime="2022-04-14T17:46:43+08:00">2022-04-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="向量">向量</h2>
-<p>verilog的向量和C的向量（数组）不太一样，其的位数是写在名称的前面的，例如</p>
-<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">wire</span> [<span class="number">7</span>:<span class="number">0</span>] w;</span><br><span class="line"><span class="keyword">assign</span> out = w[<span class="number">7</span>];</span><br></pre></td></tr></table></figure>
-<p>在对向量赋值的时候，如果向量的位宽是相同的，就可以不用标明位；如果位宽不相同，则需要指明是那些位在进行assign</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/01/13/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-02-%E5%90%91%E9%87%8F/#more" rel="contents">
+              <a class="btn" href="/2022/01/27/%E3%80%90BC26%E3%80%91-01-%E4%BB%A3%E7%A0%81%E6%95%B4%E5%90%88%E5%8F%8A%E5%85%B6%E8%A7%84%E8%8C%83/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1093,7 +1133,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1134,7 +1174,7 @@
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
