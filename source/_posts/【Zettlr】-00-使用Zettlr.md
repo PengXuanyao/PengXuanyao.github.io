@@ -37,5 +37,8 @@ categories:
 
 使用hexo同步博客(和zettlr没有什么关系):
 1. 查阅了网上的各种方案，最后选择使用两个分支的方案来同步
-2. 以前没有弄好的原因是因为在主题的文件架里面有一个用于下载主题的仓库，不能够在一个仓库里面包含另一个仓库（[利用Hexo在多台电脑上提交和更新github pages博客 - 简书 (jianshu.com)](https://www.jianshu.com/p/0b1fccce74e0/)）
-3. 
+2. 以前没有弄好的原因是因为在主题的文件架里面有一个用于下载主题的仓库，不能够在一个仓库里面包含另一个仓库（[利用Hexo在多台电脑上提交和更新github pages博客 - 简书 (jianshu.com)](https://www.jianshu.com/p/0b1fccce74e0/)）| （[如何多端同步 Hexo 框架博客 - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1365689)）（第二篇文章中有很多干货，最后是按照第二篇博客完成了本次任务）
+
+### 批处理文件
+
+使用
