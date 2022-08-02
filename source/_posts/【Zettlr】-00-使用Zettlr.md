@@ -39,6 +39,21 @@ categories:
 1. 查阅了网上的各种方案，最后选择使用两个分支的方案来同步
 2. 以前没有弄好的原因是因为在主题的文件架里面有一个用于下载主题的仓库，不能够在一个仓库里面包含另一个仓库（[利用Hexo在多台电脑上提交和更新github pages博客 - 简书 (jianshu.com)](https://www.jianshu.com/p/0b1fccce74e0/)）| （[如何多端同步 Hexo 框架博客 - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1365689)）（第二篇文章中有很多干货，最后是按照第二篇博客完成了本次任务）
 
+#### 在linux上同步博客
+
+今天又是为了这点醋包了一顿饺子——终于解决了从上学期开始就悬而未决的这个问题，那就是通过linux同步github上的博客（或者说科学上网）。
+
+折腾了基本上一天终于才解决了这个问题：
+
+主要使用了NaikoCloud科学上网（走了点灰色地带，仅为学术目的），然后再使用Clash for Windows进行节点配置等操作[^1]，最后达成了科学上网的目的。
+
+经过了这番折腾，稍稍记录一下两三个坑点：
+1. NaikoCloud本身登录上去需要梯子，所以需要打开另一个梯子（最开始使用的是Cisco的威伯斯云，由于无法在linux上使用，所以可能会选择弃坑），提前下载用于设置Clash的yml文件。
+2. 在配置Clash方面，就可以参照资料[^1]的步骤，最后需要注意的就是教程中说的配置成端口7980，我下载的Clash是没有设置成这个端口号，而是0，因此需要在Clash中手动设置一下。
+3. 最后，就是说Clash for Windows的意思是图形化的Clash，而不是说是只有windows才能使用的意思，这个软件也有linux版本（害得我早没盯上他）
+
 ### 批处理文件
 
-使用
+使用bat（windows下），或者使用sh（linux下）
+
+[^1]:[Ubuntu下安装并使用Clash for Windows](https://www.cnblogs.com/Jiang13537/p/15571504.html)
