@@ -51,9 +51,13 @@ categories:
 1. NaikoCloud本身登录上去需要梯子，所以需要打开另一个梯子（最开始使用的是Cisco的威伯斯云，由于无法在linux上使用，所以可能会选择弃坑），提前下载用于设置Clash的yml文件。
 2. 在配置Clash方面，就可以参照资料[^1]的步骤，最后需要注意的就是教程中说的配置成端口7980，我下载的Clash是没有设置成这个端口号，而是0，因此需要在Clash中手动设置一下。
 3. 最后，就是说Clash for Windows的意思是图形化的Clash，而不是说是只有windows才能使用的意思，这个软件也有linux版本（害得我早没盯上他）
+4. 最后git push的时候又遇到两个问题：
+    1. 第一个是无法使用用户名的问题，这个问题通过添加ssh秘钥，但是还是提示输入用户名。[解决方案](https://blog.csdn.net/wei_yanwen/article/details/125929532)
+    2. 第二个是报错：gnutls_handshake() failed，可能是挂了梯子的原因，暂时不知道按照StackOverflow上的方案解决了一下，安装了两个东西后，好像没有报错了[^2]
 
 ### 批处理文件
 
 使用bat（windows下），或者使用sh（linux下）
 
-[^1]:[Ubuntu下安装并使用Clash for Windows](https://www.cnblogs.com/Jiang13537/p/15571504.html)
+[^1]: [Ubuntu下安装并使用Clash for Windows](https://www.cnblogs.com/Jiang13537/p/15571504.html)
+[^2]: [Git gnutls handshake failed error](https://stackoverflow.com/questions/52379234/git-gnutls-handshake-failed-error-in-the-pull-function)
