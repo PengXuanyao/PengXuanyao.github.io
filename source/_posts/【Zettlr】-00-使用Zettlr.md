@@ -41,4 +41,17 @@ categories:
 
 ### 批处理文件
 
-使用
+用户输入
+
+写一个简单的批处理文件，写出文件名字然后新建hexo文件出来：
+
+```bash
+echo new blog, the name format is 【*】-0*-*
+echo please input the blog'name
+
+set /p name=
+
+hexo new %name%
+
+pause
+```

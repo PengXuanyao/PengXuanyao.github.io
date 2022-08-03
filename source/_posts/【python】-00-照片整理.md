@@ -1,5 +1,5 @@
 ---
-title: 【python学习】-00-照片整理
+title: 【python】-00-照片整理
 date: 2022-01-11 09:51:42
 tags: 
   - 踩坑
