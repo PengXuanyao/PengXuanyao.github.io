@@ -83,4 +83,6 @@ pause
 
 通过这篇博客解决（[git pull报错Pulling is not possible because you have unmerged files_帅阿星的博客-CSDN博客](https://blog.csdn.net/wy01272454/article/details/72846365)）：把当前冲突的文件去掉之后重新commit一下即可。
 
+当请求超时时候的解决办法，改变自身的端口号，配置和Clash一致即可（默认是7890）[Failed to connect to github.com port 443: Timed out 及 ping github.com请求超时_奔跑的痕迹的博客-CSDN博客](https://blog.csdn.net/qq_34817440/article/details/106420689)
+
 
