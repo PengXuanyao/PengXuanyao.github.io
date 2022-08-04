@@ -1,0 +1,86 @@
+---
+title: 【Zettlr】-00-使用Zettlr
+mathjax: false
+date: 2022-08-01 11:17:25
+tags:
+    - Zettlr
+    - hexo博客同步
+categories:
+    - 学习
+---
+
+
+## Zettlr显示渲染之后的样子
+
+现在Zettlr出来的结果还不是我想要的，有几点不方便的地方;
+1. 表格怎么显示
+2. 图片是否直接可以上传图床
+3. 输出的PDF格式非常难看
+4. 如何同步博客
+
+<!--more-->
+
+### 显示问题
+
+网上找了一圈，发现zettlr应该是不支持实时预览，只能这样显示了，不过也还好，看着不别扭。
+
+### 图床问题
+
+这个上传图片好像还不能够直接复制粘贴自动上传，这就有点麻烦了。以后看有没有什么办法解决掉，现在暂时放一下
+
+### 输出格式问题
+
+网上建议使用这个编辑器写文本，导出还是到Typora或者其他编辑器中去。以后设计到使用Latex再看怎么用这个导出吧。
+
+
+### 如何同步博客
+
+使用hexo同步博客(和zettlr没有什么关系):
+1. 查阅了网上的各种方案，最后选择使用两个分支的方案来同步
+2. 以前没有弄好的原因是因为在主题的文件架里面有一个用于下载主题的仓库，不能够在一个仓库里面包含另一个仓库（[利用Hexo在多台电脑上提交和更新github pages博客 - 简书 (jianshu.com)](https://www.jianshu.com/p/0b1fccce74e0/)）| （[如何多端同步 Hexo 框架博客 - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/1365689)）（第二篇文章中有很多干货，最后是按照第二篇博客完成了本次任务）
+
+#### 在linux上同步博客
+
+今天又是为了这点醋包了一顿饺子——终于解决了从上学期开始就悬而未决的这个问题，那就是通过linux同步github上的博客（或者说科学上网）。
+
+折腾了基本上一天终于才解决了这个问题：
+
+主要使用了NaikoCloud科学上网（走了点灰色地带，仅为学术目的），然后再使用Clash for Windows进行节点配置等操作[^1]，最后达成了科学上网的目的。
+
+经过了这番折腾，稍稍记录一下两三个坑点：
+1. NaikoCloud本身登录上去需要梯子，所以需要打开另一个梯子（最开始使用的是Cisco的威伯斯云，由于无法在linux上使用，所以可能会选择弃坑），提前下载用于设置Clash的yml文件。
+2. 在配置Clash方面，就可以参照资料[^1]的步骤，最后需要注意的就是教程中说的配置成端口7980，我下载的Clash是没有设置成这个端口号，而是0，因此需要在Clash中手动设置一下。
+3. 最后，就是说Clash for Windows的意思是图形化的Clash，而不是说是只有windows才能使用的意思，这个软件也有linux版本（害得我早没盯上他）
+4. 最后git push的时候又遇到两个问题：
+    1. 第一个是无法使用用户名的问题，这个问题通过添加ssh秘钥，但是还是提示输入用户名。[解决方案](https://blog.csdn.net/wei_yanwen/article/details/125929532)
+    2. 第二个是报错：gnutls_handshake() failed，可能是挂了梯子的原因，暂时不知道按照StackOverflow上的方案解决了一下，安装了两个东西后，好像没有报错了[^2]
+
+### 批处理文件
+
+<<<<<<< HEAD
+用户输入
+
+写一个简单的批处理文件，写出文件名字然后新建hexo文件出来：
+
+```bash
+echo new blog, the name format is 【*】-0*-*
+echo please input the blog'name
+
+set /p name=
+
+hexo new %name%
+
+pause
+```
+
+使用bat（windows下），或者使用sh（linux下）
+
+[^1]: [Ubuntu下安装并使用Clash for Windows](https://www.cnblogs.com/Jiang13537/p/15571504.html)
+[^2]: [Git gnutls handshake failed error](https://stackoverflow.com/questions/52379234/git-gnutls-handshake-failed-error-in-the-pull-function)
+
+
+### Git Pull 又出现了问题
+
+通过这篇博客解决（[git pull报错Pulling is not possible because you have unmerged files_帅阿星的博客-CSDN博客](https://blog.csdn.net/wy01272454/article/details/72846365)）：把当前冲突的文件去掉之后重新commit一下即可。
+
+
