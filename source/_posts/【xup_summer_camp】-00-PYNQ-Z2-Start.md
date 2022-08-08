@@ -3,7 +3,9 @@ title: 【xup_summer_camp】-00-PYNQ-Z2-Start
 mathjax: false
 date: 2022-08-03 19:28:42
 tags:
+    - pynq
 categories:
+    - 学习
 ---
 
 今天开始搞Xilinx的暑期学校了，东西有点多，得先把板子摸一遍才行。
@@ -35,6 +37,6 @@ categories:
 
 ![电源选择](https://s2.loli.net/2022/08/03/lwnK8VQu6tx1IDi.png)
 
-2. 然后是Boot选择，到时候如果是从SD卡中启动的话，需要选择这里脸上SD卡。
+2. 然后是Boot选择，到时候如果是从SD卡中启动的话，需要选择这里左边的SD卡。
 
 ![Boot选择](https://s2.loli.net/2022/08/03/t78WfxYbhPDdvie.png)
