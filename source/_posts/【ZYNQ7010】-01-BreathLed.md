@@ -35,6 +35,28 @@ categories:
 3. 在breath_clk时序逻辑中，主要是控制led以1Hz频率进行更换；
 
 ```verilog
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 2022/07/16 17:19:46
+// Design Name: 
+// Module Name: breath_led
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
 module breath_led(
     input clk,
     input rstn,
@@ -43,7 +65,7 @@ module breath_led(
 
 // 分频系数设定
 localparam MAX_PWM_COUNT = 9'd500, MAX_LED_COUNT = 3'd4,
-             DUTY_DIV = 16'd25_000, BREATH_DIV = 26'd25_000_000, ;
+             DUTY_DIV = 16'd25_000, BREATH_DIV = 26'd25_000_000;
 
 // 占空比控制、LED控制、PWM频率、占空比变化频率、呼吸频率计数器
 reg [8:0] duty_counter;
@@ -53,20 +75,17 @@ reg [15:0] duty_clk_counter;
 reg [25:0] breath_clk_conter;
 
 // 时钟信号
-reg pwm_clk, duty_clk, breath_clk;
+reg duty_clk, breath_clk;
 
 // 控制信号
-reg duty_flag;  // 控制duty变化方向
+reg duty_flag, last_duty_flag;  // 控制duty变化方向
 reg pwm;        // PWM信号
 
 // 时钟信号发生，这里采用的方法是直接从主时钟产生，也可以选择一级一级由不同时钟产生
 always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
         duty_clk_counter <= 0;
-        breath_clk_conter <=0;
-        pwm_clk <= 0;
         duty_clk <= 0;
-        breath_clk <= 0;
     end
     else begin
         if (duty_clk_counter == (DUTY_DIV - 1'b1)) begin
@@ -76,6 +95,15 @@ always @(posedge clk or negedge rstn) begin
         else begin
             duty_clk_counter <= duty_clk_counter + 1'b1;
         end
+    end
+end
+
+always @(posedge clk or negedge rstn) begin
+    if (!rstn) begin
+        breath_clk_conter <=0;
+        breath_clk <= 1;
+    end
+    else begin
         if (breath_clk_conter == (BREATH_DIV - 1'b1)) begin
             breath_clk <= ~breath_clk;
             breath_clk_conter <= 0;
@@ -85,20 +113,16 @@ always @(posedge clk or negedge rstn) begin
         end
     end
 end
-
+        
 // 占空比信号控制
 always @(posedge duty_clk or negedge rstn) begin
     if (!rstn) begin
         // reset
         duty_counter <= 0;
-        duty_flag <= 0;
     end
     else begin
-        if (duty_counter == (MAX_PWM_COUNT - 1'b1) || duty_counter == 0) begin
-            duty_flag <= ~duty_flag;
-        end
         // flag为0，表示在呼，占空比增加
-        else if (duty_flag == 0) begin
+        if (duty_flag == 0) begin
             duty_counter <= duty_counter + 1'b1;
         end
         // flag为1，表示在吸，占空比减少
@@ -111,6 +135,28 @@ always @(posedge duty_clk or negedge rstn) begin
     end
 end
 
+always @(posedge duty_clk or negedge rstn) begin
+    if (!rstn) begin
+        // reset
+        duty_flag <= 0;
+        last_duty_flag <= 0;
+    end
+    else begin
+        if (duty_counter == (MAX_PWM_COUNT - 1'b1) && last_duty_flag == 1'b0) begin
+            duty_flag <= 1'b1;
+            last_duty_flag <= duty_flag; 
+        end
+        else if (duty_counter == 1'b1 && last_duty_flag == 1'b1) begin
+            duty_flag <= 1'b0;
+            last_duty_flag <= duty_flag;
+        end
+        else begin
+            last_duty_flag <= duty_flag;
+            duty_flag <= duty_flag;
+        end
+    end
+end
+        
 // 呼吸灯控制计数器，每加一就换一个LED
 always @(posedge breath_clk or negedge rstn) begin
     if (!rstn) begin
@@ -125,7 +171,7 @@ always @(posedge breath_clk or negedge rstn) begin
     end
 end
 
-// PWM信号
+// PWM信号产生
 always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
         pwm <= 0;
@@ -144,8 +190,21 @@ always @(posedge clk or negedge rstn) begin
     end
 end
 
+// 传送PWM信号
+assign led[0] = (led_counter == 0) ? pwm : 0;
+assign led[1] = (led_counter == 1) ? pwm : 0;
+assign led[2] = (led_counter == 2) ? pwm : 0;
+assign led[3] = (led_counter == 3) ? pwm : 0;
 endmodule
 ```
+
+## Debug了一下
+
+原来的程序主要是设定这个duty_counter和duty_flag有些问题，没有用last_duty_flag这个寄存器，导致其中进行非阻塞赋值的时候，出现了一些问题（判断语句中用了这个寄存器判断，然后又在后面将这个寄存器进行了赋值，好像是这样就出现了问题，现在在判断中使用的是上一个时刻的duty_flag也就是last_duty_flag这个寄存器，在赋值的时候是使用的duty_flag这个寄存器，现在就不存在这个问题了）。
+
+图片展示一下效果：
+
+![BreathLed](https://s2.loli.net/2022/08/08/4TL51rqHw3OkIEo.gif)
 
 ## 总结
 
