@@ -3,7 +3,10 @@ title: 【xup_summer_camp】-02-FIR滤波器实验
 mathjax: false
 date: 2022-08-07 09:27:54
 tags:
+    - pynq
+    - hls
 categories:
+    - 学习
 ---
 
 完成FIR滤波器实验记录，主要是跑一下例程，对麻鹬和麻雀的声音（两者的频谱上是分开的，能够通过FIR滤波器进行滤除）。
