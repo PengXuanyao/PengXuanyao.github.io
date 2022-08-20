@@ -890,6 +890,48 @@ assign walk_left = (state == LEFT);
 assign walk_right = (state == RIGHT);
 assign aaah = (state == LEFT_FALL) || (state == RIGHT_FALL);
 endmodule
+
+// 又写了一遍
+
+// Lemings 2
+module top_module(
+    input clk,
+    input areset,    // Freshly brainwashed Lemmings walk left.
+    input bump_left,
+    input bump_right,
+    input ground,
+    output walk_left,
+    output walk_right,
+    output aaah ); 
+
+    localparam WL = 2'b00, WR = 2'b01, FL = 2'b10, FR = 2'b11;
+
+    reg [1:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            WL : next_state = ground ? (bump_left ? WR : WL) : FL;
+            WR : next_state = ground ? (bump_right ? WL : WR) : FR;
+            FL : next_state = ground ? WL : FL;
+            FR : next_state = ground ? WR : FR;
+        endcase
+    end
+
+    always @(posedge clk or posedge areset) begin
+        if (areset) begin
+            state <= 0;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign walk_left = (state == WL) ? 1'b1 : 1'b0;
+    assign walk_right = (state == WR) ? 1'b1 : 1'b0;
+    assign aaah = (state[1]) ? 1'b1 : 1'b0; // 这里使用的是定义state的时候，高位为1
+                                            // 对应掉落的状态
+
+endmodule
 ```
 
 ### debug
@@ -930,6 +972,7 @@ module top_module(
 ### solution
 
 ```verilog
+// Lemings 3
 module top_module(
     input clk,
     input areset,    // Freshly brainwashed Lemmings walk left.
@@ -940,88 +983,152 @@ module top_module(
     output walk_left,
     output walk_right,
     output aaah,
-    output digging ); 
+    output digging );
+    
+    localparam WL = 3'b000, WR = 3'b001, FL = 3'b010, FR = 3'b011, DL = 3'b100, 
+    DR = 3'b101;
 
-localparam LEFT = 3'd0, RIGHT = 3'd1, DIG_R = 3'd2, FALL_R = 3'd3, FALL_L = 3'd4
-            DLG_L = 3'd5;
+    reg [2:0] state, next_state;
 
-reg [2:0] next_state;
-reg [2:0] current_state;
-
-always @(*) begin
-    case (current_state)
-        LEFT: 
-            begin 
-                if (ground == 1'b0)
-                    next_state = FALL_L;
-                else if (dig == 1'b1)
-                    next_state = DLG_L;
-                else if (bump_left == 1'b1 )
-                    next_state = RIGHT;
-                else
-                    next_state = current_state;
-            end
-        RIGHT: 
-            begin 
-                if (ground == 1'b0)
-                    next_state = FALL_R;
-                else if (dig == 1'b1)
-                    next_state = DLG_R;
-                else if (bump_left == 1'b1 )
-                    next_state = LEFT;
-                else
-                    next_state = current_state;
-            end
-        DIG_L: 
-            begin 
-                if (ground == 1'b0)
-                    next_state = FALL_L;
-                else
-                    next_state = current_state;
-            end
-        DIG_R: 
-            begin 
-                if (ground == 1'b0)
-                    next_state = FALL_R;
-                else
-                    next_state = current_state;
-            end
-        FALL_L:
-            begin
-                if (ground == 1'b1)
-                    next_state = LEFT;
-                else begin
-                    next_state = current_state;
-                end
-            end
-        FALL_R:
-            begin
-                if (ground == 1'b1) begin
-                    next_state = RIGHT;
-                end
-                else begin
-                    next_state = current_state;
-                end
-    endcase
-end
-
-always @(posedge clk or negedge areset) begin
-    if (!areset) begin
-        current_state <= LEFT;
+    always @(*) begin
+        case (state)
+            WL : next_state = ground ? (dig ? DL : (bump_left ? WR : WL)) : FL;
+            WR : next_state = ground ? (dig ? DR : (bump_right ? WL : WR)) : FR;
+            FL : next_state = ground ? WL : FL;
+            FR : next_state = ground ? WR : FR;
+            DL : next_state = ground ? DL : FL;
+            DR : next_state = ground ? DR : FR;
+            default : next_state = next_state;
+        endcase
     end
-    else begin
-        current_state <= next_state;
-    end
-end
 
-always @(*) begin
-    walk_left = (current_state == walk_left) ? 1'b1 : 1'b0;
-    walk_right = (current_state == walk_right) ? 1'b1 : 1'b0;
-    aaah = (current_state == FALL_L || current_state == FALL_R) ? 1'b1 : 1'b0;
-    digging = (current_state == DIG_R || current_state == DIG_R) ? 1'b1 : 1'b0;
-end
+    always @(posedge clk or posedge areset) begin
+        if (areset) begin
+            state <= 0;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign walk_left = (state == WL) ? 1'b1 : 1'b0;
+    assign walk_right = (state == WR) ? 1'b1 : 1'b0;
+    assign aaah = (state[1]) ? 1'b1 : 1'b0; // 这里使用定义state的时候，第2位为1
+                                            // 对应掉落的状态
+    assign digging = (state[2]) ? 1'b1 : 1'b0;  // 这里使用定义state的时候，
+                                                // 第3位为1，对应挖洞的状态
+
+endmodule  
+```
+
+## Lemmings4
+
+Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air.
+
+![Lemings4](https://hdlbits.01xz.net/mw/images/e/e8/Lemmings4.gif)
+
+Extend your finite state machine to model this behaviour.
+
+Falling for 20 cycles is survivable:
+
+![waveform](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220819111859.png)
+
+Falling for 21 cycles causes splatter:
+
+![waveform](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220819111937.png)
+
+```verilog
+module top_module(
+    input clk,
+    input areset,    // Freshly brainwashed Lemmings walk left.
+    input bump_left,
+    input bump_right,
+    input ground,
+    input dig,
+    output walk_left,
+    output walk_right,
+    output aaah,
+    output digging );
+    
+    localparam WL = 3'b000, WR = 3'b001, FL = 3'b010, FR = 3'b011, DL = 3'b100, 
+    DR = 3'b101, SP = 3'b110;
+
+    reg [2:0] state, next_state;
+    reg [5:0] cnt;
+    reg splat;
+
+    // counter
+    always @(posedge clk or posedge areset) begin
+        if (areset) begin
+            cnt <= 0;
+        end
+        else begin
+            if ((state == FL) || (state == FR)) begin
+                cnt <= cnt + 1'b1;
+            end
+            else 
+                cnt <= 0;
+        end
+    end
+
+    // splat
+    always @(*) begin
+        if (areset) begin
+            splat = 0;
+        end
+        else begin
+            if (cnt == 6'd20) begin
+                splat = 1'b1;
+            end
+            else begin
+                splat = splat;
+            end
+        end
+    end
+
+    // next_state
+    // 注意要接触到地面才会爆炸，在空中是保持下落的状态。
+    always @(*) begin
+        case (state)
+            WL : next_state = ground ? (dig ? DL : (bump_left ? WR : WL)) : FL;
+            WR : next_state = ground ? (dig ? DR : (bump_right ? WL : WR)) : FR;
+            FL : next_state = ground ? (splat ? SP : WL) : FL;
+            FR : next_state = ground ? (splat ? SP : WR) : FR;
+            DL : next_state = ground ? DL : FL;
+            DR : next_state = ground ? DR : FR;
+            SP : next_state = state;
+            default : next_state = next_state;
+        endcase
+    end
+
+    // state convert
+    always @(posedge clk or posedge areset) begin
+        if (areset) begin
+            state <= 0;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    // output
+    assign walk_left = ((state == WL) && (state != SP)) ? 1'b1 : 1'b0;
+    assign walk_right = ((state == WR) && (state != SP)) ? 1'b1 : 1'b0;
+    assign aaah = ((state == FL || state == FR) && (state != SP)) ? 1'b1 : 1'b0; 
+                                            // 这里使用定义state的时候，第2位为1
+                                            // 对应掉落的状态
+    assign digging = ((state == DL || state == DR) && (state != SP)) ? 1'b1 : 1'b0;  
+                                            // 这里使用定义state的时候，
+                                            // 第3位为1，对应挖洞的状态
+
 endmodule
 ```
+
+### Debug
+
+debug历程如下：
+1. 最主要的bug：cnt计数比较值应该是20，而不是21。我想的是要记数到21，但忘了0开始计数的话，到20就是第21个。
+2. 其次，写next_state的表达式的时候，忘记了FL/FR到SP是要碰到地上才行，因此是要先判断ground，再判断splat信号。
 
 ## Fsm onehot
 
@@ -1078,3 +1185,374 @@ endmodule
 ### debug
 
 这一道题的本意是用独热码的原理进行状态转移，因此如果直接定有状态机进行状态转移，测试会报错。因此，应当选择独热码的转移形式。
+
+## Fsm ps2
+
+### question
+
+The PS/2 mouse protocol sends messages that are three bytes long. However, within a continuous byte stream, it's not obvious where messages start and end. The only indication is that the first byte of each three byte message always has bit\[3\]=1 (but bit\[3\] of the other two bytes may be 1 or 0 depending on data).
+
+We want a finite state machine that will search for message boundaries when given an input byte stream. The algorithm we'll use is to discard bytes until we see one with bit\[3\]=1. We then assume that this is byte 1 of a message, and signal the receipt of a message once all 3 bytes have been received (done).
+
+The FSM should signal done in the cycle immediately after the third byte of each message was successfully received.
+
+### Some timing diagrams to explain the desired behaviour
+
+Under error-free conditions, every three bytes form a message:
+
+![error-free](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220820152622.png)
+
+When an error occurs, search for byte 1:
+
+![error](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220820153313.png)
+
+Note that this is not the same as a 1xx sequence recognizer. Overlapping sequences are not allowed here:
+
+![notion](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220820153338.png)
+
+### Module Declaration
+
+```verilog
+module top_module(
+    input clk,
+    input [7:0] in,
+    input reset,    // Synchronous reset
+    output done);
+```
+        
+### Solution
+
+#### 状态转移图
+
+![state_transfer_diagram](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/%E7%8A%B6%E6%80%81%E5%9B%BE.drawio.png)
+
+#### 代码
+
+```verilog
+module top_module(
+    input clk,
+    input [7:0] in,
+    input reset,    // Synchronous reset
+    output done); //
+	
+    localparam BYTE1 = 2'b00, BYTE2 = 2'b01, BYTE3 = 2'b10, DONE = 2'b11;
+    reg [1:0] current_state, next_state;
+    // State transition logic (combinational)
+    always @(*) begin
+        case (current_state)
+            BYTE1 : next_state = in[3] ? BYTE2 : BYTE1;
+            BYTE2 : next_state = BYTE3;
+            BYTE3 : next_state = DONE;
+            DONE : next_state = in[3] ? BYTE2 : BYTE1; 
+        endcase
+    end
+    // State flip-flops (sequential)
+    always @(posedge clk) begin
+        if (reset) begin
+            current_state <= BYTE1;
+        end
+        else current_state <= next_state;
+    end
+    // Output logic
+    assign done = (current_state == DONE) ? 1'b1 : 1'b0;
+    
+endmodule
+```
+## Fsm ps2data
+
+#### question
+
+See also: [PS/2 packet parser](https://hdlbits.01xz.net/wiki/Fsm_ps2 "Fsm ps2").
+
+Now that you have a state machine that will identify three-byte messages in a PS/2 byte stream, add a datapath that will also output the 24-bit (3 byte) message whenever a packet is received (out_bytes\[23:16\] is the first byte, out_bytes\[15:8\] is the second byte, etc.).
+
+out_bytes needs to be valid whenever the done signal is asserted. You may output anything at other times (i.e., don't-care).
+
+For example:
+
+![waveform](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220820153817.png)
+
+### Module Declaration
+
+```verilog
+    module top_module(
+        input clk,
+        input [7:0] in,
+        input reset,    // Synchronous reset
+        output [23:0] out_bytes,
+        output done);
+```
+
+### Solution
+
+```verilog
+module top_module(
+    input clk,
+    input [7:0] in,
+    input reset,    // Synchronous reset
+    output [23:0] out_bytes,
+    output done);
+	
+    localparam BYTE1 = 2'b00, BYTE2 = 2'b01, BYTE3 = 2'b10, DONE = 2'b11;
+    reg [1:0] current_state, next_state;
+    // State transition logic (combinational)
+    always @(*) begin
+        case (current_state)
+            BYTE1 : next_state = in[3] ? BYTE2 : BYTE1;
+            BYTE2 : next_state = BYTE3;
+            BYTE3 : next_state = DONE;
+            DONE : next_state = in[3] ? BYTE2 : BYTE1; 
+        endcase
+    end
+    // State flip-flops (sequential)
+    always @(posedge clk) begin
+        if (reset) begin
+            current_state <= BYTE1;
+        end
+        else current_state <= next_state;
+    end
+    // Output logic
+    assign done = (current_state == DONE) ? 1'b1 : 1'b0;
+    
+    // Datapath to store incoming bytes
+    always @(posedge clk) begin
+        if (current_state == BYTE2) out_bytes[15:8] <= in;
+        else if (current_state == BYTE3) out_bytes[7:0] <= in;
+        else out_bytes[23:16] <= in;
+    end
+    
+endmodule
+```
+
+### Debug
+
+最开始的数据通路写错了，没有考虑到Done有时候是对应于第一个字节：
+```verilog
+    // Datapath to store incoming bytes
+    always @(posedge clk) begin
+        if (current_state == BYTE1) out_bytes[23:16] <= in;
+        else if (current_state == BYTE2) out_bytes[15:8] <= in;
+        else if (current_state == BYTE3) out_bytes[7:0] <= in;
+    end
+```
+
+改过之后：
+```verilog
+    // Datapath to store incoming bytes
+    always @(posedge clk) begin
+        if (current_state == BYTE2) out_bytes[15:8] <= in;
+        else if (current_state == BYTE3) out_bytes[7:0] <= in;
+        else out_bytes[23:16] <= in;
+    end
+```
+
+## Fsm serial
+
+### question
+
+In many (older) serial communications protocols, each data byte is sent along with a start bit and a stop bit, to help the receiver delimit bytes from the stream of bits. One common scheme is to use one start bit (0), 8 data bits, and 1 stop bit (1). The line is also at logic 1 when nothing is being transmitted (idle).
+
+Design a finite state machine that will identify when bytes have been correctly received when given a stream of bits. It needs to identify the start bit, wait for all 8 data bits, then verify that the stop bit was correct. If the stop bit does not appear when expected, the FSM must wait until it finds a stop bit before attempting to receive the next byte.
+
+### Some timing diagrams
+
+Error-free:
+
+![error-free](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220820155545.png)
+
+Stop bit not found. First byte is discarded:
+
+![error](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220820155617.png)
+
+### Module Declaration
+
+```verilog
+module top_module(
+    input clk,
+    input in,
+    input reset,    // Synchronous reset
+    output done
+);
+```
+
+### Solution
+
+```verilog
+module top_module(
+    input clk,
+    input in,
+    input reset,    // Synchronous reset
+    output done); 
+
+    localparam IDLE = 3'b000, START = 3'b001, TRANS = 3'b010, STOP = 3'b011,
+    ERROR = 3'b100;
+
+    reg [2:0] state, next_state;
+    reg [3:0] cnt;
+    
+    // counter
+    always @(posedge clk) begin
+        if (reset) begin
+            cnt <= 0;
+        end
+        else begin
+            if (state == TRANS) cnt <= cnt + 1'b1;
+            else cnt <= 0;
+        end
+    end
+
+    // next_state
+    always @(*) begin 
+        case (state)
+            IDLE : next_state = in ? IDLE : START;
+            START: next_state = TRANS; 
+            TRANS: next_state = (cnt == 4'd7) ? (in ? STOP : ERROR) : TRANS;
+            STOP:  next_state = in ? IDLE : START;
+            ERROR: next_state = in ? IDLE : ERROR;
+            default: next_state = IDLE; 
+        endcase
+    end
+
+    // state transition
+    always @(posedge clk) begin
+        if (reset) begin
+            state <= IDLE;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    // output
+    assign done = (state == STOP) ? 1'b1 : 1'b0;
+endmodule
+```
+
+### Debug
+
+1. 注意题目说如果出错要一直停在错误的状态ERROR，只有当输入重新变成1后，才能进入IDLE。
+2. cnt的计数界限要注意以下，这里用了state而不是next_state作为判断，因此，再计数的时候是到4’d7（第八个）就停下来了，而没有等到4‘d8（第九个）。
+      
+      或者直接:
+      
+```verilog
+    // counter
+    always @(posedge clk) begin
+        if (reset) begin
+            cnt <= 0;
+        end
+        else begin
+            // 原来这里用的state
+            if (next_state == TRANS) cnt <= cnt + 1'b1;
+            else cnt <= 0;
+        end
+    end
+   /*
+   省略代码
+   */
+   always @(*) begin 
+        case (state)
+            IDLE : next_state = in ? IDLE : START;
+            START: next_state = TRANS; 
+            // 这里变成第九个
+            TRANS: next_state = (cnt == 4'd8) ? (in ? STOP : ERROR) : TRANS;
+            STOP:  next_state = in ? IDLE : START;
+            ERROR: next_state = in ? IDLE : ERROR;
+            default: next_state = IDLE; 
+        endcase
+    end
+```
+
+## Fsm serialdata
+
+### Qusetion
+
+See also: [Serial receiver](https://hdlbits.01xz.net/wiki/Fsm_serial "Fsm serial")
+
+Now that you have a finite state machine that can identify when bytes are correctly received in a serial bitstream, add a datapath that will output the correctly-received data byte. out_byte needs to be valid when done is 1, and is don't-care otherwise.
+
+Note that the serial protocol sends the _least_ significant bit first
+
+### Some timing diagrams
+
+![waveform](https://i.niupic.com/images/2022/08/20/a2bF.png)
+
+### Module Declaration
+
+```verilog
+    module top_module(
+        input clk,
+        input in,
+        input reset,    // Synchronous reset
+        output [7:0] out_byte,
+        output done
+    );
+ 
+```
+
+### Solution
+
+```verilog
+module top_module(
+    input clk,
+    input in,
+    input reset,    // Synchronous reset
+    output [7:0] out_byte,
+    output done); 
+
+    localparam IDLE = 3'b000, START = 3'b001, TRANS = 3'b010, STOP = 3'b011,
+    ERROR = 3'b100;
+
+    reg [2:0] state, next_state;
+    reg [3:0] cnt;
+
+    
+    // counter
+    always @(posedge clk) begin
+        if (reset) begin
+            cnt <= 0;
+        end
+        else begin
+            if (state == TRANS) cnt <= cnt + 1'b1;
+            else cnt <= 0;
+        end
+    end
+
+    // next_state
+    always @(*) begin 
+        case (state)
+            IDLE : next_state = in ? IDLE : START;
+            START: next_state = TRANS; 
+            TRANS: next_state = (cnt == 4'd7) ? (in ? STOP : ERROR) : TRANS;
+            STOP:  next_state = in ? IDLE : START;
+            ERROR: next_state = in ? IDLE : ERROR;
+            default: next_state = IDLE; 
+        endcase
+    end
+
+    // state transition
+    always @(posedge clk) begin
+        if (reset) begin
+            state <= IDLE;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    // output
+    assign done = (state == STOP) ? 1'b1 : 1'b0;
+
+    // datapath
+    always @(posedge clk) begin
+        if (next_state == TRANS) begin
+            integer i;
+            out_byte[7] <= in;
+            for (i = 0; i <= 6; i = i + 1) begin : datapath_loop
+                out_byte[i] <= out_byte[i + 1];
+            end
+        end
+    end
+endmodule
+```
+
