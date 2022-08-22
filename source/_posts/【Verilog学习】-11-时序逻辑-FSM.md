@@ -1492,6 +1492,8 @@ Note that the serial protocol sends the _least_ significant bit first
 
 ### Solution
 
+![state_machine](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/F184A50CB7398BA21DE27178DB51C6F4.png)
+
 ```verilog
 module top_module(
     input clk,
@@ -1556,3 +1558,724 @@ module top_module(
 endmodule
 ```
 
+## Fsm serialdp
+
+### Question
+
+See also: [Serial receiver and datapath](https://hdlbits.01xz.net/wiki/fsm_serialdata "fsm_serialdata")
+
+We want to add parity checking to the serial receiver. Parity checking adds one extra bit after each data byte. We will use odd parity, where the number of 1s in the 9 bits received must be odd. For example, 101001011 satisfies odd parity (there are 5 1s), but 001001011 does not.
+
+Change your FSM and datapath to perform odd parity checking. Assert the done signal only if a byte is correctly received _and_ its parity check passes. Like the [serial receiver FSM](https://hdlbits.01xz.net/wiki/fsm_serial "fsm_serial"), this FSM needs to identify the start bit, wait for all 9 (data and parity) bits, then verify that the stop bit was correct. If the stop bit does not appear when expected, the FSM must wait until it finds a stop bit before attempting to receive the next byte.
+
+You are provided with the following module that can be used to calculate the parity of the input stream (It's a TFF with reset). The intended use is that it should be given the input bit stream, and reset at appropriate times so it counts the number of 1 bits in each byte.
+
+``` verilog
+    module parity (
+        input clk,
+        input reset,
+        input in,
+        output reg odd);
+    
+        always @(posedge clk)
+            if (reset) odd <= 0;
+            else if (in) odd <= ~odd;
+    
+    endmodule
+    
+Note that the serial protocol sends the least significant bit first, and the parity bit after the 8 data bits.
+```
+
+### Some timing diagrams
+
+No framing errors. Odd parity passes for first byte, fails for second byte.
+
+![wavrform](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220821112338.png)
+
+—
+### 题外话
+
+好端端的又上传不了图片，恢复步骤：
+
+1. 开始报错信息是连不上网，可能是使用github作为图床，连接不太稳定的原因。解决办法如下：
+    1. 用ClashforWindows设置代理，使用其默认的端口号7890.
+    2. 在picgo中设置代理： 
+    ![设置代理](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220821112810.png)
+    
+    ![使用默认端口号](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220821112858.png)
+2. 后来又出现问题说认证出了问题（401），后通过重新设置token并使用新的token解决。
+
+### Module Declaration
+
+```verilog
+    module top_module(
+        input clk,
+        input in,
+        input reset,    // Synchronous reset
+        output [7:0] out_byte,
+        output done
+    );
+```
+
+### Solution
+
+![state_machine](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/CFA68D12AFEAD188430428508AD5189A.png "state_machine")
+
+```verilog
+module top_module(
+    input clk,
+    input in,
+    input reset,    // Synchronous reset
+    output [7:0] out_byte,
+    output done); 
+
+    localparam IDLE = 3'b000, START = 3'b001, TRANS = 3'b010, STOP = 3'b011,
+    ERROR = 3'b100, PARITY = 3'b101, ABSORT = 3'b110;
+
+    reg [2:0] state, next_state;
+    reg [3:0] cnt;
+    wire parity_flag, parity_reset;
+    
+    // counter
+    always @(posedge clk) begin
+        if (reset) begin
+            cnt <= 0;
+        end
+        else begin
+            if (next_state == TRANS) cnt <= cnt + 1'b1;
+            else cnt <= 0;
+        end
+    end
+
+    // next_state
+    always @(*) begin 
+        case (state)
+            IDLE    : next_state = in ? IDLE : START;
+            START   : next_state = TRANS; 
+            TRANS   : next_state = (cnt == 4'd8) ? PARITY : TRANS;
+            PARITY  : next_state = in ? ((parity_flag) ? STOP : ABSORT) : ERROR;
+            STOP    : next_state = in ? IDLE : START;
+            ERROR   : next_state = in ? IDLE : ERROR;
+            ABSORT  : next_state = in ? IDLE : START;
+            default : next_state = IDLE; 
+        endcase
+    end
+
+    // state transition
+    always @(posedge clk) begin
+        if (reset) begin
+            state <= IDLE;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    // output
+    assign done = (state == STOP) ? 1'b1 : 1'b0;
+
+    // datapath
+    always @(posedge clk) begin
+        if (next_state == TRANS) begin
+            integer i;
+            out_byte[7] <= in;
+            for (i = 0; i <= 6; i = i + 1) begin : datapath_loop
+                out_byte[i] <= out_byte[i + 1];
+            end
+        end
+    end
+
+    // parity_reset
+    assign parity_reset = (next_state == START) | reset;
+
+    // parity
+    parity parity_ins(.clk(clk), .reset(parity_reset), .in(in), .odd(parity_flag));
+
+endmodule
+```
+
+### Debug
+
+时序老是出问题，还是状态寄存器next_state和state之间的关系没弄透彻。最后通过一番瞎试出了结果(`TRANS   : next_state = (cnt == 4'd8) ? PARITY : TRANS;`里面的`cnt == 4'd8`是由`cnt == 4'd7`改过来的)
+
+## Fsm hdlc
+
+### Question
+
+[Synchronous HDLC framing](https://en.wikipedia.org/wiki/High-Level_Data_Link_Control#Synchronous_framing) involves decoding a continuous bit stream of data to look for bit patterns that indicate the beginning and end of frames (packets). Seeing exactly 6 consecutive 1s (i.e., 01111110) is a "flag" that indicate frame boundaries. To avoid the data stream from accidentally containing "flags", the sender inserts a zero after every 5 consecutive 1s which the receiver must detect and discard. We also need to signal an error if there are 7 or more consecutive 1s.
+
+Create a finite state machine to recognize these three sequences:
+
+* 0111110: Signal a bit needs to be discarded (disc).
+* 01111110: Flag the beginning/end of a frame (flag).
+* 01111111...: Error (7 or more 1s) (err).
+
+When the FSM is reset, it should be in a state that behaves as though the previous input were 0.
+
+Here are some example sequences that illustrate the desired operation.
+
+Discard 0111110:
+
+![wf1](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822092935.png)
+
+Flag 01111110:
+
+![wf2](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822092959.png)
+
+Reset behaviour and error 01111111...:
+
+![wf3](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822093022.png)
+
+### Module Declaration
+
+```verilog
+    module top_module(
+        input clk,
+        input reset,    // Synchronous reset
+        input in,
+        output disc,
+        output flag,
+        output err);
+```
+
+### Hint
+
+Use a Moore state machine with around 10 states.
+
+![state_machine](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822093157.png)
+
+### Solution
+
+```verilog
+module top_module(
+    input clk,
+    input reset,    // Synchronous reset
+    input in,
+    output disc,
+    output flag,
+    output err);
+	
+    reg [9:0] next_state, state;
+    
+    always @(*) begin
+        next_state[0] = (~in & (state[0] | state[1] | state[2] | state[3] | state[4]
+         | state[7] | state[8] | state[9]));
+        next_state[1] = (in & (state[0] | state[8] | state[9]));
+        next_state[2] = (in & state[1]);
+        next_state[3] = (in & state[2]);
+        next_state[4] = (in & state[3]);
+        next_state[5] = (in & state[4]);
+        next_state[6] = (in & state[5]);
+        next_state[7] = (in & (state[7] | state[6]));
+        next_state[8] = (~in & state[5]);
+        next_state[9] = (~in & state[6]);
+    end
+    
+    always @(posedge clk) begin
+        if (reset) 
+            state <= 10'b1;  // 注意：这里复位不是0，要根据独热码的规则。
+        else
+            state <= next_state;
+    end
+    
+    assign err = state[7];
+    assign disc = state[8];
+    assign flag = state[9];
+endmodule
+```
+
+### Debug
+
+注意：复位状态时10'b1，这里用了上面独热码题目（onehot）的代码。
+
+## Exams/ece241 2013 q8
+
+### Question
+
+Implement a **Mealy**-type finite state machine that recognizes the sequence "101" on an input signal named **x**. Your FSM should have an output signal, **z**, that is asserted to logic-1 when the "101" sequence is detected. Your FSM should also have an active-low asynchronous reset. You may only have 3 states in your state machine. Your FSM should recognize overlapping sequences.
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input aresetn,    // Asynchronous active-low reset
+        input x,
+        output z );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input aresetn,    // Asynchronous active-low reset
+    input x,
+    output z ); 
+
+    localparam IDLE = 2'b00, ONE = 2'b01, TEN = 2'b10;
+    reg [2:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            IDLE : next_state = x ? ONE : IDLE;
+            ONE : next_state = x ? ONE : TEN;
+            TEN : next_state = x ? ONE : IDLE;
+        endcase
+    end
+
+    always @(posedge clk or negedge aresetn) begin
+        if (~aresetn) begin
+            state <= IDLE;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign z = (state == TEN) & (x == 1'b1);
+endmodule
+```
+
+### Referrence
+
+```verilog
+module top_module (
+	input clk,
+	input aresetn,
+	input x,
+	output reg z
+);
+
+	// Give state names and assignments. I'm lazy, so I like to use decimal numbers.
+	// It doesn't really matter what assignment is used, as long as they're unique.
+	parameter S=0, S1=1, S10=2;
+	reg[1:0] state, next;		// Make sure state and next are big enough to hold the state encodings.
+	
+	
+	
+	// Edge-triggered always block (DFFs) for state flip-flops. Asynchronous reset.			
+	always@(posedge clk, negedge aresetn)
+		if (!aresetn)
+			state <= S;
+		else
+			state <= next;
+			
+	
+
+    // Combinational always block for state transition logic. Given the current state and inputs,
+    // what should be next state be?
+    // Combinational always block: Use blocking assignments.    
+	always@(*) begin
+		case (state)
+			S: next = x ? S1 : S;
+			S1: next = x ? S1 : S10;
+			S10: next = x ? S1 : S;
+			default: next = 'x;
+		endcase
+	end
+	
+	
+	
+	// Combinational output logic. I used a combinational always block.
+	// In a Mealy state machine, the output depends on the current state *and*
+	// the inputs.
+	always@(*) begin
+		case (state)
+			S: z = 0;
+			S1: z = 0;
+			S10: z = x;		// This is a Mealy state machine: The output can depend (combinational) on the input.
+			default: z = 1'bx;
+		endcase
+	end
+	
+endmodule
+```
+
+## Exams/ece241 2014 q5a
+
+> 注意：这道题默认输入是负数并且省略了符号位。
+
+### Question
+
+You are to design a one-input one-output serial 2's complementer **Moore** state machine. The input (x) is a series of bits (one per clock cycle) beginning with the least-significant bit of the number, and the output (Z) is the 2's complement of the input. The machine will accept input numbers of arbitrary length. The circuit requires an asynchronous reset. The conversion begins when _Reset_ is released and stops when _Reset_ is asserted.
+
+For example:
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822104655.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input areset,
+        input x,
+        output z
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input areset,
+    input x,
+    output z); 
+
+    localparam IDLE = 2'b00, S1 = 2'b01, S10 = 2'b10;
+
+    reg [2:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            IDLE : next_state = x ? S1 : IDLE;
+            S1 : next_state = x ? S10 : S1;
+            S10 : next_state = x ? S10 : S1;
+        endcase
+    end
+
+    always @(posedge clk or posedge areset) begin
+        if (areset) begin
+            state <= IDLE;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign z = (state == S1);
+endmodule
+```
+
+### Debug
+
+最开始状态机画错了，正确的长成这个样子：
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/C5A74A26154A87EFFE5683F293889EFB.png)
+
+
+## Exams/ece241 2014 q5b
+
+### Question
+
+The following diagram is a **Mealy** machine implementation of the 2's complementer. Implement using one-hot encoding.
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822110111.png)
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822110010.png)
+
+### Module Declaration
+
+```verilog 
+module top_module (
+        input clk,
+        input areset,
+        input x,
+        output z
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input areset,
+    input x,
+    output z); 
+
+    localparam A = 2'b00, B = 2'b10;
+
+    reg [2:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            A : next_state = x ? B : A;
+            B : next_state = B;
+        endcase
+    end
+
+    always @(posedge clk or posedge areset) begin
+        if (areset) begin
+            state <= A;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign z = ((state == A) & ( x == 1'b1)) | ((state == B) & (x == 0));
+endmodule
+```
+
+## Exams/2014 q3fsm
+
+### Question
+
+Consider a finite state machine with inputs _s_ and _w_. Assume that the FSM begins in a reset state called _A_, as depicted below. The FSM remains in state _A_ as long as _s_ = 0, and it moves to state _B_ when _s_ = 1\. Once in state _B_ the FSM examines the value of the input _w_ in the next three clock cycles. If _w_ = 1 in exactly two of these clock cycles, then the FSM has to set an output _z_ to 1 in the following clock cycle. Otherwise _z_ has to be 0. The FSM continues checking _w_ for the next three clock cycles, and so on. The timing diagram below illustrates the required values of _z_ for different values of _w_.
+
+Use as few states as possible. Note that the _s_ input is used only in state _A_, so you need to consider just the _w_ input.
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822210017.png)
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822210035.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,   // Synchronous reset
+        input s,
+        input w,
+        output z
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,   // Synchronous reset
+    input s,
+    input w,
+    output z);
+    
+    localparam A = 1'b0, B = 1'b1;
+    reg state, next_state;
+
+    reg [1:0] cnt;
+    reg [1:0] f_cnt;
+    reg flag;
+
+    always @(*) begin
+        case (state)
+            A : next_state = s ? B : A;
+            B : next_state = B;
+            default : next_state = B;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            state <= A;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            cnt <= 0;
+        end
+        else begin
+            if (state == B) begin
+                if (cnt == 2'b10) cnt <= 0;
+                else cnt <= cnt + 1'b1;
+            end
+            else begin
+                cnt <= 0;
+            end
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            flag <= 0;
+        end
+        else begin
+            if (cnt == 2'b10) begin
+                if ((f_cnt == 2'b01) && (w == 1'b1)) 
+                    flag <= 1'b1;
+                else if ((f_cnt == 2'b10) && (w == 1'b0)) begin
+                    flag <= 1'b1;
+                end
+                else begin
+                    flag <= 1'b0;
+                end
+            end
+            if (flag == 1'b1) 
+                flag <= 1'b0;
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            f_cnt <= 0;
+        end
+        else begin
+            // 最开始这里没有判断在 state == B, 出现了bug
+            if (state == B) begin
+                if (cnt == 2'b10) 
+                    f_cnt <= 0;
+                else if (w == 1'b1) 
+                    f_cnt <= f_cnt + 1'b1;
+                else begin
+                    f_cnt <= f_cnt;
+                end
+            end
+        end
+    end
+
+    assign z = flag;
+endmodule
+```
+
+### Debug
+
+见代码注释
+
+## Exams/2014 q3bfsm
+
+### Question
+
+Given the state-assigned table shown below, implement the finite-state machine. Reset should reset the FSM to state 000.
+
+![table](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822153244.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,   // Synchronous reset
+        input x,
+        output z
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,   // Synchronous reset
+    input x,
+    output z);
+    
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4;
+    reg [2:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            A : next_state = x ? B : A;
+            B : next_state = x ? E : B;
+            C : next_state = x ? B : C;
+            D : next_state = x ? C : B;
+            E : next_state = x ? E : D;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+            state <= A;
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign z = (state == D) | (state == E);
+    
+endmodule
+```
+
+## Exams/2014 q3c
+
+### Question
+
+Given the state-assigned table shown below, implement the logic functions Y\[0\] and z.
+
+![table](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822153244.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input [2:0] y,
+        input x,
+        output Y0,
+        output z
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input [2:0] y,
+    input x,
+    output Y0,
+    output z
+);
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4;
+    reg [2:0] next_state;
+
+    always @(*) begin
+        case (y)
+            A : next_state = x ? B : A;
+            B : next_state = x ? E : B;
+            C : next_state = x ? B : C;
+            D : next_state = x ? C : B;
+            E : next_state = x ? E : D;
+        endcase
+    end
+
+    assign z = (y == D) | (y == E);
+    assign Y0 = next_state[0];
+    
+endmodule
+```
+
+## Exams/m2014 q6b
+
+Consider the state machine shown below, which has one input _w_ and one output _z_.
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822154818.png)
+
+Assume that you wish to implement the FSM using three flip-flops and state codes _y\[3:1\] =_ 000, 001, ... , 101 for states A, B, ... , F, respectively. Show a state-assigned table for this FSM. Derive a next-state expression for the flip-flop _y\[2\]_.
+
+Implement just the next-state logic for _y\[2\]_. (This is much more a FSM question than a Verilog coding question. Oh well.)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input [3:1] y,
+        input w,
+        output Y2);
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input [3:1] y,
+    input w,
+    output Y2);
+
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4, F = 5;
+    reg [3:1] next_state;
+    
+    always @(*) begin
+        case (y)
+            A : next_state = w ? A : B;
+            B : next_state = w ? D : C;
+            C : next_state = w ? D : E;
+            D : next_state = w ? A : F;
+            E : next_state = w ? D : E;
+            F : next_state = w ? D : C;
+        endcase
+    end
+
+    assign Y2 = next_state[2];
+endmodule
+```
+### Tips
+
+这道题理论上应该使用数电课上学的状态机到电路的实现方法来做，使用ffr的情况。
