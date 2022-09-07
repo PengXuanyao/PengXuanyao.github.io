@@ -12,7 +12,7 @@ categories:
 
 最后应该是国二等奖（上次蓝桥是国三，按照找规律，说不定下次再参加一个比赛就是国一了，hhh），整个比赛过程非常的流畅，我也发现了选择正确和好的工具的重要性，基于python的软件开发让我感受到了流畅和轻松。
 
-![pictures of our team](https://s2.loli.net/2022/08/08/FpmnKJgNVjAXTRh.jpg)
+![picture of our team](https://s2.loli.net/2022/08/08/FpmnKJgNVjAXTRh.jpg "picture of our team")
 
 总结一下这次整个IntelCup：
 1. 首先，系统学习一门课程或者技术的最好的方法是去阅读相关的专业入门书籍。正是通过一本专业的书籍和这个项目的实践，我才逐渐熟练起来了python编程。

@@ -32,7 +32,15 @@ categories:
    
    ![我的IP设置_2](https://s2.loli.net/2022/04/18/hIC6vMJ9mUnrbZe.png)
    
-   ![我的IP设置](https://s2.loli.net/2022/04/18/WuMFhoqVJprvOLf.png)
+   ![我的IP设置](https://s2.loli.net/2022/04/18/WuMFhoqVJprvOLf.png "我的IP设置")
+
+> 2022-09-05更新
+
+名称出错也有可能是版本问题。
+
+网上的一些做法是直接将原始信号连接到ila上面，名称未变。我这里是人为添加了一个wire包装一遍（显示的是wire的名称）。
+
+还是不行，等到需要用ILA调试的时候再来看这个该怎么弄吧。感觉和版本以及IP的设置有关系。
 
 ## 附录
 

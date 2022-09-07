@@ -2279,3 +2279,883 @@ endmodule
 ### Tips
 
 这道题理论上应该使用数电课上学的状态机到电路的实现方法来做，使用ffr的情况。
+
+## Exams/m2014 q6c
+
+### Question
+
+Consider the state machine shown below, which has one input _w_ and one output _z_.
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822154818.png)
+
+For this part, assume that a one-hot code is used with the state assignment 'y\[6:1\]_ = 000001, 000010, 000100, 001000, 010000, 100000 for states A, B,..., F, respectively._
+
+Write a logic expression for the next-state signals Y2 and Y4. (Derive the logic equations by inspection assuming a one-hot encoding. The testbench will test with non-one hot inputs to make sure you're not trying to do something more complicated).
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input [6:1] y,
+        input w,
+        output Y2,
+        output Y4);
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input [6:1] y,
+    input w,
+    output Y2,
+    output Y4);
+
+    always @(*) begin
+        Y2 = (~ w) & y[1];
+        Y4 = w & (y[2] | y[3] | y[5] | y[6]);
+    end
+    
+endmodule
+```
+
+## Exams/m2014 q6
+
+### Question
+
+Consider the state machine shown below, which has one input _w_ and one output _z_.
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220822154818.png)
+
+Implement the state machine. (This part wasn't on the midterm, but coding up FSMs is good practice).
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,     // synchronous reset
+        input w,
+        output z);
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,     // synchronous reset
+    input w,
+    output z);
+
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4, F = 5;
+    reg [3:1] state, next_state;
+    
+    always @(*) begin
+        case (state)
+            A : next_state = w ? A : B;
+            B : next_state = w ? D : C;
+            C : next_state = w ? D : E;
+            D : next_state = w ? A : F;
+            E : next_state = w ? D : E;
+            F : next_state = w ? D : C;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+            state <= A;
+        else 
+            state <= next_state;
+    end
+    
+    assign z = (state == E) | (state == F);
+    
+endmodule
+```
+## Exams/2012 q2fsm
+
+### Question
+
+Consider the state diagram shown below.
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220823080859.png)
+
+Write complete Verilog code that represents this FSM. Use separate **always** blocks for the state table and the state flip-flops, as done in lectures. Describe the FSM output, which is called _z_, using either continuous assignment statement(s) or an **always** block (at your discretion). Assign any state codes that you wish to use.
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,   // Synchronous active-high reset
+        input w,
+        output z
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,     // synchronous reset
+    input w,
+    output z);
+
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4, F = 5;
+    reg [3:1] state, next_state;
+    wire r_w;
+    
+    assign r_w = ~w;
+    
+    always @(*) begin
+        case (state)
+            A : next_state = r_w ? A : B;
+            B : next_state = r_w ? D : C;
+            C : next_state = r_w ? D : E;
+            D : next_state = r_w ? A : F;
+            E : next_state = r_w ? D : E;
+            F : next_state = r_w ? D : C;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+            state <= A;
+        else 
+            state <= next_state;
+    end
+    
+    assign z = (state == E) | (state == F);
+    
+endmodule
+```
+
+### Debug
+
+注意状态机和上面几个不一样。
+
+## Exams/2012 q2b
+
+### Question
+
+The state diagram for this question is shown again below.
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220823080859.png)
+
+Assume that a one-hot code is used with the state assignment _y\[5:0\]_ = 000001(A), 000010(B), 000100(C), 001000(D), 010000(E), 100000(F)
+
+Write a logic expression for the signal _Y1_, which is the input of state flip-flop _y\[1\]_.
+
+Write a logic expression for the signal _Y3_, which is the input of state flip-flop _y\[3\]_.
+
+(Derive the logic equations by inspection assuming a one-hot encoding. The testbench will test with non-one hot inputs to make sure you're not trying to do something more complicated).
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input [5:0] y,
+        input w,
+        output Y1,
+        output Y3
+    );
+```
+
+Logic equations for one-hot state transition logic can be derived by looking at in-edges of the state transition diagram.
+
+### Solution
+
+```verilog
+module top_module (
+    input [5:0] y,
+    input w,
+    output Y1,
+    output Y3);
+
+    assign Y1 = w & y[0];
+    assign Y3 = ~w & (y[1] | y[2] | y[4] | y[5]);
+
+endmodule
+```
+
+## Exams/2013 q2afsm
+
+### Question
+
+Consider the FSM described by the state diagram shown below:
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220823104213.png)
+
+This FSM acts as an arbiter circuit, which controls access to some type of resource by three requesting devices. Each device makes its request for the resource by setting a signal _r\[i\]_ = 1, where _r\[i\]_ is either _r\[1\]_, _r\[2\]_, or _r\[3\]_. Each r\[i\] is an input signal to the FSM, and represents one of the three devices. The FSM stays in state _A_ as long as there are no requests. When one or more request occurs, then the FSM decides which device receives a grant to use the resource and changes to a state that sets that device’s _g\[i\]_ signal to 1. Each _g\[i\]_ is an output from the FSM. There is a priority system, in that device 1 has a higher priority than device 2, and device 3 has the lowest priority. Hence, for example, device 3 will only receive a grant if it is the only device making a request when the FSM is in state _A_. Once a device, _i_, is given a grant by the FSM, that device continues to receive the grant as long as its request, _r\[i\]_ = 1.
+
+Write complete Verilog code that represents this FSM. Use separate always blocks for the state table and the state flip-flops, as done in lectures. Describe the FSM outputs, _g\[i\]_, using either continuous assignment statement(s) or an always block (at your discretion). Assign any state codes that you wish to use.
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input resetn,    // active-low synchronous reset
+        input [3:1] r,   // request
+        output [3:1] g   // grant
+    );
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input resetn,    // active-low synchronous reset
+    input [3:1] r,   // request
+    output [3:1] g   // grant
+    );
+    
+    localparam A = 2'b00, B = 2'b01, C = 2'b10, D = 2'b11;
+    reg [1:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            A : next_state = r[1] ? B : r[2] ? C : r[3] ? D : A;
+            B : next_state = r[1] ? B : A;
+            C : next_state = r[2] ? C : A;
+            D : next_state = r[3] ? D : A;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (~resetn) begin
+            state <= A;
+        end
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign g[1] = (state == B);
+    assign g[2] = (state == C);
+    assign g[3] = (state == D);
+
+endmodule
+```
+
+## Exams/2013 q2bfsm
+
+### Question
+
+Consider a finite state machine that is used to control some type of motor. The FSM has inputs _x_ and _y_, which come from the motor, and produces outputs _f_ and _g_, which control the motor. There is also a clock input called _clk_ and a reset input called _resetn_.
+
+The FSM has to work as follows. As long as the reset input is asserted, the FSM stays in a beginning state, called state _A_. When the reset signal is de-asserted, then after the next clock edge the FSM has to set the output _f_ to 1 for one clock cycle. **Then**, the FSM has to monitor the _x_ input. When _x_ has produced the values 1, 0, 1 in three successive clock cycles, then _g_ should be set to 1 on the following clock cycle. While maintaining _g_ = 1 the FSM has to monitor the _y_ input. If _y_ has the value 1 within at most two clock cycles, then the FSM should maintain _g_ = 1 permanently (that is, until reset). But if _y_ does not become 1 within two clock cycles, then the FSM should set _g_ = 0 permanently (until reset).
+
+(The original exam question asked for a state diagram only. But here, implement the FSM.)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input resetn,    // active-low synchronous reset
+        input x,
+        input y,
+        output f,
+        output g
+    );
+```
+
+### Solution
+
+
+
+```verilog
+module top_module (
+    input clk,
+    input resetn,    // active-low synchronous reset
+    input x,
+    input y,
+    output f,
+    output g
+    ); 
+    
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4, F = 5, G = 6, H = 7, I = 8;
+    reg [3:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            A : next_state = B;
+            B : next_state = C;
+            C : next_state = x ? D : C;
+            D : next_state = x ? D : E;
+            E : next_state = x ? F : C;
+            F : next_state = y ? I : G;
+            G : next_state = y ? I : H;
+            H : next_state = H;
+            I : next_state = I;
+            default : next_state = A;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (~resetn)
+            state <= A;
+        else begin
+            state <= next_state;     
+        end
+    end
+
+    assign f = (state == B);
+    assign g = (state == F) | (state == G) | (state == I);
+endmodule
+```
+
+## Exams/review2015 count1k
+
+### Question
+
+Build a counter that counts from 0 to 999, inclusive, with a period of 1000 cycles. The reset input is synchronous, and should reset the counter to 0.
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220824103438.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,
+        output [9:0] q);
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,
+    output [9:0] q);
+    always @(posedge clk) begin
+        if (reset) begin
+            q <= 0;
+        end
+        else begin
+            if (q > 10'd998) 
+            	q <= 0;
+            else 
+                q <= q + 1'b1;
+        end
+    end
+endmodule
+```
+
+## Exams/review2015 shiftcount
+
+### Question
+
+_This is the first component in a series of five exercises that builds a complex counter out of several smaller circuits. See [the final exercise](https://hdlbits.01xz.net/wiki/exams/review2015_fancytimer "exams/review2015_fancytimer") for the overall design._
+
+Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220824173044.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input shift_ena,
+        input count_ena,
+        input data,
+        output [3:0] q);
+```
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input shift_ena,
+    input count_ena,
+    input data,
+    output [3:0] q);
+
+    always @(posedge clk) begin
+        if (shift_ena) begin
+            q <= {q[2:0], data};
+        end
+        else begin
+            q <= q;
+        end
+        if (count_ena) begin
+            if (q == 0) begin
+                q <= 4'd15;
+            end
+            else begin
+                q <= q - 1'b1;
+            end
+        end
+    end
+endmodule
+```
+
+### Debug
+
+开始还有一点问题，就是data延迟了一个周期再输入，其实不用，本来就会有一个周期的延迟。
+
+## Exams/review2015 fsmseq
+
+### Question
+
+_This is the second component in a series of five exercises that builds a complex counter out of several smaller circuits. See [the final exercise](https://hdlbits.01xz.net/wiki/exams/review2015_fancytimer "exams/review2015_fancytimer") for the overall design._
+
+Build a finite-state machine that searches for the sequence 1101 in an input bit stream. When the sequence is found, it should set start_shifting to 1, forever, until reset. Getting stuck in the final state is intended to model going to other states in a bigger FSM that is not yet implemented. We will be extending this FSM in the next few exercises.
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220824204709.png)
+
+### Module Declaration
+```verilog
+    module top_module (
+        input clk,
+        input reset,      // Synchronous reset
+        input data,
+        output start_shifting);
+```
+
+### Solution
+ 
+```verilog
+module top_module (
+    input clk,
+    input reset,      // Synchronous reset
+    input data,
+    output start_shifting);
+
+    localparam A = 0, B = 1, C = 2, D = 3, E = 4;
+
+    reg [2:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            A : next_state = data ? B : A;
+            B : next_state = data ? C : A;
+            C : next_state = data ? C : D;
+            D : next_state = data ? E : A;
+            E : next_state = E;
+            default : next_state = A;
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+            state <= A;
+        else begin
+            state <= next_state;     
+        end
+    end
+
+    assign start_shifting = (state == E);
+endmodule
+```
+
+## Exams/review2015 fsmshift
+
+### Question
+
+_This is the third component in a series of five exercises that builds a complex counter out of several smaller circuits. See [the final exercise](https://hdlbits.01xz.net/wiki/exams/review2015_fancytimer "exams/review2015_fancytimer") for the overall design._
+
+As part of the FSM for controlling the shift register, we want the ability to enable the shift register for exactly 4 clock cycles whenever the proper bit pattern is detected. We handle sequence detection in [Exams/review2015_fsmseq](https://hdlbits.01xz.net/wiki/Exams/review2015_fsmseq "Exams/review2015 fsmseq"), so this portion of the FSM only handles enabling the shift register for 4 cycles.
+
+Whenever the FSM is reset, assert shift_ena for 4 cycles, then 0 forever (until reset).
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220824211056.png)
+
+### Module Declaration
+
+```verilog
+module top_module (
+    input clk,
+    input reset,      // Synchronous reset
+    output shift_ena);
+```
+
+### Soltuion
+
+```verilog
+module top_module (
+    input clk,
+    input reset,      // Synchronous reset
+    output shift_ena);
+    
+    reg [2:0] cnt;
+    
+    always @(posedge clk) begin
+        if (reset)
+            cnt <= 0;
+        else begin
+            if (cnt == 4'd3)
+                cnt <= 4'd3;
+            else
+            	cnt <= cnt + 1'b1;
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+        	shift_ena <= 1'b1;
+        else begin
+            if (cnt == 4'd3)
+                shift_ena <= 0;
+            else
+                shift_ena <= 1'b1;
+        end
+    end
+endmodule
+```
+
+## Exams/review2015 fsm
+
+### Question
+
+_This is the fourth component in a series of five exercises that builds a complex counter out of several smaller circuits. See [the final exercise](https://hdlbits.01xz.net/wiki/exams/review2015_fancytimer "exams/review2015_fancytimer") for the overall design._
+
+You may wish to do [FSM: Enable shift register](https://hdlbits.01xz.net/wiki/Exams/review2015_fsmshift "Exams/review2015 fsmshift") and [FSM: Sequence recognizer](https://hdlbits.01xz.net/wiki/Exams/review2015_fsmseq "Exams/review2015 fsmseq") first.
+
+We want to create a timer that:
+
+1.  is started when a particular pattern (1101) is detected,
+2.  shifts in 4 more bits to determine the duration to delay,
+3.  waits for the counters to finish counting, and
+4.  notifies the user and waits for the user to acknowledge the timer.
+
+In this problem, implement just the finite-state machine that controls the timer. The data path (counters and some comparators) are not included here.
+
+The serial data is available on the data input pin. When the pattern 1101 is received, the state machine must then assert output shift_ena for exactly 4 clock cycles.
+
+After that, the state machine asserts its counting output to indicate it is waiting for the counters, and waits until input done_counting is high.
+
+At that point, the state machine must assert done to notify the user the timer has timed out, and waits until input ack is 1 before being reset to look for the next occurrence of the start sequence (1101).
+
+The state machine should reset into a state where it begins searching for the input sequence 1101.
+
+Here is an example of the expected inputs and outputs. The 'x' states may be slightly confusing to read. They indicate that the FSM should not care about that particular input signal in that cycle. For example, once a 1101 pattern is detected, the FSM no longer looks at the data input until it resumes searching after everything else is done.
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220826162433.png)
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,      // Synchronous reset
+        input data,
+        output shift_ena,
+        output counting,
+        input done_counting,
+        output done,
+        input ack );
+```
+
+![hint](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220826162619.png "hint")
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,      // Synchronous reset
+    input data,
+    output shift_ena,
+    output counting,
+    input done_counting,
+    output done,
+    input ack );
+
+    localparam S = 0, S1 = 1, S11 = 2, S110 = 3, B0 = 4, B1 = 5, B2 = 6, B3 = 7,
+                COUNT = 8, WAIT = 9;
+
+    reg [3:0] state, next_state;
+
+    always @(*) begin
+        case (state)
+            S : next_state = data ? S1 : S;
+            S1 : next_state = data ? S11 : S;
+            S11 : next_state = data ? S11 : S110;
+            S110 : next_state = data ? B0 : S;
+            B0 : next_state = B1;
+            B1 : next_state = B2;
+            B2 : next_state = B3;
+            B3 : next_state = COUNT;
+            COUNT : next_state = done_counting ? WAIT : COUNT;
+            WAIT : next_state = ack ? S : WAIT; 
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+            state <= S;
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign shift_ena = ((state == B0) | (state == B1) | (state == B2) | 
+                        (state == B3));
+    assign counting = (state == COUNT);
+    assign done = (state == WAIT);
+endmodule
+```
+
+## Exams/review2015 fancytimer
+
+### Question
+
+_This is the fifth component in a series of five exercises that builds a complex counter out of several smaller circuits. You may wish to do the four previous exercises first ([counter](https://hdlbits.01xz.net/wiki/exams/review2015_shiftcount "exams/review2015_shiftcount"), [sequence recognizer FSM](https://hdlbits.01xz.net/wiki/exams/review2015_fsmseq "exams/review2015_fsmseq"), [FSM delay](https://hdlbits.01xz.net/wiki/exams/review2015_fsmshift "exams/review2015_fsmshift"), and [combined FSM](https://hdlbits.01xz.net/wiki/exams/review2015_fsm "exams/review2015_fsm"))._
+
+We want to create a timer with one input that:
+
+1.  is started when a particular input pattern (1101) is detected,
+2.  shifts in 4 more bits to determine the duration to delay,
+3.  waits for the counters to finish counting, and
+4.  notifies the user and waits for the user to acknowledge the timer.
+
+The serial data is available on the data input pin. When the pattern 1101 is received, the circuit must then shift in the next 4 bits, most-significant-bit first. These 4 bits determine the duration of the timer delay. I'll refer to this as the delay\[3:0\].
+
+After that, the state machine asserts its counting output to indicate it is counting. The state machine must count for exactly (delay\[3:0\] + 1) * 1000 clock cycles. e.g., delay=0 means count 1000 cycles, and delay=5 means count 6000 cycles. Also output the current remaining time. This should be equal to delay for 1000 cycles, then delay-1 for 1000 cycles, and so on until it is 0 for 1000 cycles. When the circuit isn't counting, the count\[3:0\] output is don't-care (whatever value is convenient for you to implement).
+
+At that point, the circuit must assert done to notify the user the timer has timed out, and waits until input ack is 1 before being reset to look for the next occurrence of the start sequence (1101).
+
+The circuit should reset into a state where it begins searching for the input sequence 1101.
+
+Here is an example of the expected inputs and outputs. The 'x' states may be slightly confusing to read. They indicate that the FSM should not care about that particular input signal in that cycle. For example, once the 1101 and delay\[3:0\] have been read, the circuit no longer looks at the data input until it resumes searching after everything else is done. In this example, the circuit counts for 2000 clock cycles because the delay\[3:0\] value was 4'b0001. The last few cycles starts another count with delay\[3:0\] = 4'b1110, which will count for 15000 cycles.
+
+![wf](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220828164209.png "wf")
+
+### Module Declaration
+
+```verilog
+    module top_module (
+        input clk,
+        input reset,      // Synchronous reset
+        input data,
+        output [3:0] count,
+        output counting,
+        output done,
+        input ack );
+```
+
+#### Hint
+
+> The hardware should be approximately the FSM from [Exams/review2015_fsm](https://hdlbits.01xz.net/wiki/Exams/review2015_fsm "Exams/review2015 fsm"), the counter from [Exams/review2015_count1k](https://hdlbits.01xz.net/wiki/Exams/review2015_count1k "Exams/review2015 count1k"), and the shift register+counter from [Exams/review2015_shiftcount](https://hdlbits.01xz.net/wiki/Exams/review2015_shiftcount "Exams/review2015 shiftcount"). You'll probably need a few more comparators here.
+> 
+> It's ok to have all the code in a single module if the components are in their own always blocks, as long as it's clear which blob of code corresponds to which hardware block. Don't merge multiple always blocks together, as that's hard to read and error-prone.
+
+### Solution
+
+```verilog
+module top_module (
+    input clk,
+    input reset,      // Synchronous reset
+    input data,
+    output [3:0] count,
+    output counting,
+    output done,
+    input ack );
+
+    localparam S = 0, S1 = 1, S11 = 2, S110 = 3, B0 = 4, B1 = 5, B2 = 6, B3 = 7,
+                COUNT = 8, WAIT = 9;
+
+    reg [3:0] state, next_state;
+    reg [3:0] delay;
+    reg [9:0] k_cnt, d_cnt; // kilo_counter, delay_counter
+    reg shift_ena, done_counting;
+
+    always @(*) begin
+        case (state)
+            S : next_state = data ? S1 : S;
+            S1 : next_state = data ? S11 : S;
+            S11 : next_state = data ? S11 : S110;
+            S110 : next_state = data ? B0 : S;
+            B0 : next_state = B1;
+            B1 : next_state = B2;
+            B2 : next_state = B3;
+            B3 : next_state = COUNT;
+            COUNT : next_state = done_counting ? WAIT : COUNT;
+            WAIT : next_state = ack ? S : WAIT; 
+        endcase
+    end
+
+    always @(posedge clk) begin
+        if (reset)
+            state <= S;
+        else begin
+            state <= next_state;
+        end
+    end
+
+    assign shift_ena = ((state == B0) | (state == B1) | (state == B2) | 
+                        (state == B3));
+    assign counting = (state == COUNT);
+    assign done = (state == WAIT);
+
+    always @(posedge clk) begin
+        if (reset) begin
+            delay <= 0;
+        end
+        else begin
+            if (shift_ena) begin
+                integer i;
+                delay[0] <= data; 
+                for (i = 0; i < 3; i = i + 1) begin : loop
+                    delay[i + 1] <= delay[i]; 
+                end
+            end
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            k_cnt <= 0;
+        end
+        else begin
+            if (counting) begin
+                if (k_cnt == 10'd999) begin
+                    k_cnt <= 0;
+                end
+                else begin
+                    k_cnt <= k_cnt + 1'b1;
+                end
+            end
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            d_cnt <= 0;
+        end
+        else begin
+            if (state == B3) begin
+                d_cnt <= {delay[2:0], data};
+            end
+            else if (k_cnt == 10'd999) begin
+                d_cnt <= d_cnt - 1'b1;
+            end
+        end
+    end
+
+    always @(posedge clk) begin
+        if (reset) begin
+            done_counting <= 0;
+        end
+        else begin
+            if ((k_cnt == 10'd998) & (d_cnt == 0)) begin
+                done_counting <= 1'b1;
+            end
+            else begin 
+                done_counting <= 0;
+            end
+        end
+    end
+    
+    assign count = d_cnt;
+endmodule
+```
+
+### Debug
+
+1. 开始边界条件写错了，`k_cnt == 10'd998` 多写了一个数。
+
+## Exams/review2015 fsmonehot
+
+### Question
+
+Given the following state machine with 3 inputs, 3 outputs, and 10 states:
+
+![sm](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20220828164700.png)
+
+Derive next-state logic equations and output logic equations _by inspection_ assuming the following one-hot encoding is used: (S, S1, S11, S110, B0, B1, B2, B3, Count, Wait) = (10'b0000000001, 10'b0000000010, 10'b0000000100, ... , 10'b1000000000)
+
+**Derive state transition and output logic equations by inspection** assuming a one-hot encoding. Implement only the state transition logic and output logic (the combinational logic portion) for this state machine. (The testbench will test with non-one hot inputs to make sure you're not trying to do something more complicated. See [fsm3onehot](https://hdlbits.01xz.net/wiki/fsm3onehot "fsm3onehot") for a description of what is meant by deriving logic equations "by inspection" for one-hot state machines.)
+
+Write code that generates the following equations:
+
+* B3_next -- next-state logic for state B3
+* S_next
+* S1_next
+* Count_next
+* Wait_next
+* done -- output logic
+* counting
+* shift_ena
+
+Logic equations for one-hot state transition logic can be derived by looking at in-edges of the state transition diagram.
+
+### Module Declaration
+
+```verilog
+    module top_module(
+        input d,
+        input done_counting,
+        input ack,
+        input [9:0] state,    // 10-bit one-hot current state
+        output B3_next,
+        output S_next,
+        output S1_next,
+        output Count_next,
+        output Wait_next,
+        output done,
+        output counting,
+        output shift_ena
+    );
+```
+
+### Solution
+
+```verilog
+module top_module(
+    input d,
+    input done_counting,
+    input ack,
+    input [9:0] state,    // 10-bit one-hot current state
+    output B3_next,
+    output S_next,
+    output S1_next,
+    output Count_next,
+    output Wait_next,
+    output done,
+    output counting,
+    output shift_ena
+); //
+
+    // You may use these parameters to access state bits using e.g., state[B2] instead of state[6].
+    parameter S=0, S1=1, S11=2, S110=3, B0=4, B1=5, B2=6, B3=7, Count=8, Wait=9;
+    
+    assign B3_next = state[B2]; 
+    assign S_next =  ((~d) & (state[S110] | state[S] | state[S1])) | (ack & 
+        state[Wait]);
+    assign S1_next = d & state[S];
+    assign Count_next = ((~done_counting) & state[Count]) | state[B3]; 
+    assign Wait_next = ((~ack) & state[Wait]) | (done_counting & state[Count]);
+
+    assign done = state[Wait];
+    assign counting = state[Count];
+    assign shift_ena = (state[B0] | state[B1] | state[B2] | state[B3]);
+    
+endmodule
+```
+
+### Debug
+
+最开始这里写错了：
+```verilog
+assign Count_next = ((~done_counting) & state[Count]) | state[B3];
+```
+
+写成了：
+```verilog
+assign Count_next = ((~done_counting) & state[Count]);
+```
+
+
+
+
+
+

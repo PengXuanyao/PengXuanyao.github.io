@@ -18,10 +18,6 @@ categories:
 
 Conda install 和 Pip 的区别：[Anaconda | Understanding Conda and Pip](https://www.anaconda.com/blog/understanding-conda-and-pip)
 
-储能91，929，930，932，933，936，937，939完成
-
-934，935，937，938，941
-
 PyQt教程：[PyQt5图形界面入门教程（第一篇） (xdbcb8.com)](https://www.xdbcb8.com/archives/98.html)
 
 例子：
