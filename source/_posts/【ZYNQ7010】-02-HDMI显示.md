@@ -24,9 +24,40 @@ categories:
 > 1. [Linux下快速启动Xilinx Vivado方法](https://juejin.cn/post/6844903886415740936)
 > 2. [Ubuntu启动Xilinx Vivado](https://blog.csdn.net/qsczxcedczx/article/details/114101741)
 
-为什么不能够自动补全标题？？
+为什么粘贴链接时候不能够自动补全标题？换过编辑器（zettlr和vscode），这个问题还是存在，目前暂时认为是复制粘贴功能的问题
 
-最后是参考了资料2的内容，直接在.bashrc中添加了source
+最后是参考了资料2的内容，直接在.bashrc中添加了source /tools/···
+
+## 使用SDK固化FLASH代码固化
+
+今天还是先做一个简单的SDK固话FLASH的项目，将上次完成呼吸灯项目固化到flash当中。
+
+1. 报错
+
+> [Common 17-69] Command failed: write_hw_platform is only supported for synthesized, implemented, or checkpoint designs
+
+解决方法：关闭elaborated design即可，[当前项目不允许导出](https://www.cnblogs.com/YYFaGe/p/14362187.html)。
+
+2. 找不到SDK入口
+
+升级之后，使用vitis（不需要vivado_sdk），[vitis导入](https://blog.csdn.net/a2267542848/article/details/115976597)
+
+3. 怎样使用vitis
+
+新建platform project，然后导入硬件生成的xsa文件。[xsa文件导入](https://blog.csdn.net/qq_31253859/article/details/112243552)
+
+4. 找不到elf文件
+
+在zynq_fsbl中运行makefile文件，得到生成的fsbl.elf文件。
+
+5. WARNING: Failed to connect to hw_server at TCP:127.0.0.1:3121
+Attempting to launch hw_server at TCP:127.0.0.1:3121； ERROR: Unable to detect JTAG cable
+
+怀疑是linux系统无法识别板卡的问题。
+
+
+
+
 
 
 
