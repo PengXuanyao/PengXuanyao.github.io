@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1.DFF  Create a single D flip-flop. 12345678module top_module (    input clk,    &#x2F;&#x2F; Clocks are used in sequential circuits    input d,    output reg q );    always @(posedge clk) begin        q &amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Verilog学习】-08-时序逻辑-基础触发器">
+<meta property="og:url" content="http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/index.html">
+<meta property="og:site_name" content="PengXuanyao">
+<meta property="og:description" content="1.DFF  Create a single D flip-flop. 12345678module top_module (    input clk,    &#x2F;&#x2F; Clocks are used in sequential circuits    input d,    output reg q );    always @(posedge clk) begin        q &amp;lt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hdlbits.01xz.net/mw/images/d/d6/Ece241_2014_q4.png">
+<meta property="article:published_time" content="2022-03-15T03:36:28.000Z">
+<meta property="article:modified_time" content="2022-07-15T13:55:46.060Z">
+<meta property="article:author" content="PengXuanyao">
+<meta property="article:tag" content="verilog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hdlbits.01xz.net/mw/images/d/d6/Ece241_2014_q4.png">
+
+
+<link rel="canonical" href="http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/","path":"2022/03/15/【Verilog学习】-08-时序逻辑-基础触发器/","title":"【Verilog学习】-08-时序逻辑-基础触发器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【Verilog学习】-08-时序逻辑-基础触发器 | PengXuanyao</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">PengXuanyao</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">天地交，万物通</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dff"><span class="nav-number">1.</span> <span class="nav-text">1.DFF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff8"><span class="nav-number">2.</span> <span class="nav-text">2.DFF8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff8r"><span class="nav-number">3.</span> <span class="nav-text">3.Dff8r</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff8p"><span class="nav-number">4.</span> <span class="nav-text">4.Dff8p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff8ar"><span class="nav-number">5.</span> <span class="nav-text">5.Dff8ar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff16e"><span class="nav-number">6.</span> <span class="nav-text">6.Dff16e</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-latch"><span class="nav-number">7.</span> <span class="nav-text">7.D Latch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff-with-gate"><span class="nav-number">8.</span> <span class="nav-text">8.DFF with gate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff-mux---0"><span class="nav-number">9.</span> <span class="nav-text">9.DFF + MUX - 0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff-mux---1"><span class="nav-number">10.</span> <span class="nav-text">10.DFF + MUX - 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dff-gates"><span class="nav-number">11.</span> <span class="nav-text">11.DFF + GATES</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jk-ff2"><span class="nav-number">12.</span> <span class="nav-text">12.JK-FF2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edge-detect"><span class="nav-number">13.</span> <span class="nav-text">13.Edge Detect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edgedetect2"><span class="nav-number">14.</span> <span class="nav-text">14.EdgeDetect2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edgecapture"><span class="nav-number">15.</span> <span class="nav-text">15.EdgeCapture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dualedge"><span class="nav-number">16.</span> <span class="nav-text">16.Dualedge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">17.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">18.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PengXuanyao"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">PengXuanyao</p>
+  <div class="site-description" itemprop="description">This is my personal blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/15/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-08-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E5%9F%BA%E7%A1%80%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Verilog学习】-08-时序逻辑-基础触发器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 11:36:28" itemprop="dateCreated datePublished" datetime="2022-03-15T11:36:28+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 21:55:46" itemprop="dateModified" datetime="2022-07-15T21:55:46+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="dff">1.DFF</h2>
+<hr />
+<p>Create a single D flip-flop.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,    <span class="comment">// Clocks are used in sequential circuits</span></span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> q );</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="dff8">2.DFF8</h2>
+<hr />
+<p>Create 8 D flip-flops. All DFFs should be triggered by the positive
+edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        q[<span class="number">7</span>:<span class="number">0</span>] &lt;= d[<span class="number">7</span>:<span class="number">0</span>];    <span class="comment">// q &lt;= d;</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8r">3.Dff8r</h2>
+<hr />
+<p>Create 8 D flip-flops with active high synchronous reset. All DFFs
+should be triggered by the positive edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,            <span class="comment">// Synchronous reset</span></span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">&#x27;b0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            q &lt;= d;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8p">4.Dff8p</h2>
+<hr />
+<p>Create 8 D flip-flops with active high synchronous reset. The
+flip-flops must be reset to 0x34 rather than zero. All DFFs should be
+triggered by the <strong>negative</strong> edge of <code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            d &lt;= <span class="number">8&#x27;h34</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            d &lt;= q;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff8ar">5.Dff8ar</h2>
+<hr />
+<p>Create 8 D flip-flops with active high asynchronous reset. All DFFs
+should be triggered by the positive edge of <code>clk</code>.<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,   <span class="comment">// active high asynchronous reset</span></span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> areset) <span class="keyword">begin</span> <span class="comment">// 这里加上or和后面的信号可以实现异步</span></span><br><span class="line">        <span class="keyword">if</span> (areset) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">&#x27;d0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            q &lt;= d;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff16e">6.Dff16e</h2>
+<hr />
+<p>Create 16 D flip-flops. It's sometimes useful to only modify parts of
+a group of flip-flops. The byte-enable inputs control whether each byte
+of the 16 registers should be written to on that cycle.
+<code>byteena[1]</code> controls the upper byte <code>d[15:8]</code>,
+while <code>byteena[0]</code> controls the lower byte
+<code>d[7:0]</code>.</p>
+<p><code>resetn</code> is a synchronous(同步的，不要和异步高反了,
+active-low reset.</p>
+<p>All DFFs should be triggered by the positive edge of
+<code>clk</code>.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> resetn,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] byteena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">15</span>:<span class="number">0</span>] d,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">15</span>:<span class="number">0</span>] q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (!resetn) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">&#x27;d0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            q[<span class="number">15</span>:<span class="number">8</span>] &lt;= byteena[<span class="number">1</span>] ? d[<span class="number">15</span>:<span class="number">8</span>] : q[<span class="number">15</span>:<span class="number">8</span>];</span><br><span class="line">            q[<span class="number">7</span>:<span class="number">0</span>] &lt;= byteena[<span class="number">0</span>] ? d[<span class="number">7</span>:<span class="number">0</span>] : q[<span class="number">7</span>:<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="d-latch">7.D Latch</h2>
+<hr />
+<p>Implement the following circuit:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_m2014q4a.png"><img
+src="https://hdlbits.01xz.net/mw/images/0/03/Exams_m2014q4a.png"
+alt="Exams m2014q4a.png" /></a></p>
+<p>Note that this is a latch, so a Quartus warning about having inferred
+a latch is expected.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> d, </span><br><span class="line">    <span class="keyword">input</span> ena,</span><br><span class="line">    <span class="keyword">output</span> q);</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (ena) <span class="keyword">begin</span></span><br><span class="line">            d &lt;= q;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-with-gate">8.DFF with gate</h2>
+<hr />
+<p>Implement the following circuit:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_m2014q4d.png"><img
+src="https://hdlbits.01xz.net/mw/images/f/f2/Exams_m2014q4d.png"
+alt="Exams m2014q4d.png" /></a></p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> in, </span><br><span class="line">    <span class="keyword">output</span> out);</span><br><span class="line">    <span class="keyword">wire</span> d;</span><br><span class="line">    <span class="keyword">reg</span> q;</span><br><span class="line">    <span class="keyword">assign</span> d = in ^ out;</span><br><span class="line">    <span class="keyword">assign</span> out = q;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-mux---0">9.DFF + MUX - 0</h2>
+<hr />
+<p>Taken from ECE253 2015 midterm question 5</p>
+<p>Consider the sequential circuit below:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Mt2015_muxdff.png"><embed
+src="https://hdlbits.01xz.net/mw/thumb.php?f=Mt2015_muxdff.png&amp;width=800" /></a></p>
+<p>Assume that you want to implement hierarchical Verilog code for this
+circuit, using three instantiations of a submodule that has a flip-flop
+and multiplexer in it. Write a Verilog module (containing one flip-flop
+and multiplexer) named <code>top_module</code> for this submodule.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> L,</span><br><span class="line">    <span class="keyword">input</span> r_in,</span><br><span class="line">    <span class="keyword">input</span> q_in,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> Q);</span><br><span class="line">    <span class="keyword">wire</span> d;</span><br><span class="line">    <span class="keyword">assign</span> d = L ? r_in : q_in;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        Q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-mux---1">10.DFF + MUX - 1</h2>
+<p>Consider the <em>n</em>-bit shift register circuit shown below:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_2014q4.png"><embed
+src="https://hdlbits.01xz.net/mw/thumb.php?f=Exams_2014q4.png&amp;width=900" /></a></p>
+<p>Write a Verilog module named top_module for one stage of this
+circuit, including both the flip-flop and multiplexers.</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> w, R, E, L,</span><br><span class="line">    <span class="keyword">output</span> Q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">wire</span> x,d;</span><br><span class="line">    <span class="keyword">assign</span> x = E ? W : Q;</span><br><span class="line">    <span class="keyword">assign</span> d = L ? R : x;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        Q &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dff-gates">11.DFF + GATES</h2>
+<hr />
+<p>Given the finite state machine circuit as shown, assume that the D
+flip-flops are initially reset to zero before the machine begins.</p>
+<p>Build this circuit.</p>
+<p>Hint: Be careful with the reset state. Ensure that each D flip-flop's
+Q output is really the inverse of its Q output, even before the first
+clock edge of the simulation.</p>
+<figure>
+<img src="https://hdlbits.01xz.net/mw/images/d/d6/Ece241_2014_q4.png"
+alt="Ece241 2014 q4.png" />
+<figcaption aria-hidden="true">Ece241 2014 q4.png</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> x,</span><br><span class="line">    <span class="keyword">output</span> z</span><br><span class="line">); </span><br><span class="line">    <span class="keyword">reg</span> q0 = <span class="number">&#x27;b0</span>,q1 = <span class="number">&#x27;b0</span>, q2 = <span class="number">&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">wire</span> q0_n,q1_n,q2_n,d0,d1,d2;</span><br><span class="line">    <span class="keyword">assign</span> q0_n = ~q0;</span><br><span class="line">    <span class="keyword">assign</span> q1_n = ~q1;</span><br><span class="line">    <span class="keyword">assign</span> q2_n = ~q2;</span><br><span class="line">    <span class="keyword">assign</span> d0 = x ^ q0;</span><br><span class="line">    <span class="keyword">assign</span> d1 = x &amp; q1_n;</span><br><span class="line">    <span class="keyword">assign</span> d2 = x | q2_n;</span><br><span class="line">    <span class="keyword">assign</span> z = ~(q0 | q1 | q2);</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        q0 &lt;= d0;</span><br><span class="line">        q1 &lt;= d1;</span><br><span class="line">        q2 &lt;= d2;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="jk-ff2">12.JK-FF<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></h2>
+<hr />
+<p>A JK flip-flop has the below truth table. Implement a JK flip-flop
+with only a D-type flip-flop and gates. Note: Qold is the output of the
+D flip-flop before the positive clock edge.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">J</th>
+<th style="text-align: left;">K</th>
+<th style="text-align: left;">Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Qold</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">~Qold</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> j,</span><br><span class="line">    <span class="keyword">input</span> k,</span><br><span class="line">    <span class="keyword">output</span> Q); </span><br><span class="line">    <span class="keyword">reg</span> q;</span><br><span class="line">    <span class="keyword">assign</span> Q = q;</span><br><span class="line">    <span class="comment">// 真值表方式</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (&#123;j,k&#125;)</span><br><span class="line">            <span class="number">2&#x27;b00</span>: q &lt;= q;</span><br><span class="line">            <span class="number">2&#x27;b01</span>: q &lt;= <span class="number">1&#x27;b0</span>;</span><br><span class="line">            <span class="number">2&#x27;b10</span>: q &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">            <span class="number">2&#x27;b11</span>: q &lt;= ~q;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">// 公式</span></span><br><span class="line">    <span class="comment">// always @(posedge Clk) begin</span></span><br><span class="line">    <span class="comment">//    Q &lt;= (J&amp;(~Q))|((~K)&amp;Q);</span></span><br><span class="line">    <span class="comment">// end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="edge-detect">13.Edge Detect</h2>
+<hr />
+<p>For each bit in an 8-bit vector, detect when the input signal changes
+from 0 in one clock cycle to 1 the next (similar to positive edge
+detection). The output bit should be set the cycle after a 0 to 1
+transition occurs.</p>
+<p>Here are some examples. For clarity, in[1] and pedge[1] are shown
+separately.</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220315145934275.png"
+alt="Edge Detect" />
+<figcaption aria-hidden="true">Edge Detect</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] pedge</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] last_in;</span><br><span class="line">    <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk)</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            last_in &lt;= in;</span><br><span class="line">            pedge &lt;= in &amp; ~last_in;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="edgedetect2">14.EdgeDetect2</h2>
+<hr />
+<p>For each bit in an 8-bit vector, detect when the input signal changes
+from one clock cycle to the next (detect any edge). The output bit
+should be set the cycle after a 0 to 1 transition occurs.</p>
+<p>Here are some examples. For clarity, in[1] and anyedge[1] are shown
+separately.</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220317090850624.png"
+alt="in双边沿检测" />
+<figcaption aria-hidden="true">in双边沿检测</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">7</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] anyedge</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] in_last;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            in_last &lt;= in;</span><br><span class="line">            anyedge &lt;= in_last ^ in;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="edgecapture">15.EdgeCapture</h2>
+<hr />
+<p>For each bit in a 32-bit vector, capture when the input signal
+changes from 1 in one clock cycle to 0 the next. "Capture" means that
+the output will remain 1 until the register is reset (synchronous
+reset).</p>
+<p>Each output bit behaves like a SR flip-flop: The output bit should be
+set (to 1) the cycle after a 1 to 0 transition occurs. The output bit
+should be reset (to 0) at the positive clock edge when reset is high. If
+both of the above events occur at the same time, reset has precedence.
+In the last 4 cycles of the example waveform below, the 'reset' event
+occurs one cycle earlier than the 'set' event, so there is no conflict
+here.</p>
+<p>In the example waveform below, reset, in[1] and out[1] are shown
+again separately for clarity.</p>
+<p>（注意这里的题意是捕捉下降沿）</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220317092415643.png"
+alt="下降沿捕捉波形图" />
+<figcaption aria-hidden="true">下降沿捕捉波形图</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">31</span>:<span class="number">0</span>] in,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">31</span>:<span class="number">0</span>] out</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">31</span>:<span class="number">0</span>] in_last;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        in_last &lt;= in;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">generate</span></span><br><span class="line">        <span class="keyword">genvar</span> i;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i = i + <span class="number">1</span>) <span class="keyword">begin</span>:my_gen</span><br><span class="line">            <span class="keyword">always</span> @ (<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">                <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">                    out[i] &lt;= <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (in_last[i] &amp; ~in[i]) <span class="keyword">begin</span></span><br><span class="line">                    out[i] &lt;= <span class="number">1&#x27;b1</span>;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    out[i] &lt;= out[i];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endgenerate</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="dualedge">16.Dualedge</h2>
+<hr />
+<p>You're familiar with flip-flops that are triggered on the positive
+edge of the clock, or negative edge of the clock. A dual-edge triggered
+flip-flop is triggered on both edges of the clock. However, FPGAs don't
+have dual-edge triggered flip-flops, and
+<code>always @(posedge clk or negedge clk)</code> is not accepted as a
+legal sensitivity list.</p>
+<p>Build a circuit that functionally behaves like a dual-edge triggered
+flip-flop:</p>
+<figure>
+<img
+src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/image-20220317094907414.png"
+alt="waveform" />
+<figcaption aria-hidden="true">waveform</figcaption>
+</figure>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">reg</span> n,p;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        n &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        p &lt;= d;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">assign</span> q = clk ? n : p;</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p>标答：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> d,</span><br><span class="line">    <span class="keyword">output</span> q);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> p, n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// A positive-edge triggered flip-flop</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk)</span><br><span class="line">        p &lt;= d ^ n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// A negative-edge triggered flip-flop</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">negedge</span> clk)</span><br><span class="line">        n &lt;= d ^ p;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Why does this work? </span></span><br><span class="line">    <span class="comment">// After posedge clk, p changes to d^n. Thus q = (p^n) = (d^n^n) = d.</span></span><br><span class="line">    <span class="comment">// After negedge clk, n changes to p^n. Thus q = (p^n) = (p^p^n) = d.</span></span><br><span class="line">    <span class="comment">// At each (positive or negative) clock edge, p and n FFs alternately</span></span><br><span class="line">    <span class="comment">// load a value that will cancel out the other and cause the new value of d to remain.</span></span><br><span class="line">    <span class="keyword">assign</span> q = p ^ n;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Can&#x27;t synthesize this.</span></span><br><span class="line">    <span class="comment">/*always @(posedge clk, negedge clk) begin</span></span><br><span class="line"><span class="comment">        q &lt;= d;</span></span><br><span class="line"><span class="comment">    end*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结">总结</h2>
+<hr />
+<p>从13题开始，解题出现了困难。</p>
+<p>13、14题的结题思路是一致的，关键点是明白要进行边沿检测，就应该将前一时刻和当前时刻的输入作比较，如果两个输入不同则是出现了边沿。</p>
+<p>15题主要是理解题意的问题，要进行下边沿的捕捉，因此需要边沿的检测和锁存，检测的思路和13、14相同，而锁存的方式是通过if语句。</p>
+<p>16题是双边沿检测的问题，这里是涉及到一个双边沿检测电路的代码综合的问题<a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>。注意具体的实现方法。</p>
+<h2 id="参考资料">参考资料</h2>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/cjx_csdn/article/details/105203494">Verilog寄存器电路描述（异步复位、异步置位等）_cjx_csdn的博客-CSDN博客_verilog寄存器</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/reborn_lee/article/details/81331395">通过仿真和综合认识JK触发器（Verilog
+HDL语言描述JK触发器）_Reborn Lee-CSDN博客_jk触发器verilog代码</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38305370/article/details/111396429">verilog实现双边沿触发器Dual-edge
+triggered flip-flop_城外南风起的博客-CSDN博客_verilog 双边沿</a><a
+href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/verilog/" rel="tag"># verilog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/15/%E3%80%90vivado%E3%80%91-00-install/" rel="prev" title="【vivado】-00-install">
+                  <i class="fa fa-chevron-left"></i> 【vivado】-00-install
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/17/%E3%80%90CAG_SLAM%E3%80%91-04-%E9%99%A4%E6%B3%95%E5%99%A8/" rel="next" title="【CAG_SLAM】-04-除法器">
+                  【CAG_SLAM】-04-除法器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PengXuanyao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

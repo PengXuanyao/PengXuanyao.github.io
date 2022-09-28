@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="混沌信号发生器 今天整个测评都已经结束，最后的结果时我们开始没有想到的，居然连一个波形都没有调出来，需要好好反思一下。首先是赛前的备赛阶段，这是最主要的原因：那就是没有花够时间，理由（借口）有很多，实习、夏令营和Intel杯占据了很多时间，再加之没有好好组织团队；然后就是比赛的选题阶段的失误，没有仔细考虑选题的问题，我们选择了其实是不擅长的模拟题（偏难了，对于我们来说），也考虑到我可能会被inte">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【TI2022】混沌信号发生器">
+<meta property="og:url" content="http://example.com/2022/08/03/%E3%80%90TI2022%E3%80%91%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8/index.html">
+<meta property="og:site_name" content="PengXuanyao">
+<meta property="og:description" content="混沌信号发生器 今天整个测评都已经结束，最后的结果时我们开始没有想到的，居然连一个波形都没有调出来，需要好好反思一下。首先是赛前的备赛阶段，这是最主要的原因：那就是没有花够时间，理由（借口）有很多，实习、夏令营和Intel杯占据了很多时间，再加之没有好好组织团队；然后就是比赛的选题阶段的失误，没有仔细考虑选题的问题，我们选择了其实是不擅长的模拟题（偏难了，对于我们来说），也考虑到我可能会被inte">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-03T08:32:34.000Z">
+<meta property="article:modified_time" content="2022-09-17T03:05:18.732Z">
+<meta property="article:author" content="PengXuanyao">
+<meta property="article:tag" content="竞赛">
+<meta property="article:tag" content="混沌信号发生器">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/08/03/%E3%80%90TI2022%E3%80%91%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/08/03/%E3%80%90TI2022%E3%80%91%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8/","path":"2022/08/03/【TI2022】混沌信号发生器/","title":"【TI2022】混沌信号发生器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【TI2022】混沌信号发生器 | PengXuanyao</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">PengXuanyao</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">天地交，万物通</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">混沌信号发生器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E5%BF%ABms%E4%BB%BF%E7%9C%9F%E9%80%9F%E5%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">加快MS仿真速度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%94%A1%E6%B0%8F%E7%94%B5%E8%B7%AF%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.2.</span> <span class="nav-text">蔡氏电路官方文档学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#diagram"><span class="nav-number">1.2.1.</span> <span class="nav-text">Diagram</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#building-chuas-circuit"><span class="nav-number">1.2.2.</span> <span class="nav-text">Building Chua&#39;s Circuit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%B7%B7%E6%B2%8C%E7%94%B5%E8%B7%AF%E7%9A%84%E5%B8%A6%E5%AE%BD"><span class="nav-number">1.2.3.</span> <span class="nav-text">如何提高混沌电路的带宽？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%8D%95%E7%94%B5%E6%BA%90%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.4.</span> <span class="nav-text">如何解决单电源的问题？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#how-to-do-this"><span class="nav-number">1.2.5.</span> <span class="nav-text">How to do this</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PengXuanyao"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">PengXuanyao</p>
+  <div class="site-description" itemprop="description">This is my personal blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/03/%E3%80%90TI2022%E3%80%91%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【TI2022】混沌信号发生器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-03 16:32:34" itemprop="dateCreated datePublished" datetime="2022-08-03T16:32:34+08:00">2022-08-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-17 11:05:18" itemprop="dateModified" datetime="2022-09-17T11:05:18+08:00">2022-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="混沌信号发生器">混沌信号发生器</h2>
+<p>今天整个测评都已经结束，最后的结果时我们开始没有想到的，居然连一个波形都没有调出来，需要好好反思一下。首先是赛前的备赛阶段，这是最主要的原因：那就是没有花够时间，理由（<del>借口</del>）有很多，实习、夏令营和Intel杯占据了很多时间，再加之没有好好组织团队；然后就是比赛的选题阶段的失误，没有仔细考虑选题的问题，我们选择了其实是不擅长的模拟题（偏难了，对于我们来说），也考虑到我可能会被intel杯耽搁，不能写数字部分；同时这四天三夜里面，也没有花足够的时间，过于不紧张，中途甚至还外出吃饭去了（食堂关门比较早也是一个原因）。</p>
+<p>在保证正常作息和兼顾intel的条件下，我只能说我尽力了。如果我们再选一次题目，我们会选择其他题目（陈老师说的这句话很有道理，看似简单的题不要选（要么有大坑等着，要么很卷），因此要选有一定难度但在接收范围内的题目为好）。</p>
+<p>下面是当时比赛期间做的一些记录，继续向前看吧。</p>
+<span id="more"></span>
+<h3 id="加快ms仿真速度">加快MS仿真速度</h3>
+<p>调节仿真的单位时间步长：<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45413245/article/details/105426221">Multisim仿真波形变化太慢和报错_津野自渡的博客-CSDN博客_multisim示波器波形闪动太快</a></p>
+<h3 id="蔡氏电路官方文档学习">蔡氏电路官方文档学习</h3>
+<h4 id="diagram">Diagram</h4>
+<p>这一节描述了蔡氏电路的方程，以及其中的参数对应于实际中的电阻、电容应当取值为多少。</p>
+<h4 id="building-chuas-circuit">Building Chua's Circuit</h4>
+<ul>
+<li>Circuit Design
+<ul>
+<li>描述了电路的基本结构，其中的电感可用<strong>模拟电感</strong>替代。其中附上了模拟电感的分析流程。</li>
+</ul></li>
+<li>Components
+<ul>
+<li>给出了基本电路中的元件参数的选取方案（包括具体的<strong>电容值、阻值</strong>等），以及电感的计算方法。</li>
+<li>不要使用陶瓷电容，不需要用精确的电阻（用电位器最好选用可用手拧的）</li>
+</ul></li>
+<li>Boards &amp; Signal
+<ul>
+<li>面包板、洞洞板、PCB三个方案</li>
+<li>三个信号需要被测量（两个电压信号和一个电流信号）</li>
+</ul></li>
+<li>The Double Scroll
+<ul>
+<li>给了仿真界面的链接，可以进</li>
+<li>行仿真</li>
+<li>电路非常敏感，微小的震动将会使得其不工作</li>
+</ul></li>
+<li>Coupling and Synchronization of Chua's Circuits
+<ul>
+<li>同步两个蔡氏电路，用处不大</li>
+</ul></li>
+</ul>
+<h4 id="如何提高混沌电路的带宽">如何提高混沌电路的带宽？</h4>
+<p>如何将频带提高40MHz是这个问题的难点，首先需要知道混沌电路的电子器件参数发生改变对频率的影响，目前查找到的混沌系统的带宽都在几kHz以内。</p>
+<p>这一篇文档谈到了参数对频率的趋势的影响：<a
+target="_blank" rel="noopener" href="https://max.book118.com/html/2019/0404/5143142133002023.shtm">蔡氏混沌电路频谱分布与元件参数的选择.PDF-全文可读
+(book118.com)</a></p>
+<h4 id="如何解决单电源的问题">如何解决单电源的问题？</h4>
+<p>第一种思路是使用单电源的电路：<a
+target="_blank" rel="noopener" href="https://m.cnki.net/express/#/literatureDetailZh?id=xxyd202106030&amp;typeId=CJFDALL&amp;VNK=d6916a55">一种基于有源模拟电感的单电源蔡氏电路
+(cnki.net)</a>；第二种思路是使用运放搭建双电源电路：<a
+target="_blank" rel="noopener" href="https://www.elecfans.com/dianlutu/dianyuandianlu/202003201186858.html">三款单电源转换双电源电路图分享
+- 电源电路图 - 电子发烧友网 (elecfans.com)</a></p>
+<p>现在选择了<strong>TDA2322</strong>作为虚地的电源信号，昨天在搭建面包板的时候，发现电流超过20mA芯片会很热（估计实际上板时，电流会稍微小一些）。目前需要在虚地的端口上加上一个滤波电容和一个大电阻（估计10k）作为负载。</p>
+<h4 id="how-to-do-this">How to do this</h4>
+<p>昨天看了一天的相关的资料和文献，太过于停留于理论了。今天要先把蔡氏电路给搭建出来看一看效果，如果嫩能够出现混沌效果，再选择合理调节参数，实现宽带的信号发生。</p>
+<p>参考文献： * <a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/WhyEngine/p/3974351.html">混沌数学之Chua's
+circuit(蔡氏电路) - 叶飞影 - 博客园 (cnblogs.com)</a> * <a
+href="file:///D:/pc/%E4%B8%8B%E8%BD%BD/Documents/2019S-02-10.pdf">蔡氏电路的混沌信号PPT.pdf</a>
+* <a
+target="_blank" rel="noopener" href="https://www.doc88.com/p-3039166425631.html?r=1">蔡氏混沌非线性电路及其频率特性研究
+- 道客巴巴 (doc88.com)</a> * <a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%94%A1%E6%B0%8F%E9%9B%BB%E8%B7%AF">蔡氏电路
+- 维基百科，自由的百科全书 (wikipedia.org)</a> * <a
+target="_blank" rel="noopener" href="http://www.chuacircuits.com/">Chua's circuit diagrams, equations,
+simlulations and how to build (chuacircuits.com)</a> * <a
+target="_blank" rel="noopener" href="https://www.bing.com/videos/search?q=Chua%27s+Circuit+kits&amp;&amp;view=detail&amp;mid=055B8CEF7E1AABA85000055B8CEF7E1AABA85000&amp;&amp;FORM=VRDGAR&amp;ru=%2Fvideos%2Fsearch%3Fq%3DChua%2527s%2520Circuit%2520kits%26%26FORM%3DVDVVXX">Chua's
+Circuit Kit - Anyone can build Chua's circuit - Bing video</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AB%9E%E8%B5%9B/" rel="tag"># 竞赛</a>
+              <a href="/tags/%E6%B7%B7%E6%B2%8C%E4%BF%A1%E5%8F%B7%E5%8F%91%E7%94%9F%E5%99%A8/" rel="tag"># 混沌信号发生器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/01/%E3%80%90python%E3%80%91-01-%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F/" rel="prev" title="【python】-01-一个小游戏">
+                  <i class="fa fa-chevron-left"></i> 【python】-01-一个小游戏
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/03/%E3%80%90IntelCup%E3%80%91-08-03/" rel="next" title="【IntelCup】-08-03">
+                  【IntelCup】-08-03 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PengXuanyao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

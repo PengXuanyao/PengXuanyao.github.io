@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Zettlr显示渲染之后的样子 现在Zettlr出来的结果还不是我想要的，有几点不方便的地方; 1. 表格怎么显示 2. 图片是否直接可以上传图床 3. 输出的PDF格式非常难看 4. 如何同步博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Zettlr】-00-使用Zettlr">
+<meta property="og:url" content="http://example.com/2022/08/01/%E3%80%90Zettlr%E3%80%91-00-%E4%BD%BF%E7%94%A8Zettlr/index.html">
+<meta property="og:site_name" content="PengXuanyao">
+<meta property="og:description" content="Zettlr显示渲染之后的样子 现在Zettlr出来的结果还不是我想要的，有几点不方便的地方; 1. 表格怎么显示 2. 图片是否直接可以上传图床 3. 输出的PDF格式非常难看 4. 如何同步博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-08-01T03:17:25.000Z">
+<meta property="article:modified_time" content="2022-08-04T02:34:19.965Z">
+<meta property="article:author" content="PengXuanyao">
+<meta property="article:tag" content="Zettlr">
+<meta property="article:tag" content="hexo博客同步">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/08/01/%E3%80%90Zettlr%E3%80%91-00-%E4%BD%BF%E7%94%A8Zettlr/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/08/01/%E3%80%90Zettlr%E3%80%91-00-%E4%BD%BF%E7%94%A8Zettlr/","path":"2022/08/01/【Zettlr】-00-使用Zettlr/","title":"【Zettlr】-00-使用Zettlr"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【Zettlr】-00-使用Zettlr | PengXuanyao</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">PengXuanyao</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">天地交，万物通</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zettlr%E6%98%BE%E7%A4%BA%E6%B8%B2%E6%9F%93%E4%B9%8B%E5%90%8E%E7%9A%84%E6%A0%B7%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">Zettlr显示渲染之后的样子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">显示问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%BA%8A%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">图床问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">输出格式问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.4.</span> <span class="nav-text">如何同步博客</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8linux%E4%B8%8A%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.4.1.</span> <span class="nav-text">在linux上同步博客</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">批处理文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-pull-%E5%8F%88%E5%87%BA%E7%8E%B0%E4%BA%86%E9%97%AE%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">Git Pull 又出现了问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PengXuanyao"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">PengXuanyao</p>
+  <div class="site-description" itemprop="description">This is my personal blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/01/%E3%80%90Zettlr%E3%80%91-00-%E4%BD%BF%E7%94%A8Zettlr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Zettlr】-00-使用Zettlr
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-01 11:17:25" itemprop="dateCreated datePublished" datetime="2022-08-01T11:17:25+08:00">2022-08-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-04 10:34:19" itemprop="dateModified" datetime="2022-08-04T10:34:19+08:00">2022-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="zettlr显示渲染之后的样子">Zettlr显示渲染之后的样子</h2>
+<p>现在Zettlr出来的结果还不是我想要的，有几点不方便的地方; 1.
+表格怎么显示 2. 图片是否直接可以上传图床 3. 输出的PDF格式非常难看 4.
+如何同步博客</p>
+<span id="more"></span>
+<h3 id="显示问题">显示问题</h3>
+<p>网上找了一圈，发现zettlr应该是不支持实时预览，只能这样显示了，不过也还好，看着不别扭。</p>
+<h3 id="图床问题">图床问题</h3>
+<p>这个上传图片好像还不能够直接复制粘贴自动上传，这就有点麻烦了。以后看有没有什么办法解决掉，现在暂时放一下</p>
+<h3 id="输出格式问题">输出格式问题</h3>
+<p>网上建议使用这个编辑器写文本，导出还是到Typora或者其他编辑器中去。以后设计到使用Latex再看怎么用这个导出吧。</p>
+<h3 id="如何同步博客">如何同步博客</h3>
+<p>使用hexo同步博客(和zettlr没有什么关系): 1.
+查阅了网上的各种方案，最后选择使用两个分支的方案来同步 2.
+以前没有弄好的原因是因为在主题的文件架里面有一个用于下载主题的仓库，不能够在一个仓库里面包含另一个仓库（<a
+target="_blank" rel="noopener" href="https://www.jianshu.com/p/0b1fccce74e0/">利用Hexo在多台电脑上提交和更新github
+pages博客 - 简书 (jianshu.com)</a>）| （<a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1365689">如何多端同步
+Hexo 框架博客 - 腾讯云开发者社区-腾讯云
+(tencent.com)</a>）（第二篇文章中有很多干货，最后是按照第二篇博客完成了本次任务）</p>
+<h4 id="在linux上同步博客">在linux上同步博客</h4>
+<p>今天又是为了这点醋包了一顿饺子——终于解决了从上学期开始就悬而未决的这个问题，那就是通过linux同步github上的博客（或者说科学上网）。</p>
+<p>折腾了基本上一天终于才解决了这个问题：</p>
+<p>主要使用了NaikoCloud科学上网（走了点灰色地带，仅为学术目的），然后再使用Clash
+for Windows进行节点配置等操作<a href="#fn1" class="footnote-ref"
+id="fnref1"
+role="doc-noteref"><sup>1</sup></a>，最后达成了科学上网的目的。</p>
+<p>经过了这番折腾，稍稍记录一下两三个坑点： 1.
+NaikoCloud本身登录上去需要梯子，所以需要打开另一个梯子（最开始使用的是Cisco的威伯斯云，由于无法在linux上使用，所以可能会选择弃坑），提前下载用于设置Clash的yml文件。
+2. 在配置Clash方面，就可以参照资料<a href="#fn2" class="footnote-ref"
+id="fnref2"
+role="doc-noteref"><sup>2</sup></a>的步骤，最后需要注意的就是教程中说的配置成端口7980，我下载的Clash是没有设置成这个端口号，而是0，因此需要在Clash中手动设置一下。
+3. 最后，就是说Clash for
+Windows的意思是图形化的Clash，而不是说是只有windows才能使用的意思，这个软件也有linux版本（害得我早没盯上他）
+4. 最后git push的时候又遇到两个问题： 1.
+第一个是无法使用用户名的问题，这个问题通过添加ssh秘钥，但是还是提示输入用户名。<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/wei_yanwen/article/details/125929532">解决方案</a>
+2. 第二个是报错：gnutls_handshake()
+failed，可能是挂了梯子的原因，暂时不知道按照StackOverflow上的方案解决了一下，安装了两个东西后，好像没有报错了<a
+href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a></p>
+<h3 id="批处理文件">批处理文件</h3>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 用户输入</p>
+<p>写一个简单的批处理文件，写出文件名字然后新建hexo文件出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> new blog, the name format is 【*】-0*-*</span><br><span class="line"><span class="built_in">echo</span> please input the blog<span class="string">&#x27;name</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">set /p name=</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">hexo new %name%</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">pause</span></span><br></pre></td></tr></table></figure>
+<p>使用bat（windows下），或者使用sh（linux下）</p>
+<h3 id="git-pull-又出现了问题">Git Pull 又出现了问题</h3>
+<p>通过这篇博客解决（<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/wy01272454/article/details/72846365">git
+pull报错Pulling is not possible because you have unmerged
+files_帅阿星的博客-CSDN博客</a>）：把当前冲突的文件去掉之后重新commit一下即可。</p>
+<p>当请求超时时候的解决办法，改变自身的端口号，配置和Clash一致即可（默认是7890）<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34817440/article/details/106420689">Failed
+to connect to github.com port 443: Timed out 及 ping
+github.com请求超时_奔跑的痕迹的博客-CSDN博客</a></p>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/Jiang13537/p/15571504.html">Ubuntu下安装并使用Clash
+for Windows</a><a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/Jiang13537/p/15571504.html">Ubuntu下安装并使用Clash
+for Windows</a><a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><a
+target="_blank" rel="noopener" href="https://stackoverflow.com/questions/52379234/git-gnutls-handshake-failed-error-in-the-pull-function">Git
+gnutls handshake failed error</a><a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Zettlr/" rel="tag"># Zettlr</a>
+              <a href="/tags/hexo%E5%8D%9A%E5%AE%A2%E5%90%8C%E6%AD%A5/" rel="tag"># hexo博客同步</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/18/%E3%80%90xup_summer_camp%E3%80%91-07-18/" rel="prev" title="【xup_summer_camp】-07-18">
+                  <i class="fa fa-chevron-left"></i> 【xup_summer_camp】-07-18
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/01/%E3%80%90python%E3%80%91-01-%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F/" rel="next" title="【python】-01-一个小游戏">
+                  【python】-01-一个小游戏 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PengXuanyao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

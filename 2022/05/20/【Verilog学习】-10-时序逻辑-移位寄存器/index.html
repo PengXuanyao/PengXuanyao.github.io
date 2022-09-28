@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Shift4 question Build a 4-bit shift register (right shift), with asynchronous reset, synchronous load, and enable.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Verilog学习】-10-时序逻辑-移位寄存器">
+<meta property="og:url" content="http://example.com/2022/05/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-10-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8/index.html">
+<meta property="og:site_name" content="PengXuanyao">
+<meta property="og:description" content="Shift4 question Build a 4-bit shift register (right shift), with asynchronous reset, synchronous load, and enable.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hdlbits.01xz.net/mw/images/9/9a/Lfsr5.png">
+<meta property="article:published_time" content="2022-05-20T01:00:20.000Z">
+<meta property="article:modified_time" content="2022-07-15T13:55:46.060Z">
+<meta property="article:author" content="PengXuanyao">
+<meta property="article:tag" content="verilog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hdlbits.01xz.net/mw/images/9/9a/Lfsr5.png">
+
+
+<link rel="canonical" href="http://example.com/2022/05/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-10-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/05/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-10-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8/","path":"2022/05/20/【Verilog学习】-10-时序逻辑-移位寄存器/","title":"【Verilog学习】-10-时序逻辑-移位寄存器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【Verilog学习】-10-时序逻辑-移位寄存器 | PengXuanyao</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">PengXuanyao</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">天地交，万物通</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shift4"><span class="nav-number">1.</span> <span class="nav-text">Shift4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question"><span class="nav-number">1.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration"><span class="nav-number">1.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution"><span class="nav-number">1.3.</span> <span class="nav-text">solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rotate100"><span class="nav-number">2.</span> <span class="nav-text">Rotate100</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question-1"><span class="nav-number">2.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-1"><span class="nav-number">2.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-1"><span class="nav-number">2.3.</span> <span class="nav-text">solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debug"><span class="nav-number">2.4.</span> <span class="nav-text">debug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shift18-arithmetic-shift-register"><span class="nav-number">3.</span> <span class="nav-text">Shift18-Arithmetic Shift
+Register</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question-2"><span class="nav-number">3.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-2"><span class="nav-number">3.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint..."><span class="nav-number">3.3.</span> <span class="nav-text">Hint...</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-2"><span class="nav-number">3.4.</span> <span class="nav-text">solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debug-1"><span class="nav-number">3.5.</span> <span class="nav-text">debug</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lfsr"><span class="nav-number">4.</span> <span class="nav-text">LFSR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-3"><span class="nav-number">4.1.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint...-1"><span class="nav-number">4.2.</span> <span class="nav-text">Hint...</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-3"><span class="nav-number">4.3.</span> <span class="nav-text">solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">4.4.</span> <span class="nav-text">summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mt2015-lfsr"><span class="nav-number">5.</span> <span class="nav-text">Mt2015 lfsr</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question-3"><span class="nav-number">5.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-4"><span class="nav-number">5.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint...-2"><span class="nav-number">5.3.</span> <span class="nav-text">Hint...</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-4"><span class="nav-number">5.4.</span> <span class="nav-text">solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lfsr32"><span class="nav-number">6.</span> <span class="nav-text">Lfsr32</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-5"><span class="nav-number">6.1.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-5"><span class="nav-number">6.2.</span> <span class="nav-text">solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#examsm2014-q4k"><span class="nav-number">7.</span> <span class="nav-text">Exams&#x2F;m2014 q4k</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question-4"><span class="nav-number">7.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-6"><span class="nav-number">7.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-6"><span class="nav-number">7.3.</span> <span class="nav-text">solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exams2014-q4b"><span class="nav-number">8.</span> <span class="nav-text">Exams&#x2F;2014 q4b</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question-5"><span class="nav-number">8.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-7"><span class="nav-number">8.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-7"><span class="nav-number">8.3.</span> <span class="nav-text">solution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#examsece241-2013q12"><span class="nav-number">9.</span> <span class="nav-text">Exams&#x2F;ece241 2013q12</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#question-6"><span class="nav-number">9.1.</span> <span class="nav-text">question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#module-declaration-8"><span class="nav-number">9.2.</span> <span class="nav-text">Module Declaration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#solution-8"><span class="nav-number">9.3.</span> <span class="nav-text">solution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debug-2"><span class="nav-number">9.4.</span> <span class="nav-text">Debug</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PengXuanyao"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">PengXuanyao</p>
+  <div class="site-description" itemprop="description">This is my personal blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/20/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-10-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Verilog学习】-10-时序逻辑-移位寄存器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-20 09:00:20" itemprop="dateCreated datePublished" datetime="2022-05-20T09:00:20+08:00">2022-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-15 21:55:46" itemprop="dateModified" datetime="2022-07-15T21:55:46+08:00">2022-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="shift4">Shift4</h2>
+<h3 id="question">question</h3>
+<p>Build a 4-bit shift register (right shift), with asynchronous reset,
+synchronous load, and enable.</p>
+<span id="more"></span>
+<ul>
+<li><code>areset</code>: Resets shift register to zero.</li>
+<li><code>load</code>: Loads shift register with <code>data[3:0]</code>
+instead of shifting.</li>
+<li><code>ena</code>: Shift right (<code>q[3]</code> becomes zero,
+<code>q[0]</code> is shifted out and disappears).</li>
+<li><code>q</code>: The contents of the shift register.</li>
+</ul>
+<p>If both the <code>load</code> and <code>ena</code> inputs are
+asserted (1), the <code>load</code> input has higher priority.</p>
+<h3 id="module-declaration">Module Declaration</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">module top_module(</span><br><span class="line">    input clk,</span><br><span class="line">    input areset,  // async active-high reset to zero</span><br><span class="line">    input load,</span><br><span class="line">    input ena,</span><br><span class="line">    input [3:0] data,</span><br><span class="line">    output reg [3:0] q); </span><br></pre></td></tr></table></figure>
+<h3 id="solution">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my answer</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,  <span class="comment">// async active-high reset to zero</span></span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] q); </span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">posedge</span> areset) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (areset) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (load == <span class="number">1&#x27;b1</span>) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= data;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (ena == <span class="number">1&#x27;b1</span>) <span class="keyword">begin</span></span><br><span class="line">            q[<span class="number">3</span>] &lt;= <span class="number">0</span>;</span><br><span class="line">            q[<span class="number">2</span>] &lt;= q[<span class="number">3</span>];</span><br><span class="line">            q[<span class="number">1</span>] &lt;= q[<span class="number">2</span>];</span><br><span class="line">            q[<span class="number">0</span>] &lt;= q[<span class="number">1</span>];</span><br><span class="line">            <span class="comment">// q &lt;= q[3:1];</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// reference answer</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> areset,</span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] q);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Asynchronous reset: Notice the sensitivity list.</span></span><br><span class="line">    <span class="comment">// The shift register has four modes:</span></span><br><span class="line">    <span class="comment">//   reset</span></span><br><span class="line">    <span class="comment">//   load</span></span><br><span class="line">    <span class="comment">//   enable shift</span></span><br><span class="line">    <span class="comment">//   idle -- preserve q (i.e., DFFs)</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk, <span class="keyword">posedge</span> areset) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (areset)        <span class="comment">// reset</span></span><br><span class="line">            q &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (load)    <span class="comment">// load</span></span><br><span class="line">            q &lt;= data;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ena)    <span class="comment">// shift is enabled</span></span><br><span class="line">            q &lt;= q[<span class="number">3</span>:<span class="number">1</span>];    <span class="comment">// Use vector part select to express a shift.</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="rotate100">Rotate100</h2>
+<h3 id="question-1">question</h3>
+<p>Build a 100-bit left/right rotator, with synchronous load and
+left/right enable. A rotator shifts-in the shifted-out bit from the
+other end of the register, unlike a shifter that discards the
+shifted-out bit and shifts in a zero. If enabled, a rotator rotates the
+bits around and does not modify/discard them.</p>
+<ul>
+<li><p><code>load</code>: Loads shift register with
+<code>data[99:0]</code> instead of rotating.</p></li>
+<li><dl>
+<dt>ena[1:0]</dt>
+<dd>
+<p>Chooses whether and which direction to rotate.</p>
+</dd>
+</dl>
+<ul>
+<li><code>2'b01</code> rotates right by one bit</li>
+<li><code>2'b10</code> rotates left by one bit</li>
+<li><code>2'b00</code> and <code>2'b11</code> do not rotate.</li>
+</ul></li>
+<li><p><code>q</code>: The contents of the rotator.</p></li>
+</ul>
+<h3 id="module-declaration-1">Module Declaration</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">99</span>:<span class="number">0</span>] q);</span><br></pre></td></tr></table></figure>
+<h3 id="solution-1">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my ans</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">99</span>:<span class="number">0</span>] q);</span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (load) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= data;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (ena)</span><br><span class="line">            <span class="number">2&#x27;b01</span>: <span class="keyword">begin</span></span><br><span class="line">                q[<span class="number">98</span>:<span class="number">0</span>] &lt;= q[<span class="number">99</span>:<span class="number">1</span>];</span><br><span class="line">                q[<span class="number">99</span>] &lt;= q[<span class="number">0</span>];</span><br><span class="line">                <span class="comment">// q &lt;= &#123;q[0], q[99:1]&#125;;</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="number">2&#x27;b10</span>: <span class="keyword">begin</span></span><br><span class="line">                q[<span class="number">99</span>:<span class="number">1</span>] &lt;= q[<span class="number">98</span>:<span class="number">0</span>];</span><br><span class="line">                q[<span class="number">0</span>] &lt;= q[<span class="number">99</span>];</span><br><span class="line">                <span class="comment">// q &lt;= &#123;q[98:0], q[99]&#125;;</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            <span class="keyword">default</span>: </span><br><span class="line">                q &lt;= q;</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ref ans</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">99</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">99</span>:<span class="number">0</span>] q);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This rotator has 4 modes:</span></span><br><span class="line">    <span class="comment">//   load</span></span><br><span class="line">    <span class="comment">//   rotate left</span></span><br><span class="line">    <span class="comment">//   rotate right</span></span><br><span class="line">    <span class="comment">//   do nothing</span></span><br><span class="line">    <span class="comment">// I used vector part-select and concatenation to express a rotation.</span></span><br><span class="line">    <span class="comment">// Edge-sensitive always block: Use non-blocking assignments.</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (load)        <span class="comment">// Load</span></span><br><span class="line">            q &lt;= data;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ena == <span class="number">2&#x27;h1</span>)    <span class="comment">// Rotate right</span></span><br><span class="line">            q &lt;= &#123;q[<span class="number">0</span>], q[<span class="number">99</span>:<span class="number">1</span>]&#125;;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (ena == <span class="number">2&#x27;h2</span>)    <span class="comment">// Rotate left</span></span><br><span class="line">            q &lt;= &#123;q[<span class="number">98</span>:<span class="number">0</span>], q[<span class="number">99</span>]&#125;;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="debug">debug</h3>
+<ul>
+<li>case 里面对应的一个情况超过了一个语句描述，则需要用begin end</li>
+</ul>
+<h2 id="shift18-arithmetic-shift-register">Shift18-Arithmetic Shift
+Register</h2>
+<h3 id="question-2">question</h3>
+<p>Build a 64-bit <em>arithmetic</em> shift register, with synchronous
+load. The shifter can shift both left and right, and by 1 or 8 bit
+positions, selected by <code>amount</code>.</p>
+<p>An <em>arithmetic</em> right shift shifts in the sign bit of the
+number in the shift register (<code>q[63]</code> in this case) instead
+of zero as done by a <em>logical</em> right shift. Another way of
+thinking about an arithmetic right shift is that it assumes the number
+being shifted is signed and preserves the sign, so that arithmetic right
+shift divides a signed number by a power of two.</p>
+<p>There is no difference between logical and arithmetic <em>left</em>
+shifts.</p>
+<ul>
+<li><p><code>load</code>: Loads shift register with
+<code>data[63:0]</code> instead of shifting.</p></li>
+<li><p><code>ena</code>: Chooses whether to shift.</p></li>
+<li><dl>
+<dt>amount</dt>
+<dd>
+<p>Chooses which direction and how much to shift.</p>
+</dd>
+</dl>
+<ul>
+<li><code>2'b00</code>: shift left by 1 bit.</li>
+<li><code>2'b01</code>: shift left by 8 bits.</li>
+<li><code>2'b10</code>: shift right by 1 bit.</li>
+<li><code>2'b11</code>: shift right by 8 bits.</li>
+</ul></li>
+<li><p><code>q</code>: The contents of the shifter.</p></li>
+</ul>
+<h3 id="module-declaration-2">Module Declaration</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] amount,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">63</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">63</span>:<span class="number">0</span>] q); </span><br></pre></td></tr></table></figure>
+<h3 id="hint...">Hint...</h3>
+<p>A 5-bit number <code>11000</code> arithmetic right-shifted by 1 is
+<code>11100</code>, while a logical right shift would produce
+<code>01100</code>.</p>
+<p>Similarly, a 5-bit number <code>01000</code> arithmetic right-shifted
+by 1 is <code>00100</code>, and a logical right shift would produce the
+same result, because the original number was non-negative.</p>
+<h3 id="solution-2">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> load,</span><br><span class="line">    <span class="keyword">input</span> ena,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] amount,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">63</span>:<span class="number">0</span>] data,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">63</span>:<span class="number">0</span>] q); </span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (load) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= data;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (ena) <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">case</span> (amount)</span><br><span class="line">                <span class="number">2&#x27;b00</span>: <span class="keyword">begin</span></span><br><span class="line">                    q &lt;= &#123;q[<span class="number">62</span>:<span class="number">0</span>],<span class="number">1&#x27;b0</span>&#125;;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="number">2&#x27;b01</span>: <span class="keyword">begin</span></span><br><span class="line">                    q &lt;= &#123;q[<span class="number">55</span>:<span class="number">0</span>],<span class="number">8&#x27;b0</span>&#125;;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="number">2&#x27;b10</span>: <span class="keyword">begin</span></span><br><span class="line">                    q &lt;= q[<span class="number">63</span>] ? &#123;<span class="number">1&#x27;b1</span>,q[<span class="number">63</span>:<span class="number">1</span>]&#125; : &#123;<span class="number">1&#x27;b0</span>,q[<span class="number">63</span>:<span class="number">1</span>]&#125;;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="number">2&#x27;b11</span>: <span class="keyword">begin</span></span><br><span class="line">                    q &lt;= q[<span class="number">63</span>] ? &#123;<span class="number">8&#x27;hff</span>,q[<span class="number">63</span>:<span class="number">8</span>]&#125; : &#123;<span class="number">8&#x27;h00</span>,q[<span class="number">63</span>:<span class="number">8</span>]&#125;;</span><br><span class="line">                <span class="keyword">end</span></span><br><span class="line">                <span class="keyword">default</span>: </span><br><span class="line">                    q &lt;= q;</span><br><span class="line">            <span class="keyword">endcase</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="debug-1">debug</h3>
+<ul>
+<li>三元运算符语法错误：正确：<code>q &lt;= q[63] ? &#123;1'b1,q[63:1]&#125; : &#123;1'b0,q[63:1]&#125;;</code>；错误：<code>q[63] ? q &lt;=  &#123;1'b1,q[63:1]&#125; : q &lt;=  &#123;1'b0,q[63:1]&#125;;</code></li>
+<li>case 的对象错误：R：amount；E：ena。</li>
+<li>case 的参数错误：R：2'b10；E：10。</li>
+</ul>
+<h2 id="lfsr">LFSR</h2>
+<p>A <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear_feedback_shift_register">linear
+feedback shift register</a> is a shift register usually with a few XOR
+gates to produce the next state of the shift register. A Galois LFSR is
+one particular arrangement where bit positions with a "tap" are XORed
+with the output bit to produce its next value, while bit positions
+without a tap shift. If the taps positions are carefully chosen, the
+LFSR can be made to be "maximum-length". A maximum-length LFSR of n bits
+cycles through 2n-1 states before repeating (the all-zero state is never
+reached).</p>
+<p>The following diagram shows a 5-bit maximal-length Galois LFSR with
+taps at bit positions 5 and 3. (Tap positions are usually numbered
+starting from 1). Note that I drew the XOR gate at position 5 for
+consistency, but one of the XOR gate inputs is 0.</p>
+<figure>
+<img src="https://hdlbits.01xz.net/mw/images/9/9a/Lfsr5.png"
+alt="Lfsr5.png" />
+<figcaption aria-hidden="true">Lfsr5.png</figcaption>
+</figure>
+<p>Build this LFSR. The <code>reset</code> should reset the LFSR to
+1.</p>
+<h3 id="module-declaration-3">Module Declaration</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,    <span class="comment">// Active-high synchronous reset to 5&#x27;h1</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">4</span>:<span class="number">0</span>] q</span><br><span class="line">); </span><br></pre></td></tr></table></figure>
+<h3 id="hint...-1">Hint...</h3>
+<p>The first few states starting at 1 are <code>00001</code>,
+<code>10100</code>, <code>01010</code>, <code>00101</code>, ... The LFSR
+should cycle through 31 states before returning to
+<code>00001</code>.</p>
+<h3 id="solution-3">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my answer</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,    <span class="comment">// Active-high synchronous reset to 5&#x27;h1</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">4</span>:<span class="number">0</span>] q</span><br><span class="line">); </span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">        q &lt;= <span class="number">5&#x27;h1</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        q[<span class="number">4</span>] &lt;= q[<span class="number">0</span>];</span><br><span class="line">        q[<span class="number">3</span>] &lt;= q[<span class="number">4</span>];</span><br><span class="line">        q[<span class="number">2</span>] &lt;= q[<span class="number">3</span>] ^ q[<span class="number">0</span>];</span><br><span class="line">        q[<span class="number">1</span>] &lt;= q[<span class="number">2</span>];</span><br><span class="line">        q[<span class="number">0</span>] &lt;= q[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ref answer</span></span><br><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> [<span class="number">4</span>:<span class="number">0</span>] q);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">4</span>:<span class="number">0</span>] q_next;        <span class="comment">// q_next is not a register</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Convenience: Create a combinational block of logic that computes</span></span><br><span class="line">    <span class="comment">// what the next value should be. For shorter code, I first shift</span></span><br><span class="line">    <span class="comment">// all of the values and then override the two bit positions that have taps.</span></span><br><span class="line">    <span class="comment">// A logic synthesizer creates a circuit that behaves as if the code were</span></span><br><span class="line">    <span class="comment">// executed sequentially, so later assignments override earlier ones.</span></span><br><span class="line">    <span class="comment">// Combinational always block: Use blocking assignments.</span></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        q_next = q[<span class="number">4</span>:<span class="number">1</span>];    <span class="comment">// Shift all the bits. This is incorrect for q_next[4] and q_next[2]</span></span><br><span class="line">        q_next[<span class="number">4</span>] = q[<span class="number">0</span>];    <span class="comment">// Give q_next[4] and q_next[2] their correct assignments</span></span><br><span class="line">        q_next[<span class="number">2</span>] = q[<span class="number">3</span>] ^ q[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// This is just a set of DFFs. I chose to compute the connections between the</span></span><br><span class="line">    <span class="comment">// DFFs above in its own combinational always block, but you can combine them if you wish.</span></span><br><span class="line">    <span class="comment">// You&#x27;ll get the same circuit either way.</span></span><br><span class="line">    <span class="comment">// Edge-triggered always block: Use non-blocking assignments.</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset)</span><br><span class="line">            q &lt;= <span class="number">5&#x27;h1</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            q &lt;= q_next;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h3 id="summary">summary</h3>
+<p>这里的作者使用了状态机的写法，通过组合逻辑列出其下一状态的值，这里需要注意的是，组合逻辑使用的是阻塞赋值，后一个值将前一个值覆盖，电路里将直接忽略前一个时刻的值。</p>
+<h2 id="mt2015-lfsr">Mt2015 lfsr</h2>
+<h3 id="question-3">question</h3>
+<p>Taken from 2015 midterm question 5. See also the first part of this
+question: <a
+target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Mt2015_muxdff">mt2015_muxdff</a></p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Mt2015_muxdff.png"><embed
+src="https://hdlbits.01xz.net/mw/thumb.php?f=Mt2015_muxdff.png&amp;width=800" /></a></p>
+<p>Write the Verilog code for this sequential circuit (Submodules are
+ok, but the top-level must be named <code>top_module</code>). Assume
+that you are going to implement the circuit on the DE1-SoC board.
+Connect the <code>R</code> inputs to the <code>SW</code> switches,
+connect Clock to <code>KEY[0]</code>, and <code>L</code> to
+<code>KEY[1]</code>. Connect the <code>Q</code> outputs to the red
+lights <code>LEDR</code>.</p>
+<h3 id="module-declaration-4">Module Declaration</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module top_module (</span><br><span class="line">    input [2:0] SW,      // R</span><br><span class="line">    input [1:0] KEY,     // L and clk</span><br><span class="line">    output [2:0] LEDR);  // Q</span><br></pre></td></tr></table></figure>
+<h3 id="hint...-2">Hint...</h3>
+<p>This circuit is an example of a <a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linear_feedback_shift_register">Linear
+Feedback Shift Register</a> (LFSR). A maximum-period LFSR can be used to
+generate pseudorandom numbers, as it cycles through 2n-1 combinations
+before repeating. The all-zeros combination does not appear in this
+sequence.</p>
+<h3 id="solution-4">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">2</span>:<span class="number">0</span>] SW,      <span class="comment">// R</span></span><br><span class="line">    <span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] KEY,     <span class="comment">// L and clk</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">2</span>:<span class="number">0</span>] LEDR);  <span class="comment">// Q</span></span><br><span class="line"><span class="keyword">reg</span> [<span class="number">2</span>:<span class="number">0</span>] next_ledr;</span><br><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">   next_ledr = &#123;LEDR[<span class="number">1</span>] ^ LEDR[<span class="number">2</span>],LEDR[<span class="number">0</span>],LEDR[<span class="number">2</span>]&#125; ;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">always</span> @(<span class="keyword">posedge</span> KEY[<span class="number">0</span>]) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (KEY[<span class="number">1</span>])</span><br><span class="line">        LEDR &lt;= SW;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">        LEDR &lt;= next_ledr;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="lfsr32">Lfsr32</h2>
+<p>See <a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Lfsr5">Lfsr5</a> for
+explanations.</p>
+<p>Build a 32-bit Galois LFSR with taps at bit positions 32, 22, 2, and
+1.</p>
+<h3 id="module-declaration-5">Module Declaration</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,    <span class="comment">// Active-high synchronous reset to 32&#x27;h1</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">31</span>:<span class="number">0</span>] q</span><br><span class="line">); </span><br></pre></td></tr></table></figure>
+<h3 id="solution-5">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> reset,    <span class="comment">// Active-high synchronous reset to 32&#x27;h1</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">31</span>:<span class="number">0</span>] q</span><br><span class="line">); </span><br><span class="line">    <span class="keyword">wire</span> [<span class="number">31</span>:<span class="number">0</span>] next_q;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        next_q = &#123;q[<span class="number">0</span>],q[<span class="number">31</span>:<span class="number">1</span>]&#125;;</span><br><span class="line">        next_q[<span class="number">31</span>] = q[<span class="number">0</span>];</span><br><span class="line">        next_q[<span class="number">21</span>] = q[<span class="number">22</span>] ^ q[<span class="number">0</span>];</span><br><span class="line">        next_q[<span class="number">1</span>] = q[<span class="number">2</span>] ^ q[<span class="number">0</span>];</span><br><span class="line">        next_q[<span class="number">0</span>] = q[<span class="number">1</span>] ^ q[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (reset) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">32&#x27;h1</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">           q &lt;= next_q;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="examsm2014-q4k">Exams/m2014 q4k</h2>
+<h3 id="question-4">question</h3>
+<p>Implement the following circuit:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_m2014q4k.png"><img
+src="https://hdlbits.01xz.net/mw/images/1/15/Exams_m2014q4k.png"
+alt="Exams m2014q4k.png" /></a></p>
+<h3 id="module-declaration-6">Module Declaration</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> resetn,   <span class="comment">// synchronous reset</span></span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">output</span> out);</span><br></pre></td></tr></table></figure>
+<h3 id="solution-6">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> resetn,   <span class="comment">// synchronous reset</span></span><br><span class="line">    <span class="keyword">input</span> in,</span><br><span class="line">    <span class="keyword">output</span> out);</span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>] q;</span><br><span class="line">    <span class="keyword">assign</span> out = q[<span class="number">3</span>];</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (!resetn) <span class="keyword">begin</span></span><br><span class="line">            q &lt;= <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">integer</span> i;</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">2</span>; i = i + <span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">                q[i + <span class="number">1</span>] &lt;= q[i]; </span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            q[<span class="number">0</span>] &lt;= in;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="exams2014-q4b">Exams/2014 q4b</h2>
+<h3 id="question-5">question</h3>
+<p>Consider the <em>n</em>-bit shift register circuit shown below:</p>
+<p><a target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/File:Exams_2014q4.png"><embed
+src="https://hdlbits.01xz.net/mw/thumb.php?f=Exams_2014q4.png&amp;width=900" /></a></p>
+<p>Write a top-level Verilog module (named top_module) for the shift
+register, assuming that <em>n</em> = 4. Instantiate four copies of your
+MUXDFF subcircuit in your top-level module. Assume that you are going to
+implement the circuit on the DE2 board.</p>
+<ul>
+<li>Connect the <em>R</em> inputs to the <em>SW</em> switches,</li>
+<li><em>clk</em> to <em>KEY[0]</em>,</li>
+<li><em>E</em> to <em>KEY[1]</em>,</li>
+<li><em>L</em> to <em>KEY[2]</em>, and</li>
+<li><em>w</em> to <em>KEY[3]</em>.</li>
+<li>Connect the outputs to the red lights <em>LEDR[3:0]</em>.</li>
+</ul>
+<p>(Reuse your MUXDFF from <a
+target="_blank" rel="noopener" href="https://hdlbits.01xz.net/wiki/Exams/2014_q4a">exams/2014_q4a</a>.)</p>
+<h3 id="module-declaration-7">Module Declaration</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] SW,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] KEY,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] LEDR</span><br><span class="line">); </span><br></pre></td></tr></table></figure>
+<h3 id="solution-7">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] SW,</span><br><span class="line">    <span class="keyword">input</span> [<span class="number">3</span>:<span class="number">0</span>] KEY,</span><br><span class="line">    <span class="keyword">output</span> [<span class="number">3</span>:<span class="number">0</span>] LEDR</span><br><span class="line">); <span class="comment">//</span></span><br><span class="line">    <span class="keyword">genvar</span> i;</span><br><span class="line">    <span class="keyword">generate</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">3</span>; i &gt;= <span class="number">1</span> ; i = i - <span class="number">1</span>) <span class="keyword">begin</span>: for_bk</span><br><span class="line">            MUXDFF MUXDFF_inst(</span><br><span class="line">                <span class="variable">.w</span>(LEDR[i]),</span><br><span class="line">                <span class="variable">.R</span>(SW[i - <span class="number">1</span>]),</span><br><span class="line">                <span class="variable">.E</span>(KEY[<span class="number">1</span>]),</span><br><span class="line">                <span class="variable">.L</span>(KEY[<span class="number">2</span>]),</span><br><span class="line">                <span class="variable">.clk</span>(KEY[<span class="number">0</span>]),</span><br><span class="line">                <span class="variable">.Q</span>(LEDR[i - <span class="number">1</span>])</span><br><span class="line">            ); </span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        MUXDFF MUXDFF_inst_3(</span><br><span class="line">            <span class="variable">.w</span>(KEY[<span class="number">3</span>]),</span><br><span class="line">            <span class="variable">.R</span>(SW[<span class="number">3</span>]),</span><br><span class="line">            <span class="variable">.E</span>(KEY[<span class="number">1</span>]),</span><br><span class="line">            <span class="variable">.L</span>(KEY[<span class="number">2</span>]),</span><br><span class="line">            <span class="variable">.clk</span>(KEY[<span class="number">0</span>]),</span><br><span class="line">            <span class="variable">.Q</span>(LEDR[<span class="number">3</span>])</span><br><span class="line">         ); </span><br><span class="line">    <span class="keyword">endgenerate</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">module</span> MUXDFF (</span><br><span class="line">    <span class="keyword">input</span> w, R, E, L,</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">output</span> Q</span><br><span class="line">);</span><br><span class="line">    <span class="keyword">wire</span> mid, next_Q;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        next_Q = L ? R : mid;</span><br><span class="line">        mid = E ? w : Q;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        Q &lt;= next_Q;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<h2 id="examsece241-2013q12">Exams/ece241 2013q12</h2>
+<h3 id="question-6">question</h3>
+<p>In this question, you will design a circuit for an 8x1 memory, where
+writing to the memory is accomplished by shifting-in bits, and reading
+is "random access", as in a typical RAM. You will then use the circuit
+to realize a 3-input logic function.</p>
+<p>First, create an 8-bit shift register with 8 D-type flip-flops. Label
+the flip-flop outputs from Q[0]...Q[7]. The shift register input should
+be called <strong>S</strong>, which feeds the input of Q[0] (MSB is
+shifted in first). The <strong>enable</strong> input controls whether to
+shift. Then, extend the circuit to have 3 additional inputs
+<strong>A</strong>,<strong>B</strong>,<strong>C</strong> and an output
+<strong>Z</strong>. The circuit's behaviour should be as follows: when
+ABC is 000, Z=Q[0], when ABC is 001, Z=Q[1], and so on. Your circuit
+should contain ONLY the 8-bit shift register, and multiplexers. (Aside:
+this circuit is called a 3-input look-up-table (LUT)).</p>
+<h3 id="module-declaration-8">Module Declaration</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">module top_module (</span><br><span class="line">    input clk,</span><br><span class="line">    input enable,</span><br><span class="line">    input S,</span><br><span class="line">    input A, B, C,</span><br><span class="line">    output Z ); </span><br></pre></td></tr></table></figure>
+<h3 id="solution-8">solution</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> enable,</span><br><span class="line">    <span class="keyword">input</span> S,</span><br><span class="line">    <span class="keyword">input</span> A, B, C,</span><br><span class="line">    <span class="keyword">output</span> Z ); </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] Q;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (enable) <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">integer</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span> ; i = i + <span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">                Q[i + <span class="number">1</span>] &lt;= Q[i];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            Q[<span class="number">0</span>] &lt;= S;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">module</span> top_module (</span><br><span class="line">    <span class="keyword">input</span> clk,</span><br><span class="line">    <span class="keyword">input</span> enable,</span><br><span class="line">    <span class="keyword">input</span> S,</span><br><span class="line">    <span class="keyword">input</span> A, B, C,</span><br><span class="line">    <span class="keyword">output</span> Z ); </span><br><span class="line">    <span class="keyword">reg</span> [<span class="number">7</span>:<span class="number">0</span>] Q;</span><br><span class="line">    <span class="keyword">always</span> @(<span class="keyword">posedge</span> clk) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">if</span> (enable) <span class="keyword">begin</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">integer</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span> ; i = i + <span class="number">1</span>) <span class="keyword">begin</span></span><br><span class="line">                Q[i + <span class="number">1</span>] &lt;= Q[i];</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">            Q[<span class="number">0</span>] &lt;= S;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">case</span> (&#123;A,B,C&#125;)</span><br><span class="line">            <span class="number">3&#x27;b000</span>: Z = Q[<span class="number">0</span>];</span><br><span class="line">            <span class="number">3&#x27;b001</span>: Z = Q[<span class="number">1</span>];</span><br><span class="line">            <span class="number">3&#x27;b010</span>: Z = Q[<span class="number">2</span>];</span><br><span class="line">            <span class="number">3&#x27;b011</span>: Z = Q[<span class="number">3</span>];</span><br><span class="line">            <span class="number">3&#x27;b100</span>: Z = Q[<span class="number">4</span>];</span><br><span class="line">            <span class="number">3&#x27;b101</span>: Z = Q[<span class="number">5</span>];</span><br><span class="line">            <span class="number">3&#x27;b110</span>: Z = Q[<span class="number">6</span>];</span><br><span class="line">            <span class="number">3&#x27;b111</span>: Z = Q[<span class="number">7</span>];</span><br><span class="line">        <span class="keyword">endcase</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br><span class="line"><span class="comment">/*    always @(*) begin</span></span><br><span class="line"><span class="comment">        case &#123;A,B,C&#125;: // USAGE OF CASE IS WRONG </span></span><br><span class="line"><span class="comment">            3&#x27;b000: Z = Q[0];</span></span><br><span class="line"><span class="comment">            3&#x27;b001: Z = Q[1];</span></span><br><span class="line"><span class="comment">            3&#x27;b010: Z = Q[2];</span></span><br><span class="line"><span class="comment">            3&#x27;b011: Z = Q[3];</span></span><br><span class="line"><span class="comment">            3&#x27;b100: Z = Q[4];</span></span><br><span class="line"><span class="comment">            3&#x27;b101: Z = Q[5];</span></span><br><span class="line"><span class="comment">            3&#x27;b110: Z = Q[6];</span></span><br><span class="line"><span class="comment">            3&#x27;b111: Z = Q[7];</span></span><br><span class="line"><span class="comment">        endcase</span></span><br><span class="line"><span class="comment">    end</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h3 id="debug-2">Debug</h3>
+<ul>
+<li>注意case的用法</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/verilog/" rel="tag"># verilog</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/15/%E3%80%90%E6%9C%AD%E8%AE%B0%E3%80%91%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B%E5%86%99%E5%8D%9A%E5%AE%A2/" rel="prev" title="【札记】重新开始写博客">
+                  <i class="fa fa-chevron-left"></i> 【札记】重新开始写博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/25/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-11-%E6%97%B6%E5%BA%8F%E9%80%BB%E8%BE%91-MoreCircuit/" rel="next" title="【Verilog学习】-11-时序逻辑-MoreCircuit">
+                  【Verilog学习】-11-时序逻辑-MoreCircuit <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PengXuanyao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
