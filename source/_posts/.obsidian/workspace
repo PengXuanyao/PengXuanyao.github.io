@@ -1,0 +1,144 @@
+{
+  "main": {
+    "id": "03282e6a22254b17",
+    "type": "split",
+    "children": [
+      {
+        "id": "67aaa14d78de65c6",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "庞.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5a028d64a348f7b5",
+    "type": "split",
+    "children": [
+      {
+        "id": "11c86cb0ce3c6df3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bfcc51f2224bc05c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "962e247ca30dd124",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "036a66ba3ebfc7ac",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a5a48658999aca8b",
+    "type": "split",
+    "children": [
+      {
+        "id": "4ce9d277f225817a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "89be7802de54e47e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "庞.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": true,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "e51a9d14edad86bb",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "庞.md",
+                "linksCollapsed": true,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "1e7a8f5f1ccb126f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "8d90a87ed7dd6b1f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "庞.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "67aaa14d78de65c6",
+  "lastOpenFiles": [
+    "【RV_Security】-00-调研.md",
+    "【TI2022】混沌信号发生器.md",
+    "【xup_summer_camp】-00-PYNQ-Z2-Start.md",
+    "【Verilog学习】-07-testbench.md",
+    "【CPP】-00-基本概念学习.md",
+    "【CAG_SLAM】-04-除法器.md",
+    "【CAG_SLAM】-01-控制信号.md",
+    "【BC26】-00-数据传输.md"
+  ]
+}

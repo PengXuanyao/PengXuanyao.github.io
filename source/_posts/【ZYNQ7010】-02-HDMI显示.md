@@ -8,7 +8,7 @@ categories:
     - 学习
 ---
 
-## 做个实验
+## 想做HDMI实验
 
 还是按照官方的教程搭建这个HDMI显示的
 
@@ -32,6 +32,8 @@ categories:
 
 今天还是先做一个简单的SDK固话FLASH的项目，将上次完成呼吸灯项目固化到flash当中。
 
+### debug流
+
 1. 报错
 
 > [Common 17-69] Command failed: write_hw_platform is only supported for synthesized, implemented, or checkpoint designs
@@ -53,7 +55,71 @@ categories:
 5. WARNING: Failed to connect to hw_server at TCP:127.0.0.1:3121
 Attempting to launch hw_server at TCP:127.0.0.1:3121； ERROR: Unable to detect JTAG cable
 
-怀疑是linux系统无法识别板卡的问题。
+怀疑是linux系统无法识别板卡的问题，在win环境下已经验证是没有问题的。
+
+尝试使用vivado进行程序烧录,还是发现问题存在。
+
+已经找到根源，是因为没有装驱动;
+
+> 按照官方教程装驱动即可：https://support.xilinx.com/s/article/54381?language=en_US
+> 其他参考资料：
+> * [Unable to connect to hardware target in Vivado](https://support.xilinx.com/s/question/0D52E00006iI3y1SAC/unable-to-connect-to-hardware-target-in-vivado?language=en_US)
+
+安装驱动重启后，问题解决。
+
+### 搞定
+
+最后使用vitis进行程序烧写，烧录完成之后，断电将boot模式选为10（QSPI模式），最后程序已经固化在芯片上，能够正常启动。
+
+## Picgo使用
+
+想在vscode上写博客的时候上传一下图片，于是安装了一下picgo。
+
+### snap应用安装
+
+非官方商店的snap安装时，会出现以下的报错：
+
+> error: cannot find signatures with metadata for snap "picgo_2.3.0_amd64.snap"
+
+解决方法就是：加一个dangerous标志
+
+> [参考博客](https://itsfoss.com/snap-metadata-signature-error/)
+
+安装完成之后打开是黑屏，有大问题！
+
+### 使用AppImage版本
+
+不用snap版本了，上次snap版本的firefox也经常出小毛病。
+
+换成appImage版本试一下。
+
+AppImage版本是正确的，但是得先安装以下FUSE（参照教程：[FUSE_WIKI](https://github.com/AppImage/AppImageKit/wiki/FUSE)）
+
+启动picgo成功
+
+[AppImage使用](https://ubunlog.com/zh-CN/%E4%BB%80%E4%B9%88%E6%98%AFappimage%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%9C%A8ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85%E5%AE%83%E4%BB%AC/)
+
+如何复制
+将AppImage添加到应用界面：
+ 
+### 设置上传方式
+
+注意上传的路径是：用户名/仓库，而不是整个url
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
