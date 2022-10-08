@@ -115,3 +115,4 @@ $$ \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} cos{\theta} & -sin{\th
 
 1. HLS能够帮助快捷的实现复杂功能的硬件电路，但是需要程序员不仅要对C++代码较为了解，并且要对硬件具体实现的方式方法非常清楚，才能够正确地结合directive实现合适的硬件电路。
 2. 本次项目能够熟悉了整个HLS开发的流程，是一个helloworld性质的proj，后续需要自己设计并实现一定功能的复杂电路，才能够具体掌握hls。
+3. 更多学习资料：![source](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221004111724.png)
