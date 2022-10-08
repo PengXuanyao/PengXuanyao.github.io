@@ -132,18 +132,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,485 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/01/%E3%80%90IntelCup%E3%80%91-07-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/01/%E3%80%90IntelCup%E3%80%91-07-01/" class="post-title-link" itemprop="url">【IntelCup】-07-01</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-01 11:49:10" itemprop="dateCreated datePublished" datetime="2022-07-01T11:49:10+08:00">2022-07-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/IntelCup/" itemprop="url" rel="index"><span itemprop="name">IntelCup</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="神经网络学习">神经网络学习</h2>
+<blockquote>
+<p>《Python神经网络编程》</p>
+</blockquote>
+<h3 id="基本的神经网络">基本的神经网络</h3>
+<p>简单的神经网络就是通过一层一层（输入层、隐藏层、输出层）的矩阵运算，中间将加权后的输入用sigmoid函数<span
+class="math inline">\(\frac{1}{1+e^{-x}}\)</span>（书中也称激活函数）映射，将得到的输出送入到下一层。</p>
+<h3
+id="基本的反馈思想调节神经网络的链接权重">基本的反馈思想调节神经网络的链接权重</h3>
+<p>当输出值和期望值有误差时，将误差作为反馈，调节网络中的链接权重，并且权重越大应当调节的效果越大。</p>
+<h4 id="使用矩阵乘法进行反向传播误差">使用矩阵乘法进行反向传播误差</h4>
+<p>这种方法是通过实际直观知道的输出误差，反向推导得到上一层（中间层或叫隐藏层的误差），尝试用矩阵的方式描述这一过程就成为<strong>过程矢量化</strong>。</p>
+<p>首先，通过观察误差来源，列出方程，然后写成矩阵形式；接着，进行归一化处理，得到反向传播的误差举证是前面描述的<strong>链接权重矩阵的转置</strong>。</p>
+<h4
+id="使用梯度下降法确定调节链接权重矩阵系数的方向">使用梯度下降法确定调节链接权重矩阵系数的方向</h4>
+<p>构建误差函数（误差的2次方），使用梯度下降法（求一阶偏导数）得到调整系数方向，大梯度使用大步长调整，小梯度使用小步长调整，直到满足精度要求。</p>
+<p>记住优化的方向是负梯度方向（下降）。</p>
+<h3 id="构建训练的数据需要注意的问题">构建训练的数据需要注意的问题</h3>
+<ul>
+<li>激活函数的输出范围是0~1，因此，不应当设置一个大于1的目标值；</li>
+<li>初始权重不应当过大，会导致网络饱和；也要避免0值导致的网络断联。</li>
+<li>权重初始化也不应当设置为相同，会导致优化权重时，优化的权重会始终一样。</li>
+</ul>
+<h2 id="pycharm添加模板">Pycharm添加模板</h2>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/andy9468/p/8988501.html">pycharm自定义代码片段
+- 安迪9468 - 博客园 (cnblogs.com)</a></p>
+</blockquote>
+<p>添加模板的时候注意作用域的设置：</p>
+<figure>
+<img src="https://s2.loli.net/2022/07/01/Cb8Eqzc2d3j9ZBQ.png"
+alt="img-1" />
+<figcaption aria-hidden="true">img-1</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/07/01/FaClPw6iemZuYzL.png"
+alt="img-2" />
+<figcaption aria-hidden="true">img-2</figcaption>
+</figure>
+<h2 id="qt学习">QT学习</h2>
+<blockquote>
+<p>直接复制一行代码：Ctrl+D；</p>
+<p>多行编辑：ctrl双击不松手+上下键.可以在同一列增加光标.</p>
+<p><a target="_blank" rel="noopener" href="http://www.pyqt5.cn/">PyQt5中文网 - Python
+GUI图形界面开发视频教程</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://www.xdbcb8.com/archives/98.html">PyQt5图形界面入门教程（第一篇）
+(xdbcb8.com)</a>（这个教程比较全面）</p>
+<p><a
+target="_blank" rel="noopener" href="https://space.bilibili.com/216221286">迷途小书童的Note的个人空间_哔哩哔哩_bilibili</a>(这个阿婆是讲Yolo的)</p>
+</blockquote>
+<p>第一章讲了里面的主要的类的属性和方法，以及如何之间的父子关系等基本内容。</p>
+<h3 id="pyqt中的定时器">PYQT中的定时器</h3>
+<p>给定时器绑定一个触发时激活的函数，然后自动运行就可以，并在合适的时间进行终止操作。</p>
+<h3 id="事件">事件</h3>
+<p>是属于PYQT内置的信号处理方法</p>
+<h3 id="others">Others</h3>
+<h4 id="raise">raise</h4>
+<p>用来引发一个异常：</p>
+<h4 id="基础ui设计包括窗口图标等">基础UI设计，包括窗口图标等</h4>
+<p><a
+target="_blank" rel="noopener" href="https://www.xdbcb8.com/archives/137.html">PyQt5的UI设计，包含了最基本的信号与槽函数调用，
+还有Qt设计师关于信号与槽函数的联系 (xdbcb8.com)</a></p>
+<h3 id="一个有意思的代码">一个有意思的代码</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QApplication, QLabel, QWidget)</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QPainter, QColor, QPen</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> Qt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span>(<span class="params">QWidget</span>):</span></span><br><span class="line">    distance_from_center = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.initUI()</span><br><span class="line">        self.setMouseTracking(<span class="literal">True</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.setGeometry(<span class="number">200</span>, <span class="number">200</span>, <span class="number">1000</span>, <span class="number">500</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">&#x27;学点编程吧&#x27;</span>)</span><br><span class="line">        self.label = QLabel(self)</span><br><span class="line">        self.label.resize(<span class="number">500</span>, <span class="number">40</span>)</span><br><span class="line">        self.show()</span><br><span class="line">        self.pos = <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mouseMoveEvent</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        distance_from_center = <span class="built_in">round</span>(((event.y() - <span class="number">250</span>)**<span class="number">2</span> + (event.x() - <span class="number">500</span>)**<span class="number">2</span>)**<span class="number">0.5</span>)</span><br><span class="line">        self.label.setText(<span class="string">&#x27;坐标: ( x: %d ,y: %d )&#x27;</span> % (event.x(), event.y()) + <span class="string">&quot; 离中心点距离: &quot;</span> + <span class="built_in">str</span>(distance_from_center))</span><br><span class="line">        self.pos = event.pos()</span><br><span class="line">        <span class="comment"># 这里的update会激活paintEvent</span></span><br><span class="line">        self.update()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">paintEvent</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        <span class="keyword">if</span> self.pos:</span><br><span class="line">            q = QPainter(self)</span><br><span class="line">            q.drawLine(<span class="number">0</span>, <span class="number">0</span>, self.pos.x(), self.pos.y())</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    ex = Example()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/29/%E3%80%90IntelCup%E3%80%91-06-29/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/29/%E3%80%90IntelCup%E3%80%91-06-29/" class="post-title-link" itemprop="url">【IntelCup】-06-29</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-29 16:52:35" itemprop="dateCreated datePublished" datetime="2022-06-29T16:52:35+08:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="使用pyqt搭建一个简易登录界面">使用PYQT搭建一个简易登录界面</h2>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Li4y1m79p?spm_id_from=333.337.search-card.all.click&amp;vd_source=293ffecc5040ce31ebf8b10de8372434">Python/PyQt5/Qtdesigner设计登录界面——包括登录和注册界面切换_哔哩哔哩_bilibili</a></p>
+</blockquote>
+<h3 id="使用qt-desiger设计界面">使用QT desiger设计界面</h3>
+<p>详细参加视频，注意不要把登录框重叠</p>
+<h3 id="使用pycharm开发">使用Pycharm开发</h3>
+<p>暂时未遇到无法解决的问题，但是有些功能没有完全实现。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/29/%E3%80%90IntelCup%E3%80%91-06-29/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/27/%E3%80%90IntelCup%E3%80%91-06-27/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/27/%E3%80%90IntelCup%E3%80%91-06-27/" class="post-title-link" itemprop="url">【IntelCup】-06-27</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-27 15:15:31" itemprop="dateCreated datePublished" datetime="2022-06-27T15:15:31+08:00">2022-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="pycharm配置anaconda">pycharm配置anaconda</h2>
+<h3
+id="anaconda新建虚拟环境默认在c盘的解决">anaconda新建虚拟环境默认在C盘的解决</h3>
+<p>使用<code>conda config --add envs_dirs dir（路径）</code>新建一个虚拟环境，其会成为默认的环境。</p>
+<p>这里使用的路径是<code>D:\Users\admin\.conda\envs\</code>。</p>
+<h3
+id="anaconda在指定的虚拟环境中安装库">anaconda在指定的虚拟环境中安装库</h3>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/zhuan_long/article/details/114092666">Anaconda在指定环境中安装库_西门一刀的博客-CSDN博客</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44857413/article/details/106438719">Anaconda
+安装python第三方库的各类方法__Ashore的博客-CSDN博客_anaconda安装第三方库</a></p>
+</blockquote>
+<h3 id="找不到命令anaconda">找不到命令anaconda</h3>
+<p>在系统变量的Path中添加相关的路径：<code>C:\Users\XXX\Anaconda3</code>,<code>C:\Users\XXX\Anaconda3\Scripts</code></p>
+<h3 id="anaconda无法search">anaconda无法search</h3>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/Sky_Tree_Delivery/article/details/109078288">Can‘t
+connect to HTTPS URL because the SSL module is not available -
+关于anaconda中的SSL模块错误_Sky_Tree_Delivery的博客-CSDN博客</a></p>
+</blockquote>
+<p>csdn(github) nb</p>
+<h2 id="pyqt5编写界面">pyqt5编写界面</h2>
+<h2 id="ssh远程连接linux主机">SSH远程连接linux主机</h2>
+<p>vscode中使用remote插件</p>
+<p>openssh-server</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/05/%E3%80%90CAG_SLAM%E3%80%91-07-BA-Part/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/05/%E3%80%90CAG_SLAM%E3%80%91-07-BA-Part/" class="post-title-link" itemprop="url">【CAG_SLAM】-07-BA-Part</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-05 10:19:05" itemprop="dateCreated datePublished" datetime="2022-06-05T10:19:05+08:00">2022-06-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="整体模块功能图">整体模块功能图</h2>
+<figure>
+<img src="https://s2.loli.net/2022/06/05/Q6Bi13UfHJRoMpx.png"
+alt="BA_module" />
+<figcaption aria-hidden="true">BA_module</figcaption>
+</figure>
+<p>这里主要涉及到矩阵求逆、矩阵转置和矩阵乘法的操作，最后输出结果的矩阵。</p>
+<h2 id="矩阵求逆">矩阵求逆</h2>
+<p>矩阵求逆主要有两种方法，一种是利用伴随阵求逆矩阵的方法，还有其他方法是利用矩阵的L-U分解法等（L-U分解法具有更加广泛的应用范围，其可以并行计算）</p>
+<blockquote>
+<p><strong>L-U分解法</strong> <span class="math display">\[
+A = LU \\
+A^{-1} = U^{-1}L^{-1}
+\]</span> 其中，L是下三角阵，U是上三角阵。 <span class="math display">\[
+\begin{bmatrix}
+A_{11}    &amp; A_{12} \\
+A_{21}    &amp; A_{22}
+\end{bmatrix}
+=
+\begin{bmatrix}
+L_{11}    &amp;  \\
+L_{21}    &amp; L_{22}
+\end{bmatrix}
+\times
+\begin{bmatrix}
+U_{11}    &amp; U_{12} \\
+      &amp; U_{22}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\left\{
+  \begin{array}{**lr**}
+  A_{11} = L_{11}U_{11} \\
+  A_{12} = L_{11}U_{12} \\
+  A_{21} = L_{21}U_{11} \\
+  A_{22} = L_{21}U_{12} + L_{22}U_{22}
+  \end{array}
+\right.
+\]</span></p>
+<p>上式表明，其可以作并行计算</p>
+</blockquote>
+<h2 id="fifo">FIFO</h2>
+<p>求FIFO深度需要考虑最坏的情形，读写的速率应该相差最大，也就是说需要找出最大的写速率和最小的读速率；不管什么场景，要确定FIFO的深度，关键在于计算出在突发读写这段时间内有多少个数据没有被读走。</p>
+<h3 id="最坏情况">最坏情况：</h3>
+<p>给定数据传输的速率，不给数据传输的方式，考虑最坏情况是下图的case-4（背靠背），连续读取了最多的数据，需要的FIFO是最大的。</p>
+<figure>
+<img
+src="https://pic1.zhimg.com/80/v2-27362d832a75aa595ca1bfb3566336bc_720w.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h3 id="推导公式">推导公式：</h3>
+<ul>
+<li>写时钟周期为clkw</li>
+<li>读时钟周期为clkr</li>
+<li>在读时钟周期内，每x个周期内可以有y个数据读出FIFO，即读数据的读数率</li>
+<li>在写时钟周期内，每m个周期内就有<strong>n个数据</strong>写入FIFO</li>
+<li>背靠背“的情形下是FIFO读写的最坏情形，<strong>burst长度 B =
+2*n</strong></li>
+</ul>
+<p>FIFO最小深度为： <span class="math display">\[
+depth = 2n - 2m\times\frac{y}{x} = B -
+B\times\frac{clkr}{clkw}\times\frac{y}{x}
+\]</span></p>
+<h3 id="总结">总结</h3>
+<p>要计算这里的FIFO深度的最坏情况，也就是要计算写操作burst的最大长度（当给定数据传输速率后，选择背靠背的传输方式为最大）。</p>
+<h3 id="参考资料">参考资料</h3>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/166177480">FIFO深度计算 - 知乎
+(zhihu.com)</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -397,7 +876,7 @@ asynchronous reset.</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-15 21:55:46" itemprop="dateModified" datetime="2022-07-15T21:55:46+08:00">2022-07-15</time>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -486,7 +965,7 @@ asynchronous reset.</p>
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-15 21:55:46" itemprop="dateModified" datetime="2022-07-15T21:55:46+08:00">2022-07-15</time>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -568,9 +1047,15 @@ synchronous load, and enable.</p>
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-05-15 14:50:47 / 修改时间：14:59:48" itemprop="dateCreated datePublished" datetime="2022-05-15T14:50:47+08:00">2022-05-15</time>
+      <time title="创建时间：2022-05-15 14:50:47" itemprop="dateCreated datePublished" datetime="2022-05-15T14:50:47+08:00">2022-05-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -709,352 +1194,6 @@ ZYNQ工程模板教程.pdf）。</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/14/%E3%80%90uC-OS%E3%80%91-01-%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A7%BB%E5%80%BC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/14/%E3%80%90uC-OS%E3%80%91-01-%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A7%BB%E5%80%BC/" class="post-title-link" itemprop="url">【uC-OS】-01-系统的移值</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-04-14 10:48:15 / 修改时间：10:48:16" itemprop="dateCreated datePublished" datetime="2022-04-14T10:48:15+08:00">2022-04-14</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/14/%E3%80%90uC-OS%E3%80%91-00-%E5%88%9D%E8%AF%86uCOS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/14/%E3%80%90uC-OS%E3%80%91-00-%E5%88%9D%E8%AF%86uCOS/" class="post-title-link" itemprop="url">【uCOS】-00-初识uCOS</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-04-14 10:02:08 / 修改时间：17:46:44" itemprop="dateCreated datePublished" datetime="2022-04-14T10:02:08+08:00">2022-04-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="ucos简介">uCOS简介</h2>
-<p>μC/OS-III（Micro C OS Three 微型的 C 语言编写的操作系统第三版）是由
-Micrium 于 2009
-年推出的一款可升级的、可固化的、开源的、基于优先级的抢占式实时内核。它提供了
-高档实时内核所需要的所有功能，例如任务管理、时间管理、信号量、事件标志组、互斥信
-号量、消息队列、软件定时器、内存管理等。μC/OS-III
-对任务数量、任务大小、优先级数
-量无限制，只限制于处理器所能提供的内存大小。μC/OS-III
-也提供了很多其他实时内核中
-所没有的，比如能在运行时测量运行性能，直接发送信号或消息给任务，任务能同时等待多
-个信号量和消息队列。μC/OS-III 被设计用于 32 位处理器， 但是它也能在 16
-位或 8 位 处理器中很好地工作。</p>
-<p>μC/OS-III
-是一个软件实时内核，主要负责任务的管理和任务间的交流，任务的管理也
-叫做多任务处理，其作用是协调和切换多个任务依次享用 CPU，它能使 CPU
-的利用率达到 最大，让我们从宏观上感觉是多个 CPU
-在同时运行，但是在微观上，对于单核处理器，同
-一时刻只能处理一个任务，即任务间是串行执行的。把系统功能分成多个在独自的循环体内
-运行的小任务，可以实现模块化管理，程序员可以简单的维护和升级产品。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/14/%E3%80%90uC-OS%E3%80%91-00-%E5%88%9D%E8%AF%86uCOS/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/08/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-10-modelsim%E7%A0%B4%E8%A7%A3%E5%92%8C%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/08/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-10-modelsim%E7%A0%B4%E8%A7%A3%E5%92%8C%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">【Verilog学习】-10-modelsim破解和安装</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-08 21:29:33" itemprop="dateCreated datePublished" datetime="2022-04-08T21:29:33+08:00">2022-04-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-07-15 21:55:46" itemprop="dateModified" datetime="2022-07-15T21:55:46+08:00">2022-07-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/%E7%A7%91%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">科研</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="简单说一下">简单说一下</h2>
-<p>按照该教程就没有问题。</p>
-<p>注意：在破解的时候，不能用<strong>查找后</strong>得到的目录，要在源目录下运行脚本，否者将会失效。</p>
-<h2 id="referrence">Referrence</h2>
-<p><a
-target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1624946">ModelSim的安装、破解、使用（缩放算法仿真）
-- 云+社区 - 腾讯云 (tencent.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/05/%E3%80%90CAG_SLAM%E3%80%91-06-AXI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/04/05/%E3%80%90CAG_SLAM%E3%80%91-06-AXI/" class="post-title-link" itemprop="url">【CAG_SLAM】-06-AXI</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-04-05 11:01:57" itemprop="dateCreated datePublished" datetime="2022-04-05T11:01:57+08:00">2022-04-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-14 11:29:42" itemprop="dateModified" datetime="2022-04-14T11:29:42+08:00">2022-04-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="axi">AXI</h2>
-<p>主要参考了一些资料直接进行实践。</p>
-<h2 id="referrence">Referrence</h2>
-<ol type="1">
-<li><a
-target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23274715/article/details/102500233">AXI总线介绍_theboynoName的博客-CSDN博客</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/152283168">从零学习AXI4总线(二)：AXI4-Stream
-介绍 - 知乎 (zhihu.com)</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://www.cnblogs.com/milianke/p/15145574.html">05AXI4总线axi-stream(AXI4总线实战)
-- 米联客(milianke) - 博客园 (cnblogs.com)</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1097,7 +1236,7 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/milianke/p/15145574
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 

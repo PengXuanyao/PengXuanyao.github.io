@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Rudolf Emil Kalman  Rudolf Emil Kálmán[3] (May 19, 1930 – July 2, 2016) was a Hungarian-American electrical engineer, mathematician, and inventor. He is most noted for his co-invention and develop">
+<meta name="description" content="Rudolf Emil Kalman  Rudolf Emil Kálmán[3] (May 19, 1930 – July 2, 2016) was a Hungarian-American electrical engineer, mathematician, and inventor. He is most noted for his co-invention and development">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【KalmanFilter】-00-简介">
 <meta property="og:url" content="http://example.com/2022/03/22/%E3%80%90KalmanFilter%E3%80%91-00-%E7%AE%80%E4%BB%8B/index.html">
 <meta property="og:site_name" content="PengXuanyao">
-<meta property="og:description" content="Rudolf Emil Kalman  Rudolf Emil Kálmán[3] (May 19, 1930 – July 2, 2016) was a Hungarian-American electrical engineer, mathematician, and inventor. He is most noted for his co-invention and develop">
+<meta property="og:description" content="Rudolf Emil Kalman  Rudolf Emil Kálmán[3] (May 19, 1930 – July 2, 2016) was a Hungarian-American electrical engineer, mathematician, and inventor. He is most noted for his co-invention and development">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-22T13:04:04.000Z">
-<meta property="article:modified_time" content="2022-03-22T13:08:06.000Z">
+<meta property="article:modified_time" content="2022-08-02T02:03:26.638Z">
 <meta property="article:author" content="PengXuanyao">
 <meta property="article:tag" content="卡尔曼滤波器">
 <meta property="article:tag" content="现代控制理论">
@@ -136,18 +136,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -209,9 +209,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-03-22 21:04:04 / 修改时间：21:08:06" itemprop="dateCreated datePublished" datetime="2022-03-22T21:04:04+08:00">2022-03-22</time>
+      <time title="创建时间：2022-03-22 21:04:04" itemprop="dateCreated datePublished" datetime="2022-03-22T21:04:04+08:00">2022-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,15 +261,15 @@ effort trying to understand the Principle of it. And I find it is not
 easy to understand. But luckily, this blog<a href="#fn2"
 class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
 helped me a lot.</p>
-<section class="footnotes footnotes-end-of-document"
+<section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p><a
+<li id="fn1"><p><a
 target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kalman_filter">Kalman filter -
 Wikipedia</a><a href="#fnref1" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><a
+<li id="fn2"><p><a
 target="_blank" rel="noopener" href="https://blog.csdn.net/u010720661/article/details/63253509">详解卡尔曼滤波原理</a><a
 href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

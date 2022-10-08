@@ -132,18 +132,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">86</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -172,6 +172,476 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/09/%E3%80%90xup_summer_camp%E3%80%91-03-Sobel%E7%AE%97%E5%AD%90%E7%9A%84FPGA%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/09/%E3%80%90xup_summer_camp%E3%80%91-03-Sobel%E7%AE%97%E5%AD%90%E7%9A%84FPGA%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">【xup_summer_camp】-03-Sobel算子的FPGA实现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-09 10:56:01" itemprop="dateCreated datePublished" datetime="2022-08-09T10:56:01+08:00">2022-08-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-17 11:05:18" itemprop="dateModified" datetime="2022-09-17T11:05:18+08:00">2022-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="跑文档">跑文档</h2>
+<h3 id="ip的问题">IP的问题</h3>
+<p>出问题了HLS生成的IP是空的，有一点小烦，不知道哪里有毛病。</p>
+<p>现在目测是创建工程的时候，由于选择的顶层文件不正确导致的。</p>
+<p>发现一个问题，没有按照文档选择正确的器件（创建hls工程的时候）：</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/09/yDSR98PpMGn73me.png"
+alt="pic-1" />
+<figcaption aria-hidden="true">pic-1</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/08/09/P4VIYG3R5vQ2wdh.png"
+alt="pic-2" />
+<figcaption aria-hidden="true">pic-2</figcaption>
+</figure>
+<p>改过来后，出现IP，正常了。</p>
+<h3 id="blockdesign的问题">BlockDesign的问题</h3>
+<p>开始连线不正确，AutoConnection有一个模块没有出现，检查后发现是忘记给ZYNQ
+Processing的IP进行配置了。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/09/MqzZWvbklj94tSX.png"
+alt="pic-3" />
+<figcaption aria-hidden="true">pic-3</figcaption>
+</figure>
+<figure>
+<img src="https://s2.loli.net/2022/08/09/T71B8mWlE4oiGda.png"
+alt="pic-4" />
+<figcaption aria-hidden="true">pic-4</figcaption>
+</figure>
+<p>给ZYNQ加上这一个AXI端口后，正常。</p>
+<p>顺利跑下来了，中间没什么事故。接下来就是进一步进行HLS的开发而不是仅仅用这个python来跑程序了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/08/%E3%80%90IntelCup%E3%80%91-08-08-%E6%AF%94%E8%B5%9B%E7%BB%93%E6%9D%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/08/%E3%80%90IntelCup%E3%80%91-08-08-%E6%AF%94%E8%B5%9B%E7%BB%93%E6%9D%9F/" class="post-title-link" itemprop="url">【IntelCup】-08-08-比赛结束</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-08 20:46:05" itemprop="dateCreated datePublished" datetime="2022-08-08T20:46:05+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-17 11:05:18" itemprop="dateModified" datetime="2022-09-17T11:05:18+08:00">2022-09-17</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="最后一场答辩">最后一场答辩</h2>
+<p>今天上午是Intel的最后一场答辩，效果应该说比前两次的要好一些。现场的展示非常的流畅，专家的提问都问在了想到的点上，技术方面的问题例如知识蒸馏、做多人检测等，对答如流，最后一次答辩就这样顺利结束了。</p>
+<p>最后应该是国二等奖（上次蓝桥是国三，按照找规律，说不定下次再参加一个比赛就是国一了，hhh），整个比赛过程非常的流畅，我也发现了选择正确和好的工具的重要性，基于python的软件开发让我感受到了流畅和轻松。</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/08/FpmnKJgNVjAXTRh.jpg"
+title="picture of our team" alt="picture of our team" />
+<figcaption aria-hidden="true">picture of our team</figcaption>
+</figure>
+<p>总结一下这次整个IntelCup： 1.
+首先，系统学习一门课程或者技术的最好的方法是去阅读相关的专业入门书籍。正是通过一本专业的书籍和这个项目的实践，我才逐渐熟练起来了python编程。
+2.
+闭环的总结非常重要（CodeSheep），通过这次比赛呢，我也认识到一件事情无论最后结果好还是坏，及时的总结总是大有裨益的。
+3.
+最后一点是关于最近的状态问题，我觉得这两天好像有一点飘了。写点东西让自己静下来很重要。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/08/%E3%80%90ZYNQ7010%E3%80%91-02-HDMI%E6%98%BE%E7%A4%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/08/%E3%80%90ZYNQ7010%E3%80%91-02-HDMI%E6%98%BE%E7%A4%BA/" class="post-title-link" itemprop="url">【ZYNQ7010】-02-HDMI显示</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-08 15:34:27" itemprop="dateCreated datePublished" datetime="2022-08-08T15:34:27+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-29 11:48:57" itemprop="dateModified" datetime="2022-09-29T11:48:57+08:00">2022-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="想做hdmi实验">想做HDMI实验</h2>
+<p>还是按照官方的教程搭建这个HDMI显示的</p>
+<h2 id="换成linux环境开发">换成Linux环境开发</h2>
+<p>现在已经在linux环境下，安装好了Vitis套件，但是官方给出的启动方案（必须在制定的文件目录下，启动脚本运行才能够显示图形化界面）并不是很好用。</p>
+<p>现在想要做的第一件事情是将这个命令添加到全局执行。</p>
+<h3 id="vitis系列软件设置为全局启动">Vitis系列软件设置为全局启动</h3>
+<blockquote>
+<p>参考资料： 1. <a
+target="_blank" rel="noopener" href="https://juejin.cn/post/6844903886415740936">Linux下快速启动Xilinx
+Vivado方法</a> 2. <a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qsczxcedczx/article/details/114101741">Ubuntu启动Xilinx
+Vivado</a></p>
+</blockquote>
+<p>为什么粘贴链接时候不能够自动补全标题？换过编辑器（zettlr和vscode），这个问题还是存在，目前暂时认为是复制粘贴功能的问题</p>
+<p>最后是参考了资料2的内容，直接在.bashrc中添加了source /tools/···</p>
+<h2 id="使用sdk固化flash代码固化">使用SDK固化FLASH代码固化</h2>
+<p>今天还是先做一个简单的SDK固话FLASH的项目，将上次完成呼吸灯项目固化到flash当中。</p>
+<h3 id="debug流">debug流</h3>
+<ol type="1">
+<li>报错</li>
+</ol>
+<blockquote>
+<p>[Common 17-69] Command failed: write_hw_platform is only supported
+for synthesized, implemented, or checkpoint designs</p>
+</blockquote>
+<p>解决方法：关闭elaborated design即可，<a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/YYFaGe/p/14362187.html">当前项目不允许导出</a>。</p>
+<ol start="2" type="1">
+<li>找不到SDK入口</li>
+</ol>
+<p>升级之后，使用vitis（不需要vivado_sdk），<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/a2267542848/article/details/115976597">vitis导入</a></p>
+<ol start="3" type="1">
+<li>怎样使用vitis</li>
+</ol>
+<p>新建platform project，然后导入硬件生成的xsa文件。<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31253859/article/details/112243552">xsa文件导入</a></p>
+<ol start="4" type="1">
+<li>找不到elf文件</li>
+</ol>
+<p>在zynq_fsbl中运行makefile文件，得到生成的fsbl.elf文件。</p>
+<ol start="5" type="1">
+<li>WARNING: Failed to connect to hw_server at TCP:127.0.0.1:3121
+Attempting to launch hw_server at TCP:127.0.0.1:3121； ERROR: Unable to
+detect JTAG cable</li>
+</ol>
+<p>怀疑是linux系统无法识别板卡的问题，在win环境下已经验证是没有问题的。</p>
+<p>尝试使用vivado进行程序烧录,还是发现问题存在。</p>
+<p>已经找到根源，是因为没有装驱动;</p>
+<blockquote>
+<p>按照官方教程装驱动即可：https://support.xilinx.com/s/article/54381?language=en_US
+其他参考资料： * <a
+target="_blank" rel="noopener" href="https://support.xilinx.com/s/question/0D52E00006iI3y1SAC/unable-to-connect-to-hardware-target-in-vivado?language=en_US">Unable
+to connect to hardware target in Vivado</a></p>
+</blockquote>
+<p>安装驱动重启后，问题解决。</p>
+<h3 id="搞定">搞定</h3>
+<p>最后使用vitis进行程序烧写，烧录完成之后，断电将boot模式选为10（QSPI模式），最后程序已经固化在芯片上，能够正常启动。</p>
+<h2 id="picgo使用">Picgo使用</h2>
+<p>想在vscode上写博客的时候上传一下图片，于是安装了一下picgo。</p>
+<h3 id="snap应用安装">snap应用安装</h3>
+<p>非官方商店的snap安装时，会出现以下的报错：</p>
+<blockquote>
+<p>error: cannot find signatures with metadata for snap
+"picgo_2.3.0_amd64.snap"</p>
+</blockquote>
+<p>解决方法就是：加一个dangerous标志</p>
+<blockquote>
+<p><a
+target="_blank" rel="noopener" href="https://itsfoss.com/snap-metadata-signature-error/">参考博客</a></p>
+</blockquote>
+<p>安装完成之后打开是黑屏，有大问题！</p>
+<h3 id="使用appimage版本">使用AppImage版本</h3>
+<p>不用snap版本了，上次snap版本的firefox也经常出小毛病。</p>
+<p>换成appImage版本试一下。</p>
+<p>AppImage版本是正确的，但是得先安装以下FUSE（参照教程：<a
+target="_blank" rel="noopener" href="https://github.com/AppImage/AppImageKit/wiki/FUSE">FUSE_WIKI</a>）</p>
+<p>启动picgo成功</p>
+<p><a
+target="_blank" rel="noopener" href="https://ubunlog.com/zh-CN/%E4%BB%80%E4%B9%88%E6%98%AFappimage%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%9C%A8ubuntu%E4%B8%AD%E5%AE%89%E8%A3%85%E5%AE%83%E4%BB%AC/">AppImage使用</a></p>
+<p>如何复制 将AppImage添加到应用界面：</p>
+<h3 id="设置上传方式">设置上传方式</h3>
+<p>注意上传的路径是：用户名/仓库，而不是整个url</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/07/%E3%80%90xup_summer_camp%E3%80%91-02-FIR%E6%BB%A4%E6%B3%A2%E5%99%A8%E5%AE%9E%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="PengXuanyao">
+      <meta itemprop="description" content="This is my personal blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PengXuanyao">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/07/%E3%80%90xup_summer_camp%E3%80%91-02-FIR%E6%BB%A4%E6%B3%A2%E5%99%A8%E5%AE%9E%E9%AA%8C/" class="post-title-link" itemprop="url">【xup_summer_camp】-02-FIR滤波器实验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-08-07 09:27:54" itemprop="dateCreated datePublished" datetime="2022-08-07T09:27:54+08:00">2022-08-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-17 11:05:18" itemprop="dateModified" datetime="2022-09-17T11:05:18+08:00">2022-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>完成FIR滤波器实验记录，主要是跑一下例程，对麻鹬和麻雀的声音（两者的频谱上是分开的，能够通过FIR滤波器进行滤除）。</p>
+<p>使用的仓库地址（fork了一下原仓库）：<a
+target="_blank" rel="noopener" href="https://github.com/PengXuanyao/XilinxSummerSchool2022">PengXuanyao/XilinxSummerSchool2022
+(github.com)</a></p>
+<h3 id="vitis导出rtl有bug">Vitis导出RTL有bug</h3>
+<p>按照教程顺序进行操作时，无法生成IP，出现报错：<code>ERROR: [IMPL 213-28] Failed to generate IP.</code>。</p>
+<p>查阅了一下，是一个普遍的问题，可能是由于系统时间溢出导致的（？不太确定），通过打上官方的补丁即可修复。</p>
+<p>问题解决，注意：**需要在Xilinx的根目录下运行补丁，而不是在*</p>
+<figure>
+<img src="https://s2.loli.net/2022/08/07/PFucTUOEKmBZnAL.png"
+alt="在Xilinx目录下运行" />
+<figcaption aria-hidden="true">在Xilinx目录下运行</figcaption>
+</figure>
+<p>笔记本跑起来明显有一点卡顿。</p>
+<p>按照官方的文档，顺利地跑下来整个工程，总结一下如何使用pynq进行开发和验证：</p>
+<ol type="1">
+<li>实际生成硬件框架使用的是hls和vivado工具链，pynq是给与了一个调用和交互的接口，用户能够轻松地对硬件进行验证和可视化等操作。</li>
+<li>使用jupyterbook的时候，是相当于在芯片PS端上运行了python环境，然后调用了PS端的接口，整个流程图如下（摘自<a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52469205">这篇博客</a>） <img
+src="https://pic1.zhimg.com/80/v2-ad4971bc5d27a020cd94b7d4772a4d44_720w.jpg"
+alt="pynq" /></li>
+</ol>
+<p>参考的资料包括：</p>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/u014798590/article/details/122312505">HLS
+ERROR: IMPL 213-28 Failed to generate IP._XS30的博客-CSDN博客</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://support.xilinx.com/s/article/76960?language=en_US">Export
+IP Invalid Argument / Revision Number Overflow Issue (Y2K22)
+(xilinx.com)</a>（解决方法）</li>
+<li><a
+target="_blank" rel="noopener" href="https://support.xilinx.com/s/question/0D52E00006uyTmwSAE/error-impl-21328-failed-to-generate-ip?language=en_US">ERROR:
+IMPL 213-28 Failed to generate IP. (xilinx.com)</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -584,9 +1054,15 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/Light_windly/article/
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-08-01 15:58:56 / 修改时间：17:13:08" itemprop="dateCreated datePublished" datetime="2022-08-01T15:58:56+08:00">2022-08-01</time>
+      <time title="创建时间：2022-08-01 15:58:56" itemprop="dateCreated datePublished" datetime="2022-08-01T15:58:56+08:00">2022-08-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-17 11:05:18" itemprop="dateModified" datetime="2022-09-17T11:05:18+08:00">2022-09-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -674,7 +1150,7 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/Light_windly/article/
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-04 10:34:19" itemprop="dateModified" datetime="2022-08-04T10:34:19+08:00">2022-08-04</time>
+      <time title="修改时间：2022-09-21 15:02:28" itemprop="dateModified" datetime="2022-09-21T15:02:28+08:00">2022-09-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -703,370 +1179,6 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/Light_windly/article/
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/08/01/%E3%80%90Zettlr%E3%80%91-00-%E4%BD%BF%E7%94%A8Zettlr/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/18/%E3%80%90xup_summer_camp%E3%80%91-07-18/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/18/%E3%80%90xup_summer_camp%E3%80%91-07-18/" class="post-title-link" itemprop="url">【xup_summer_camp】-07-18</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-18 19:39:58" itemprop="dateCreated datePublished" datetime="2022-07-18T19:39:58+08:00">2022-07-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-17 11:05:18" itemprop="dateModified" datetime="2022-09-17T11:05:18+08:00">2022-09-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="hls相关知识">HLS相关知识</h2>
-<h3 id="进程和线程">进程和线程：</h3>
-<p>这个博客描述了这两个基本概念之间的区别和联系：一个进程可以包含一个或者多个线程（轻量级进程）<a
-target="_blank" rel="noopener" href="https://blog.csdn.net/ThinkWon/article/details/102021274">进程和线程的区别(超详细)_ThinkWon的博客-CSDN博客_进程和线程的区别</a></p>
-<p>还有一个协程：<a
-target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/114453309">面试必考 |
-进程和线程的区别 - 知乎 (zhihu.com)</a></p>
-<p><img src="https://s2.loli.net/2022/07/18/D24HRgoEyYtbGkO.png" /></p>
-<h3 id="如何进行算法优化">如何进行算法优化：</h3>
-<p>作为硬件加速的基本方法，就是要知道那些地方可以做并行计算，那些地方有数据关联，只能做串行计算。</p>
-<p>将顺序程序运用转换成生产者消费者模式（Producer - Consumer
-Paradigm），中间加入Buffer缓冲，保持两者之间的吞吐量一致。</p>
-<p>pics</p>
-<p>Stream（流）的定义是指无界和连续更新</p>
-<p>流水线</p>
-<p>调度是指分析算法的流程，绑定指的是将变量映射到寄存器等硬件资源</p>
-<p>控制逻辑提取需要在有循环的状态下产生</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/18/%E3%80%90IntelCup%E3%80%91-07-18/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/18/%E3%80%90IntelCup%E3%80%91-07-18/" class="post-title-link" itemprop="url">【IntelCup】-07-18</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-07-18 18:58:21 / 修改时间：20:18:35" itemprop="dateCreated datePublished" datetime="2022-07-18T18:58:21+08:00">2022-07-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InterlCup/" itemprop="url" rel="index"><span itemprop="name">InterlCup</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="收尾">收尾</h2>
-<p>今天阅读了一下emo-net的论文，梳理一下这篇文章：</p>
-<ol type="1">
-<li><p>提到的关键点主要有：</p>
-<ul>
-<li><p>面部关键点的检测</p></li>
-<li><p>面部中心集中的检测</p></li>
-<li><p>模型蒸馏方法：学生、教师模型</p></li>
-</ul></li>
-<li><p>有一些指标：</p>
-<ul>
-<li><p>RMSE：均方根误差</p></li>
-<li><p>SAGR：Sign agreement</p></li>
-<li><p>PCC：皮尔森相关系数</p></li>
-<li><p>CCC：一致相关系数</p></li>
-</ul></li>
-<li><p>模型的样子：</p></li>
-</ol>
-<p>    暂时没有调好图床，先放一个论文链接：<a
-target="_blank" rel="noopener" href="https://www.nature.com/articles/s42256-020-00280-0.epdf?sharing_token=8UEdDpr-K7UpoDi5SYjGLtRgN0jAjWel9jnR3ZoTv0NmJm5LtKLATZX-wg4Cg96PU_Xagw0dC67imfvbYZzOaFRYUs-6qIlabUXidsXjQRkYDNWUaArHiGy8zxyz2DozptfHYg3G_HumDAHYUwgV2PRTjKDd-8LKGzbMstnxIxY%3D">Estimation
-of continuous valence and arousal levels from faces in naturalistic
-conditions | Nature Machine Intelligence</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/16/%E3%80%90IntelCup%E3%80%91-07-16/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/16/%E3%80%90IntelCup%E3%80%91-07-16/" class="post-title-link" itemprop="url">【IntelCup】-07-16</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-16 10:26:41" itemprop="dateCreated datePublished" datetime="2022-07-16T10:26:41+08:00">2022-07-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-02 10:03:26" itemprop="dateModified" datetime="2022-08-02T10:03:26+08:00">2022-08-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InterlCup/" itemprop="url" rel="index"><span itemprop="name">InterlCup</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="部署yolov5">部署yolov5</h2>
-<p>今天在自己的工程里面部署了yolov5，总体比较顺利。中间卡住的地方主要是：</p>
-<ol type="1">
-<li><p>cv2读取图片的时候要看一下是否读取图片成功，目前因为图片都是以缓存的形式保存在文件中，有注意有一边图片还没有写好，另一边就需要读取的情况，这时候需要做一个判断，防止出现读入图片无效，引发错误的情况发生。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.imread(src_img)</span><br><span class="line">            <span class="keyword">if</span> img <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;图片读取失败&quot;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                img_res, det_res = self.yolo_detector.detect(img, cls, thresh)</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/15/%E3%80%90ZYNQ7010%E3%80%91-01-BreathLed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="PengXuanyao">
-      <meta itemprop="description" content="This is my personal blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PengXuanyao">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/07/15/%E3%80%90ZYNQ7010%E3%80%91-01-BreathLed/" class="post-title-link" itemprop="url">【ZYNQ7010】-01-BreathLed</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-07-15 20:46:50" itemprop="dateCreated datePublished" datetime="2022-07-15T20:46:50+08:00">2022-07-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-08-08 19:52:59" itemprop="dateModified" datetime="2022-08-08T19:52:59+08:00">2022-08-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">学习</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="概述">概述</h2>
-<p>这个整一个简单的活，做一个呼吸灯。怎么实现呢？现在没有这个定时器的PWM辅助，就需要造出一个PWM来控制LED，本质上是一个PWM的实现。（这里默默地想到了第一次在TI的开发板上实现呼吸灯的方法，直接用两个for循环，很粗暴但是作为第一个自己写的程序，现在想起来还是蛮有意思的）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/15/%E3%80%90ZYNQ7010%E3%80%91-01-BreathLed/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
