@@ -16,3 +16,7 @@ tags:
 ## HelloPi
 
 在树莓派上打印了一个HelloWorld，啥也不是。
+
+遇见的问题：
+
+1. Ubuntu上有线网连接不上树莓派，暂时不清楚原因（报错是：activation of network connection failed）
