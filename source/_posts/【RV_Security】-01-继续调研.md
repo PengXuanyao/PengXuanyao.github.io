@@ -9,12 +9,15 @@ categories:
 ---
 
 ## Intel SGX
+> [Software Guard Extensions - Wikipedia](https://en.wikipedia.org/wiki/Software_Guard_Extensions)
+
+wiki百科定义中，对于SGX的定义是（a set of security-related instruction codes that are built into some Intel central processing units (CPUs)）用于保护**用户**或者**操作系统**定义的被保护的私有内存区域（enclaves）
 
 > [Intel SGX系列（一）了解Intel SGX - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/39976702)
 
-数据在网络传输和磁盘存储中一般都会有加密的协议，但是在**内存**中，数据都是在**直接暴露**的状态。因此，Intel的SGX（Software Guard Extensions）针对这种情况，对内存的可执行区域进行保护。
+数据在网络传输和磁盘存储中一般都会有加密的协议，但是在**内存**中，数据都是在**直接暴露**的状态。因此，Intel的SGX（Software Guard Extensions）针对这种情况，对内存的数据进行保护。
 
-其是一个硬件辅助的可行执行环境，Intel SGX提供17种新的Intel架构指令。应用程序能够为**代码和数据**设置保留的**私有区域**，也能阻止对**执行中代码**和**内存中的数据**进行的直接攻击。
+Intel SGX是一个硬件辅助的可行执行环境，Intel SGX提供17种新的Intel架构指令。应用程序能够为**代码和数据**设置保留的**私有区域**，也能阻止对**执行中代码**和**内存中的数据**进行的直接攻击。
 
 - 典型应用场景：对于不信任的Component不能访问信任的Component。
 
@@ -65,9 +68,13 @@ eFUSE的特点：
 
 [Breaking Samsung's ARM TrustZone](https://link.zhihu.com/?target=https%3A//www.youtube.com/watch%3Fv%3DuXH5LJGRwXI) （[PDF](https://link.zhihu.com/?target=https%3A//i.blackhat.com/USA-19/Thursday/us-19-Peterlin-Breaking-Samsungs-ARM-TrustZone.pdf) & [GitHub](https://link.zhihu.com/?target=https%3A//github.com/quarkslab/samsung-trustzone-research)）
 
+
+
 #### 自底向上
 
-利用特殊硬件方法读取底层硬件内容：通过在非常精确的时间点，执行微秒级的电压骤变使得 bootROM 在写那个可视性寄存器的时候出现错误，导致 bootROM 没有被不可视化，进而他们可以在一块开发板上用自己写的 FSBL 读取 bootROM 代码。
+利用特殊硬件方法读取底层硬件内容：通过在非常精确的时间点，执行微秒级的电压骤变使得 bootROM 在写寄存器的时候出现错误，导致 bootROM 没有被不可视化，进而他们可以在一块开发板上用自己写的 FSBL 读取 bootROM 代码。
+
+[(PDF) The Forgotten Threat of Voltage Glitching: A Case Study on Nvidia Tegra X2 SoCs](https://www.researchgate.net/publication/353922465_The_Forgotten_Threat_of_Voltage_Glitching_A_Case_Study_on_Nvidia_Tegra_X2_SoCs)
 
 [Glitching the Switch](https://link.zhihu.com/?target=https%3A//media.ccc.de/v/c4.openchaos.2018.06.glitching-the-switch)
 
