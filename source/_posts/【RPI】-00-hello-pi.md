@@ -48,5 +48,34 @@ tags:
 
 改为静态ip后无法连接，遂先改为原来的动态分配方式。目前想到的解决办法是：通过将静态ip设置为和动态ip一样，看能不能解决。
 
+## 安装vnc软件on Linux
+
+> [dpkg安装deb缺少依赖包的解决方法 - my\_cool2007 - 博客园](https://www.cnblogs.com/horizonli/p/5179224.html)
+
+使用dpkg -i   *.deb 的时候出现依赖没有安装
+
+使用apt-get -f -y install  解决依赖问题后再执行dpkg安装deb包
+
+在桌面打不开vnc
+
+解决办法：
+
+按照下面这个博客搞就完事儿。
+
+> [树莓派 VNC Viewer 远程桌面配置教程 | 树莓派实验室](https://shumeipai.nxez.com/2018/08/31/raspberry-pi-vnc-viewer-configuration-tutorial.html)
+
+以前是因为树莓pi上面没有装vnc viewer
+
+![截图留念](https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221013200451.png)
+
+## vscode通过ssh远程连接树莓派
+
+安装remote-ssh
+
+> [VSCode通过Remote - SSH实现远程开发\_飞翔的大白菜丶的博客-CSDN博客](https://blog.csdn.net/wangzhihao1994/article/details/100047558)
+
+安装完成后，配置一下本机的.ssh即可，到此为止，环境大概是配好了，新买的wifi模块装上后就能用，现在终于搞完了，爽歪歪。
+
+
 
 
