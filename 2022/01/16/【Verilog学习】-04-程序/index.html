@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【Verilog学习】-04-程序 | Xuanyao's Blog</title><meta name="author" content="Xuanyao Peng"><meta name="copyright" content="Xuanyao Peng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里的取题目名字程序其实不是特别好，这里应该主要是procedure，也就是always、initial等其他模块包含的那一段代码。 always(组合电路) always模块可以用来生成组合电路，其和块外面的assign有着相同的作用，主要是语法方面有着一定的区别。 在always块中使用组合逻辑，输出（也就是被驱动的等式的左边）需要用寄存器类型的变量。例如下面两种写法的功能是一样的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Verilog学习】-04-程序">
+<meta property="og:url" content="http://example.com/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:site_name" content="Xuanyao&#39;s Blog">
+<meta property="og:description" content="这里的取题目名字程序其实不是特别好，这里应该主要是procedure，也就是always、initial等其他模块包含的那一段代码。 always(组合电路) always模块可以用来生成组合电路，其和块外面的assign有着相同的作用，主要是语法方面有着一定的区别。 在always块中使用组合逻辑，输出（也就是被驱动的等式的左边）需要用寄存器类型的变量。例如下面两种写法的功能是一样的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/10/K5ZwIitHl2xDTVq.jpg">
+<meta property="article:published_time" content="2022-01-16T13:02:43.000Z">
+<meta property="article:modified_time" content="2023-01-11T04:16:35.626Z">
+<meta property="article:author" content="Xuanyao Peng">
+<meta property="article:tag" content="verilog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/10/K5ZwIitHl2xDTVq.jpg"><link rel="shortcut icon" href="https://s2.loli.net/2023/01/10/ARwIOr2ym4q5kxY.png"><link rel="canonical" href="http://example.com/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【Verilog学习】-04-程序',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-11 12:16:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://api.ixiaowai.cn/gqapi/gqapi.php/')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xuanyao's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【Verilog学习】-04-程序</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-16T13:02:43.000Z" title="发表于 2022-01-16 21:02:43">2022-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-11T04:16:35.626Z" title="更新于 2023-01-11 12:16:35">2023-01-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【Verilog学习】-04-程序"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里的取题目名字程序其实不是特别好，这里应该主要是procedure，也就是always、initial等其他模块包含的那一段代码。</p>
+<h2 id="always-组合电路"><a href="#always-组合电路" class="headerlink" title="always(组合电路)"></a>always(组合电路)</h2><hr>
+<p>always模块可以用来生成组合电路，其和块外面的assign有着相同的作用，主要是语法方面有着一定的区别。</p>
+<p>在always块中使用组合逻辑，输出（也就是被驱动的等式的左边）需要用寄存器类型的变量。例如下面两种写法的功能是一样的。</p>
+<span id="more"></span>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> top_module(</span><br><span class="line">    <span class="keyword">input</span> a, </span><br><span class="line">    <span class="keyword">input</span> b,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">wire</span> out_assign,</span><br><span class="line">    <span class="keyword">output</span> <span class="keyword">reg</span> out_alwaysblock</span><br><span class="line">);</span><br><span class="line">	<span class="keyword">assign</span> out_assign = a &amp; b;</span><br><span class="line">    <span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">        out_alwaysblock = a &amp; b;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的(*)是指的是敏感列表，如果是组合逻辑的话，需要用这样的写法，如果把所有的信号列出来会容易出错，十分不建议。</p>
+<h2 id="always-时序电路（clocked）"><a href="#always-时序电路（clocked）" class="headerlink" title="always(时序电路（clocked）)"></a>always(时序电路（clocked）)</h2><hr>
+<p>阻塞和非阻塞赋值（Blocking and Non-Blocking Assignment）</p>
+<ul>
+<li><strong>Continuous</strong> assignments (<code>assign x = y;</code>). Can only be used when <strong>not</strong> inside a procedure (“always block”).</li>
+<li>Procedural <strong>blocking</strong> assignment: (<code>x = y;</code>). Can only be used inside a procedure.</li>
+<li>Procedural <strong>non-blocking</strong> assignment: (<code>x &lt;= y;</code>). Can only be used inside a procedure.</li>
+</ul>
+<p>阻塞赋值和非阻塞赋值都是指的是procedure中的一部分，组合逻辑中用阻塞赋值，时序逻辑中用非阻塞赋值。</p>
+<h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><hr>
+<p>在使用if语句的时候，要考虑到所有的情况。如果有情况没有考虑到，也就是else没有写，那么，在生成电路的时候，编译器就会默认将其保持不变，即会产生一个锁存器（Latche），因此，需要考虑这个锁存器的影响。</p>
+<p>也就是说要写成下面这种完整的形式：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(flag)<span class="keyword">begin</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span>(flag_1)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="case"><a href="#case" class="headerlink" title="case"></a>case</h2><hr>
+<p>语法结构</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span>     <span class="comment">// This is a combinational circuit</span></span><br><span class="line">    <span class="keyword">case</span> (in)</span><br><span class="line">      <span class="number">1&#x27;b1</span>: <span class="keyword">begin</span> </span><br><span class="line">               out = <span class="number">1&#x27;b1</span>;  <span class="comment">// begin-end if &gt;1 statement</span></span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">      <span class="number">1&#x27;b0</span>: out = <span class="number">1&#x27;b0</span>;</span><br><span class="line">      <span class="keyword">default</span>: out = <span class="number">1&#x27;bx</span>;</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>语法和C有点区别：没有switch，不用break，case可以有重复的情况</p>
+<h2 id="casez"><a href="#casez" class="headerlink" title="casez"></a>casez</h2><hr>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">always</span> @(*) <span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">casez</span> (in[<span class="number">3</span>:<span class="number">0</span>])</span><br><span class="line">        <span class="number">4&#x27;bzzz1</span>: out = <span class="number">0</span>;   <span class="comment">// in[3:1] can be anything</span></span><br><span class="line">        <span class="number">4&#x27;bzz1z</span>: out = <span class="number">1</span>;</span><br><span class="line">        <span class="number">4&#x27;bz1zz</span>: out = <span class="number">2</span>;</span><br><span class="line">        <span class="number">4&#x27;b1zzz</span>: out = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">default</span>: out = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>casez只关心某一位，并且逻辑上是顺序去判断（通过增加相应的电路）。</p>
+<p>在写case语句的时候可以提前赋上初值，这样可以减少代码量：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接考虑所有情况</span></span><br><span class="line"><span class="keyword">always</span>@(*)<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">casez</span>(scancode)</span><br><span class="line">        <span class="number">16&#x27;he06b</span>: <span class="keyword">begin</span> up = <span class="number">1&#x27;b0</span>; down = <span class="number">1&#x27;b0</span>; left = <span class="number">1&#x27;b1</span>; right = <span class="number">1&#x27;b0</span>; <span class="keyword">end</span></span><br><span class="line">        <span class="number">16&#x27;he072</span>: <span class="keyword">begin</span> up = <span class="number">1&#x27;b0</span>; down = <span class="number">1&#x27;b1</span>; left = <span class="number">1&#x27;b0</span>; right = <span class="number">1&#x27;b0</span>; <span class="keyword">end</span></span><br><span class="line">        <span class="number">16&#x27;he074</span>: <span class="keyword">begin</span> up = <span class="number">1&#x27;b0</span>; down = <span class="number">1&#x27;b0</span>; left = <span class="number">1&#x27;b0</span>; right = <span class="number">1&#x27;b1</span>; <span class="keyword">end</span></span><br><span class="line">        <span class="number">16&#x27;he075</span>: <span class="keyword">begin</span> up = <span class="number">1&#x27;b1</span>; down = <span class="number">1&#x27;b0</span>; left = <span class="number">1&#x27;b0</span>; right = <span class="number">1&#x27;b0</span>; <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">default</span>:  <span class="keyword">begin</span> up = <span class="number">1&#x27;b0</span>; down = <span class="number">1&#x27;b0</span>; left = <span class="number">1&#x27;b0</span>; right = <span class="number">1&#x27;b0</span>; <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">//赋“初值”后，只需要考虑变化的情况。</span></span><br><span class="line"><span class="keyword">always</span>@(*)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    up = <span class="number">1&#x27;b0</span>; down = <span class="number">1&#x27;b0</span>; left = <span class="number">1&#x27;b0</span>; right = <span class="number">1&#x27;b0</span>;</span><br><span class="line">    <span class="keyword">casez</span>(scancode)</span><br><span class="line">        <span class="number">16&#x27;he06b</span>: left = <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="number">16&#x27;he072</span>: down = <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="number">16&#x27;he074</span>: right = <span class="number">1&#x27;b1</span>; </span><br><span class="line">        <span class="number">16&#x27;he075</span>: up = <span class="number">1&#x27;b1</span>;</span><br><span class="line">        <span class="keyword">default</span>: <span class="keyword">begin</span></span><br><span class="line">            up = <span class="number">1&#x27;b0</span>; down = <span class="number">1&#x27;b0</span>; left = <span class="number">1&#x27;b0</span>; right = <span class="number">1&#x27;b0</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Xuanyao Peng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/">http://example.com/2022/01/16/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-04-%E7%A8%8B%E5%BA%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Xuanyao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/verilog/">verilog</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/01/10/K5ZwIitHl2xDTVq.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/17/%E3%80%90%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86%E3%80%91-00-%E7%94%B5%E5%AD%90%E4%B9%A6%E8%B5%84%E6%BA%90/"><img class="prev-cover" src="https://s2.loli.net/2023/01/10/vam3z1Zb27wOdCi.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【杂七杂八】-00-资源链接</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/14/%E3%80%90Verilog%E5%AD%A6%E4%B9%A0%E3%80%91-03-%E6%A8%A1%E5%9D%97/"><img class="next-cover" src="https://s2.loli.net/2023/01/10/K5ZwIitHl2xDTVq.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【Verilog学习】-03-模块</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/12/%E3%80%90CAG_SLAM%E3%80%91-01-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7/" title="【CAG_SLAM】-01-控制信号"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-12</div><div class="title">【CAG_SLAM】-01-控制信号</div></div></a></div><div><a href="/2022/01/05/%E3%80%90CAG_SLAM%E3%80%91-00-%E6%AF%94%E8%BE%83%E6%A0%91/" title="【CAG_SLAM】-00-比较树"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-05</div><div class="title">【CAG_SLAM】-00-比较树</div></div></a></div><div><a href="/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" title="【CAG-SLAM】-02-项目总结"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-17</div><div class="title">【CAG-SLAM】-02-项目总结</div></div></a></div><div><a href="/2022/02/28/%E3%80%90CAG_SLAM%E3%80%91-03-Padding-Modules/" title="【CAG_SLAM】-03-Padding-Modules"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-28</div><div class="title">【CAG_SLAM】-03-Padding-Modules</div></div></a></div><div><a href="/2022/03/17/%E3%80%90CAG_SLAM%E3%80%91-04-%E9%99%A4%E6%B3%95%E5%99%A8/" title="【CAG_SLAM】-04-除法器"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-17</div><div class="title">【CAG_SLAM】-04-除法器</div></div></a></div><div><a href="/2022/03/20/%E3%80%90CAG_SLAM%E3%80%91-05-Zero-Padding/" title="【CAG_SLAM】-05-Zero-Padding"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">【CAG_SLAM】-05-Zero-Padding</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xuanyao Peng</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/PengXuanyao"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">新手学电脑，也请多多指教。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#always-%E7%BB%84%E5%90%88%E7%94%B5%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">always(组合电路)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#always-%E6%97%B6%E5%BA%8F%E7%94%B5%E8%B7%AF%EF%BC%88clocked%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">always(时序电路（clocked）)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#if"><span class="toc-number">3.</span> <span class="toc-text">if</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#case"><span class="toc-number">4.</span> <span class="toc-text">case</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#casez"><span class="toc-number">5.</span> <span class="toc-text">casez</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决"><img src="https://s2.loli.net/2023/01/10/Gnz3RKpxZOYeulf.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Hexo】-06-使用github同步博客时的若干问题及解决"/></a><div class="content"><a class="title" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决">【Hexo】-06-使用github同步博客时的若干问题及解决</a><time datetime="2023-01-12T09:56:23.000Z" title="发表于 2023-01-12 17:56:23">2023-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置"><img src="https://avatars2.githubusercontent.com/t/3419353?s=280&amp;v=4" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Fluid】00_Hexo主题Fluid配置"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置">【Fluid】00_Hexo主题Fluid配置</a><time datetime="2023-01-10T07:10:00.000Z" title="发表于 2023-01-10 15:10:00">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙"><img src="https://s2.loli.net/2023/01/10/nqXCl9KY8mQHa4B.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【星河杯】00_赛题发布沙龙"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙">【星河杯】00_赛题发布沙龙</a><time datetime="2023-01-10T06:02:19.000Z" title="发表于 2023-01-10 14:02:19">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关"><img src="https://s2.loli.net/2023/01/10/POV4FL6dMYX9yBR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【xs】14_蓬莱接口相关"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关">【xs】14_蓬莱接口相关</a><time datetime="2023-01-10T02:46:57.000Z" title="发表于 2023-01-10 10:46:57">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【ChiselBookByLiang】00_Chisel"/></a><div class="content"><a class="title" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel">【ChiselBookByLiang】00_Chisel</a><time datetime="2022-12-18T03:36:20.000Z" title="发表于 2022-12-18 11:36:20">2022-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Xuanyao Peng</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤️🧡💚🇨🇳💙💜🤎</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

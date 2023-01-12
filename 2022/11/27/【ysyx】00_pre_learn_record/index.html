@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【ysyx】00_pre_learn_record | Xuanyao's Blog</title><meta name="author" content="Xuanyao Peng"><meta name="copyright" content="Xuanyao Peng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="LinuxLinux 系统的可配置性太高了，但同时对于刚入门的我来说不禁显得有点陌生和不适应。刚才试着重新配置一下vim（加装md插件和md_preview插件），但是过程过于繁琐，打算一步步来，现在暂时放一放，先尝试加装md插件。 并没有加装md插件，继续看ppt，并体会Linux的神奇。这幅图片很有意思，曲线确实有点陡峭：  以下命令基本上覆盖了大多数需求，要勤加掌握： 123456文件管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【ysyx】00_pre_learn_record">
+<meta property="og:url" content="http://example.com/2022/11/27/%E3%80%90ysyx%E3%80%9100_pre_learn_record/index.html">
+<meta property="og:site_name" content="Xuanyao&#39;s Blog">
+<meta property="og:description" content="LinuxLinux 系统的可配置性太高了，但同时对于刚入门的我来说不禁显得有点陌生和不适应。刚才试着重新配置一下vim（加装md插件和md_preview插件），但是过程过于繁琐，打算一步步来，现在暂时放一放，先尝试加装md插件。 并没有加装md插件，继续看ppt，并体会Linux的神奇。这幅图片很有意思，曲线确实有点陡峭：  以下命令基本上覆盖了大多数需求，要勤加掌握： 123456文件管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/10/nCPE7tIQw62BR1D.png">
+<meta property="article:published_time" content="2022-11-27T08:29:24.000Z">
+<meta property="article:modified_time" content="2023-01-11T04:16:36.346Z">
+<meta property="article:author" content="Xuanyao Peng">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="ysyx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/10/nCPE7tIQw62BR1D.png"><link rel="shortcut icon" href="https://s2.loli.net/2023/01/10/ARwIOr2ym4q5kxY.png"><link rel="canonical" href="http://example.com/2022/11/27/%E3%80%90ysyx%E3%80%9100_pre_learn_record/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【ysyx】00_pre_learn_record',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-11 12:16:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://api.ixiaowai.cn/gqapi/gqapi.php/')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xuanyao's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【ysyx】00_pre_learn_record</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-27T08:29:24.000Z" title="发表于 2022-11-27 16:29:24">2022-11-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-11T04:16:36.346Z" title="更新于 2023-01-11 12:16:36">2023-01-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【ysyx】00_pre_learn_record"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>Linux 系统的可配置性太高了，但同时对于刚入门的我来说不禁显得有点陌生和不适应。刚才试着重新配置一下vim（加装<strong>md插件</strong>和<strong>md_preview插件</strong>），但是过程过于繁琐，打算一步步来，现在暂时放一放，先尝试加装md插件。</p>
+<p>并没有加装md插件，继续看ppt，并体会Linux的神奇。这幅图片很有意思，曲线确实有点陡峭：</p>
+<p><img src="https://ysyx.oscc.cc/slides/2205/resources/img/02-script.png" alt="img"></p>
+<p>以下命令基本上覆盖了大多数需求，要勤加掌握：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">文件管理 - <span class="built_in">cd</span>, <span class="built_in">pwd</span>, <span class="built_in">mkdir</span>, <span class="built_in">rmdir</span>, <span class="built_in">ls</span>, <span class="built_in">cp</span>, <span class="built_in">rm</span>, <span class="built_in">mv</span>, tar</span><br><span class="line">文件检索 - <span class="built_in">cat</span>, more, less, <span class="built_in">head</span>, <span class="built_in">tail</span>, file, find</span><br><span class="line">输入输出控制 - 重定向, 管道, <span class="built_in">tee</span>, xargs</span><br><span class="line">文本处理 - vim, grep, awk, sed, <span class="built_in">sort</span>, <span class="built_in">wc</span>, <span class="built_in">uniq</span>, <span class="built_in">cut</span>, <span class="built_in">tr</span></span><br><span class="line">正则表达式</span><br><span class="line">任务管理 - <span class="built_in">jobs</span>, ps, top, <span class="built_in">kill</span>, free, lsof</span><br></pre></td></tr></table></figure>
+
+<p>第二遍看完<a target="_blank" rel="noopener" href="https://ysyx.oscc.cc/slides/2205/02.html#/">工具是第一生产力——Linux入门教程</a>，比第一次更加熟悉其中的一些命令，也更加明白yzh兄的用心所在。还是找一本书看起，系统地学习是最好的，然后在使用的途中在通过<code>RTFM和STFW</code>解决实际问题。</p>
+<p><a target="_blank" rel="noopener" href="https://101.ustclug.org/">欢迎 - Linux 101</a>ustc的这个教程不错，其中基本上以实操为基础讲解，但是介于内容有点多，调了感兴趣的网络操作<code>wget</code>和<code>curl</code>看了一下，其他内容慢慢再看。</p>
+<h2 id="C"><a href="#C" class="headerlink" title="C"></a>C</h2><h3 id="union"><a href="#union" class="headerlink" title="union"></a>union</h3><p>C语言部分简略过了一下，把两个习题做了就行。</p>
+<p>将指针转换为整数如何进行：使用特殊的数据类型<code>uint_ptr</code>或者<code>int_ptr</code>，使用普通的<code>unsigned int</code>会存在数据位宽不一致的情况。<a target="_blank" rel="noopener" href="https://blog.csdn.net/b1480521874/article/details/83039085">c、c++指针和整型的互相转换–强制转换，类型转换_淡淡的宁静的博客-CSDN博客_c++ 指针转换为整型</a></p>
+<p>这里面的用到了Union数据类型，以前不是很熟，学习了一下。其对<strong>同一块</strong>地址空间<strong>定义多种数据类型</strong>的访问接口，实现复用。例如，使用int和float定义一个变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">union</span> <span class="title">inst</span> &#123;</span></span><br><span class="line">	<span class="type">int</span> n,</span><br><span class="line">	<span class="type">float</span> m</span><br><span class="line">&#125; <span class="type">inst_t</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="位域"><a href="#位域" class="headerlink" title="位域"></a>位域</h3><p>结构体中可以使用位域来 <strong>按位(bit)</strong> 进行数据定义，准守的规则是<strong>低位</strong>在前、<strong>高位</strong>在后（<a target="_blank" rel="noopener" href="https://blog.csdn.net/modi000/article/details/112564558">c语言中使用冒号结构体拆分16位的数的低字节和高字节_modi000的博客-CSDN博客</a>）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	u8 rs : <span class="number">2</span>, rt : <span class="number">2</span>, addr : <span class="number">4</span>;</span><br><span class="line">&#125; rtpye;    <span class="comment">// rs -&gt; rtpye[1 : 0], rt -&gt; rtpye[3 : 2], addr -&gt; rtpye[7 : 4]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="YEMU的实现"><a href="#YEMU的实现" class="headerlink" title="YEMU的实现"></a>YEMU的实现</h3><h4 id="实现要求"><a href="#实现要求" class="headerlink" title="实现要求"></a>实现要求</h4><p>存储器系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">寄存器: PC, R0 (RA), R1, R2, R3 (8-bit) </span><br><span class="line">内存： 16字节 (按字节访问)</span><br></pre></td></tr></table></figure>
+
+<p>指令集：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">       7 6 5 4   3 2   1 0 </span><br><span class="line">mov   [0 0 0 0] [ rt] [ rs] </span><br><span class="line">add   [0 0 0 1] [ rt] [ rs] </span><br><span class="line">load  [1 1 1 0] [   addr  ] </span><br><span class="line">store [1 1 1 1] [   addr  ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><p>手搓了一遍源码，经常犯一些莫名其妙的小错误，不过gcc是真的智能，还能够提示我怎么改。</p>
+<p>参考了源码改的一个bug是：定义结构体的时候成员变量忘记加分号，<code>struct &#123;u8 rs : 2, rt : 2, addr = 4;&#125; rtpye;</code>(第一个分号)</p>
+<p>官方给的源码的网址在：</p>
+<p><a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/ICS/2020/demos/yemu.tar.gz">yemu code</a></p>
+<h2 id="C-语言到而进制"><a href="#C-语言到而进制" class="headerlink" title="C 语言到而进制"></a>C 语言到而进制</h2><h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p>预处理包含头文件的查找过程理解：</p>
+<p><strong>未加-I参数</strong>，&lt;&gt;包括的头文件将从系统的路径中查找。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pxy@pxy-Inspiron-3480:FromCToBits$ gcc -E a.c --verbose &gt; /dev/null</span><br><span class="line">...</span><br><span class="line"><span class="comment">#include &lt;...&gt; search starts here:                                                                                                                    </span></span><br><span class="line"> /usr/lib/gcc/x86_64-linux-gnu/11/include                                                                                                             </span><br><span class="line"> /usr/local/include                                                                                                                                   </span><br><span class="line"> /usr/include/x86_64-linux-gnu                                                                                                                        </span><br><span class="line"> /usr/include                                                                                                                                         </span><br><span class="line">End of search list. </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><strong>增减-I参数</strong>，将从用户指定的目录下开始找起。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pxy@pxy-Inspiron-3480:FromCToBits$ gcc -E a.c -Iaaa -Ibbb --verbose </span><br><span class="line"><span class="comment">#include &quot;...&quot; search starts here:</span></span><br><span class="line"><span class="comment">#include &lt;...&gt; search starts here:</span></span><br><span class="line"> aaa</span><br><span class="line"> bbb        </span><br><span class="line"> /usr/lib/gcc/x86_64-linux-gnu/11/include</span><br><span class="line"> /usr/local/include</span><br><span class="line"> /usr/include/x86_64-linux-gnu</span><br><span class="line"> /usr/include</span><br></pre></td></tr></table></figure>
+
+<p>在指定目标为riscv的时候代码，运行会发生报错：<code>error: &#39;stdio.h&#39; file not found with &lt;angled&gt; include; use &quot;quotes&quot; instead</code></p>
+<p><img src="https://s2.loli.net/2022/11/24/HaLK8yptcxqMg3Q.png"></p>
+<p>解决方法：</p>
+<ul>
+<li>尝试装riscv-gnu-toolchain：<ul>
+<li>make过程中出现报错：<code>fatal: unable to access &#39;https://gcc.gnu.org/git/gcc.git/&#39;: gnutls_handsha ke() failed: The TLS connection was non-properly terminated.</code></li>
+<li>可能是网络环境问题。</li>
+<li>从图书馆回到宿舍网依旧有一些问题，参考issue：<a target="_blank" rel="noopener" href="https://github.com/riscv-collab/riscv-gnu-toolchain/issues/909">Git clone is stuck when not used with –recursive · Issue #909 · riscv-collab&#x2F;riscv-gnu-toolchain</a></li>
+<li>重新git clone：<code>git clone --recursive https://github.com/riscv/riscv-gnu-toolchain</code></li>
+<li>出现新的报错；<code>error: RPC failed; curl 56 GnuTLS recv error (-9): Error decoding the received TLS packet.</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="C语言的implementation-defined-behavior"><a href="#C语言的implementation-defined-behavior" class="headerlink" title="C语言的implementation-defined behavior"></a>C语言的implementation-defined behavior</h3><p>在不同的操作系统中，<code>int</code>、<code>char</code>和<code>long</code>等数据类型的定义都是不同的，编程的时候，应当定义确定的数据类型，例如：<code>int8_t</code>、<code>int16_t</code>、<code>int32_t</code>、<code>signed char</code>、<code>unsigned char</code>等。</p>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ysyx.oscc.cc/slides/2205/04.html#/">从C语言到二进制程序</a></li>
+</ul>
+<h2 id="程序的执行和模拟器"><a href="#程序的执行和模拟器" class="headerlink" title="程序的执行和模拟器"></a>程序的执行和模拟器</h2><p>在学习C语言部分，写了一下YEMU（参照源代码），这里给出了Chisel实现的代码，后面可以也实现一下。</p>
+<h2 id="Verilator仿真环境搭建"><a href="#Verilator仿真环境搭建" class="headerlink" title="Verilator仿真环境搭建"></a>Verilator仿真环境搭建</h2><p>make 文件中YSYX路径问题，解决方法是：使用了绝对路径（由于在另一个文件夹下clone了PA，现在找到的<code>NEMU_HOME</code>不是这里的NEMU，因此改成了绝对路径）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">YSYX_HOME = ~/Documents/ysyx/ysyx-workbench</span><br></pre></td></tr></table></figure>
+
+<p>然后按照手册完成了第一个cpp仿真程序，并成功运行。</p>
+<h2 id="GTKWave"><a href="#GTKWave" class="headerlink" title="GTKWave"></a>GTKWave</h2><p>使用GTKWave查看生成的波形。</p>
+<p>出现报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Gtk-Message: 12:14:21.701: Failed to load module <span class="string">&quot;canberra-gtk-module&quot;</span>     </span><br><span class="line">                                                                           </span><br><span class="line">GTKWave Analyzer v3.3.104 (w)1999-2020 BSI                                 </span><br><span class="line">                                                                           </span><br><span class="line">GTKWAVE | Use the -h, --<span class="built_in">help</span> <span class="built_in">command</span> line flags to display <span class="built_in">help</span>.           </span><br></pre></td></tr></table></figure>
+
+<p>debug结果是发现代码写错了，忘记了写：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tfp-&gt;<span class="built_in">close</span>();</span><br></pre></td></tr></table></figure>
+
+<p>导致文件没有被正常关闭，因此出现了vcd文件无法读取的现象。</p>
+<h3 id="参考资料：-1"><a href="#参考资料：-1" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.veripool.org/verilator/">Veripool</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.icfgblog.com/index.php/Digital/317.html">varilator 仿真简介和示例 - IC的帆哥</a></li>
+<li><a target="_blank" rel="noopener" href="https://ysyx.oscc.cc/docs/prestudy/0.4.html#%E6%8E%A5%E5%85%A5nvboard">搭建verilator仿真环境 | 官方文档</a></li>
+</ul>
+<h2 id="NVBoard实现流水灯"><a href="#NVBoard实现流水灯" class="headerlink" title="NVBoard实现流水灯"></a>NVBoard实现流水灯</h2><h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>使用nvboard的模板，改写vsrc和csrc文件，make生成可执行文件即可。</p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><ol>
+<li><p>不能够直接写脚本自动获取当前的路径，并生成环境变量：</p>
+<ul>
+<li>使用的方法是：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NVBOARD_PATH=$(<span class="built_in">cd</span> `<span class="built_in">dirname</span> <span class="variable">$0</span>`; <span class="built_in">pwd</span>)</span><br><span class="line"><span class="comment"># and</span></span><br><span class="line">NVBOARD_PATH=$(<span class="built_in">cd</span> `<span class="built_in">dirname</span> <span class="variable">$0</span>`; <span class="built_in">pwd</span>)</span><br><span class="line"><span class="comment"># both not work</span></span><br></pre></td></tr></table></figure>
+
+<p>暂时没有解决思路。</p>
+</li>
+<li><p><code>TOP_NAME</code>找不到是在哪里定义的：</p>
+<p>只看见了在main.cpp里面的调用，但是找不到定义。可能是在makefile中进行了处理，但是现在还暂时没有弄明白。</p>
+<p>答案就在makefile中：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS += <span class="variable">$(INCFLAGS)</span> -DTOP_NAME=<span class="string">&quot;\&quot;V<span class="variable">$(TOPNAME)\&quot;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>问题找到了，出在make里面，暂时的解决办法是将使用<code>Vlight</code>替换<code>TOP_NAME</code>。</p>
+<p><strong>最终的问题原因找到了</strong>，粘贴原来的makefile，改变TOPNAME值，运行正确。使用diff比较两个文件，发现makefile第一行light后面多打了一个空格;</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TOPNAME = light_</span><br><span class="line">               ^</span><br><span class="line">               多打了一个空格</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><h4 id="main-cpp代码"><a href="#main-cpp代码" class="headerlink" title="main.cpp代码"></a>main.cpp代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;nvboard.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Vlight.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> TOP_NAME dut;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">nvboard_bind_all_pins</span><span class="params">(Vlight* top)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">single_cycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  dut.clk = <span class="number">0</span>; dut.<span class="built_in">eval</span>();</span><br><span class="line">  dut.clk = <span class="number">1</span>; dut.<span class="built_in">eval</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">reset</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  dut.rst = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span> (n -- &gt; <span class="number">0</span>) <span class="built_in">single_cycle</span>();</span><br><span class="line">  dut.rst = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">nvboard_bind_all_pins</span>(&amp;dut);</span><br><span class="line">  <span class="built_in">nvboard_init</span>();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">reset</span>(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">nvboard_update</span>();</span><br><span class="line">    <span class="built_in">single_cycle</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">nvboard_quit</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Xuanyao Peng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/11/27/%E3%80%90ysyx%E3%80%9100_pre_learn_record/">http://example.com/2022/11/27/%E3%80%90ysyx%E3%80%9100_pre_learn_record/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Xuanyao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/ysyx/">ysyx</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/01/10/nCPE7tIQw62BR1D.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/29/%E3%80%90ysyx%E3%80%9101_NJU_Digital_Circuit_Exp/"><img class="prev-cover" src="https://s2.loli.net/2023/01/10/nCPE7tIQw62BR1D.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【ysyx】01_NJU_Digital_Circuit_Exp</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/21/%E3%80%90ChiselBookV1%E3%80%9101_Sequential_Circuit/"><img class="next-cover" src="https://s2.loli.net/2023/01/10/w6JK7dIO8ijpDg3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【ChiselBookV1】01_Sequential_Circuit</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/11/29/%E3%80%90ysyx%E3%80%9101_NJU_Digital_Circuit_Exp/" title="【ysyx】01_NJU_Digital_Circuit_Exp"><img class="cover" src="https://s2.loli.net/2023/01/10/nCPE7tIQw62BR1D.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-29</div><div class="title">【ysyx】01_NJU_Digital_Circuit_Exp</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xuanyao Peng</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/PengXuanyao"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">新手学电脑，也请多多指教。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux"><span class="toc-number">1.</span> <span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C"><span class="toc-number">2.</span> <span class="toc-text">C</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#union"><span class="toc-number">2.1.</span> <span class="toc-text">union</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E5%9F%9F"><span class="toc-number">2.2.</span> <span class="toc-text">位域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#YEMU%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.3.</span> <span class="toc-text">YEMU的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%A6%81%E6%B1%82"><span class="toc-number">2.3.1.</span> <span class="toc-text">实现要求</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.4.</span> <span class="toc-text">具体实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E8%AF%AD%E8%A8%80%E5%88%B0%E8%80%8C%E8%BF%9B%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">C 语言到而进制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E8%AF%AD%E8%A8%80%E7%9A%84implementation-defined-behavior"><span class="toc-number">3.2.</span> <span class="toc-text">C语言的implementation-defined behavior</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">参考资料：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%89%A7%E8%A1%8C%E5%92%8C%E6%A8%A1%E6%8B%9F%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">程序的执行和模拟器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Verilator%E4%BB%BF%E7%9C%9F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">5.</span> <span class="toc-text">Verilator仿真环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GTKWave"><span class="toc-number">6.</span> <span class="toc-text">GTKWave</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A-1"><span class="toc-number">6.1.</span> <span class="toc-text">参考资料：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NVBoard%E5%AE%9E%E7%8E%B0%E6%B5%81%E6%B0%B4%E7%81%AF"><span class="toc-number">7.</span> <span class="toc-text">NVBoard实现流水灯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-number">7.1.</span> <span class="toc-text">实现思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">7.2.</span> <span class="toc-text">遇到的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">7.3.</span> <span class="toc-text">实验结果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#main-cpp%E4%BB%A3%E7%A0%81"><span class="toc-number">7.3.1.</span> <span class="toc-text">main.cpp代码</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决"><img src="https://s2.loli.net/2023/01/10/Gnz3RKpxZOYeulf.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Hexo】-06-使用github同步博客时的若干问题及解决"/></a><div class="content"><a class="title" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决">【Hexo】-06-使用github同步博客时的若干问题及解决</a><time datetime="2023-01-12T09:56:23.000Z" title="发表于 2023-01-12 17:56:23">2023-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置"><img src="https://avatars2.githubusercontent.com/t/3419353?s=280&amp;v=4" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Fluid】00_Hexo主题Fluid配置"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置">【Fluid】00_Hexo主题Fluid配置</a><time datetime="2023-01-10T07:10:00.000Z" title="发表于 2023-01-10 15:10:00">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙"><img src="https://s2.loli.net/2023/01/10/nqXCl9KY8mQHa4B.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【星河杯】00_赛题发布沙龙"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙">【星河杯】00_赛题发布沙龙</a><time datetime="2023-01-10T06:02:19.000Z" title="发表于 2023-01-10 14:02:19">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关"><img src="https://s2.loli.net/2023/01/10/POV4FL6dMYX9yBR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【xs】14_蓬莱接口相关"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关">【xs】14_蓬莱接口相关</a><time datetime="2023-01-10T02:46:57.000Z" title="发表于 2023-01-10 10:46:57">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【ChiselBookByLiang】00_Chisel"/></a><div class="content"><a class="title" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel">【ChiselBookByLiang】00_Chisel</a><time datetime="2022-12-18T03:36:20.000Z" title="发表于 2022-12-18 11:36:20">2022-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Xuanyao Peng</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤️🧡💚🇨🇳💙💜🤎</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

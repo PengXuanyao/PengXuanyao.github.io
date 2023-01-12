@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【chisel】01_Chisel_Slide | Xuanyao's Blog</title><meta name="author" content="Xuanyao Peng"><meta name="copyright" content="Xuanyao Peng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Chisel and Xiangshan Learning  Chisel 学习   chisel-cheatsheet3.pdf chisel基本语法、数据类型的讲解和示例，阅读之后可以熟悉基础的语法知识点。chisel变量命名严格按照面向对象语言设计：类名使用驼峰命名法、变量和函数使用小写字母和下划线方式命名。 不同点是，chisel使用:&#x3D;进行物理连线的描述，用&#x3D;来进行变量的定义（和ve">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【chisel】01_Chisel_Slide">
+<meta property="og:url" content="http://example.com/2022/11/09/%E3%80%90chisel%E3%80%9101_chisel_slide/index.html">
+<meta property="og:site_name" content="Xuanyao&#39;s Blog">
+<meta property="og:description" content="Chisel and Xiangshan Learning  Chisel 学习   chisel-cheatsheet3.pdf chisel基本语法、数据类型的讲解和示例，阅读之后可以熟悉基础的语法知识点。chisel变量命名严格按照面向对象语言设计：类名使用驼峰命名法、变量和函数使用小写字母和下划线方式命名。 不同点是，chisel使用:&#x3D;进行物理连线的描述，用&#x3D;来进行变量的定义（和ve">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png">
+<meta property="article:published_time" content="2022-11-09T11:20:20.000Z">
+<meta property="article:modified_time" content="2023-01-11T04:16:36.014Z">
+<meta property="article:author" content="Xuanyao Peng">
+<meta property="article:tag" content="Chisel">
+<meta property="article:tag" content="slide">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png"><link rel="shortcut icon" href="https://s2.loli.net/2023/01/10/ARwIOr2ym4q5kxY.png"><link rel="canonical" href="http://example.com/2022/11/09/%E3%80%90chisel%E3%80%9101_chisel_slide/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【chisel】01_Chisel_Slide',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-11 12:16:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://api.ixiaowai.cn/gqapi/gqapi.php/')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xuanyao's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【chisel】01_Chisel_Slide</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-09T11:20:20.000Z" title="发表于 2022-11-09 19:20:20">2022-11-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-11T04:16:36.014Z" title="更新于 2023-01-11 12:16:36">2023-01-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【chisel】01_Chisel_Slide"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- slide -->
+
+<h1 id="Chisel-and-Xiangshan-Learning"><a href="#Chisel-and-Xiangshan-Learning" class="headerlink" title="Chisel and Xiangshan Learning"></a>Chisel and Xiangshan Learning</h1><!-- slide -->
+
+<h2 id="Chisel-学习"><a href="#Chisel-学习" class="headerlink" title="Chisel 学习"></a>Chisel 学习</h2><!-- slide vertical=true -->
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs250/sp17/handouts/chisel-cheatsheet3.pdf">chisel-cheatsheet3.pdf</a><ul>
+<li>chisel基本语法、数据类型的讲解和示例，阅读之后可以熟悉基础的语法知识点。chisel变量命名严格按照面向对象语言设计：类名使用驼峰命名法、变量和函数使用小写字母和下划线方式命名。</li>
+<li>不同点是，chisel使用<code>:=</code>进行物理连线的描述，用<code>=</code>来进行变量的定义（和verilog的&#x3D;、&lt;&#x3D;表示方式不同），目前没有看到区分组合逻辑部分和时序逻辑部分的表示。</li>
+<li>同时chisel里面也定义了一些较为高级的函数、接口（例如，带有握手信号的IO、仲裁器等）</li>
+</ul>
+</li>
+</ul>
+<!-- slide vertical=true -->
+
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.imm.dtu.dk/~masca/chisel-book.pdf">Digital Design with Chisel</a><ul>
+<li>这本是丹麦大学Martin Schoeberl教授撰写的Cshisel入门书籍</li>
+<li>目前有中文版（第几版不太清楚），且目录有点小问题，可以先看中文版，过了一遍之后，再去读英文原版（第四版）<a target="_blank" rel="noopener" href="http://www.imm.dtu.dk/~masca/chisel-book.pdf">Digital Design with Chisel</a></li>
+</ul>
+</li>
+</ul>
+<!-- slide vertical=true -->
+
+<h3 id="Ch2-Basic-Component"><a href="#Ch2-Basic-Component" class="headerlink" title="Ch2 Basic Component"></a>Ch2 Basic Component</h3><ul>
+<li><p>Data Type and Contant</p>
+<ul>
+<li>Chisel 中的<strong>有符号数</strong>是用<strong>补码表示</strong>，数据表示的时候，通过用(n.W)的方式规定数据的位宽为n</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// variable </span></span><br><span class="line"><span class="keyword">val</span> b_data = <span class="type">Bits</span>(<span class="number">3.</span><span class="type">W</span>)    <span class="comment">// binary, datawidth is 3 bits</span></span><br><span class="line"><span class="keyword">val</span> s_data = <span class="type">SInt</span>(<span class="number">2.</span><span class="type">W</span>)    <span class="comment">// signed integer, datawidth is 2 bits</span></span><br><span class="line"><span class="keyword">val</span> u_data = <span class="type">UInt</span>(<span class="number">2.</span><span class="type">W</span>)    <span class="comment">// unsigned integer, datawidth is 2 bits  </span></span><br></pre></td></tr></table></figure>
+
+<!-- slide vertical=true -->
+
+<ul>
+<li>Update operator<ul>
+<li>Chisel 同样规定了线网类型的变量，以及用来赋值的update operator （:&#x3D;）。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> w = <span class="type">Wire</span>(<span class="type">UInt</span>()) </span><br><span class="line">w := a &amp; b</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Mux<ul>
+<li>Chisel 自带了多路选择器模块，调用方法：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> r = <span class="type">Mux</span>(sel, a, b)</span><br></pre></td></tr></table></figure>
+
+<!-- slide vertical=true -->
+
+<ul>
+<li>Reg<ul>
+<li>Chisel的寄存器有两种定义方法，一种是不带输入端口的，另一种是带的：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// first case:</span></span><br><span class="line"><span class="keyword">val</span> reg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>))</span><br><span class="line">reg := d</span><br><span class="line"><span class="keyword">val</span> q = reg</span><br><span class="line"></span><br><span class="line"><span class="comment">// second case:</span></span><br><span class="line"><span class="keyword">val</span> reg = <span class="type">RegNext</span>(d, <span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>))</span><br><span class="line"><span class="keyword">val</span> q = reg</span><br></pre></td></tr></table></figure>
+
+<!-- slide vertical=true -->
+
+<ul>
+<li>Counter<ul>
+<li>计数器可以用Reg + Mux的方式实现：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> cntReg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>)) </span><br><span class="line">cntReg := <span class="type">Mux</span>(cntReg === <span class="number">9.</span><span class="type">U</span>, <span class="number">0.</span><span class="type">U</span>, cntReg + <span class="number">1.</span><span class="type">U</span>)</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Xuanyao Peng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/11/09/%E3%80%90chisel%E3%80%9101_chisel_slide/">http://example.com/2022/11/09/%E3%80%90chisel%E3%80%9101_chisel_slide/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Xuanyao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Chisel/">Chisel</a><a class="post-meta__tags" href="/tags/slide/">slide</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/16/%E3%80%90chisel%E3%80%9102_chisel%E7%9A%84%E8%BF%90%E8%A1%8C%E5%92%8C%E9%AA%8C%E8%AF%81/"><img class="prev-cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【chisel】02_chisel的运行与验证</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/04/%E3%80%90vim%E3%80%9100_vim_leaning/"><img class="next-cover" src="https://s2.loli.net/2023/01/10/G9H6LbTizCy5XmW.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">10_Vim_Learning</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img class="cover" src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-18</div><div class="title">【ChiselBookByLiang】00_Chisel</div></div></a></div><div><a href="/2022/12/10/%E3%80%90ChiselBookV1%E3%80%9100_Combinational_Circuit/" title="【ChiselBookV1】00_Combinational_Circuit"><img class="cover" src="https://s2.loli.net/2023/01/10/w6JK7dIO8ijpDg3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">【ChiselBookV1】00_Combinational_Circuit</div></div></a></div><div><a href="/2022/11/21/%E3%80%90ChiselBookV1%E3%80%9101_Sequential_Circuit/" title="【ChiselBookV1】01_Sequential_Circuit"><img class="cover" src="https://s2.loli.net/2023/01/10/w6JK7dIO8ijpDg3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">【ChiselBookV1】01_Sequential_Circuit</div></div></a></div><div><a href="/2022/11/02/%E3%80%90chisel%E3%80%9100_Chisel_Learning/" title="【chisel】00_Chisel_Learning"><img class="cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-02</div><div class="title">【chisel】00_Chisel_Learning</div></div></a></div><div><a href="/2022/11/16/%E3%80%90chisel%E3%80%9102_chisel%E7%9A%84%E8%BF%90%E8%A1%8C%E5%92%8C%E9%AA%8C%E8%AF%81/" title="【chisel】02_chisel的运行与验证"><img class="cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-16</div><div class="title">【chisel】02_chisel的运行与验证</div></div></a></div><div><a href="/2022/11/21/%E3%80%90chisel%E3%80%9103_chisel_combiantion_logic/" title="【chisel】03_chisel_combiantion_logic"><img class="cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">【chisel】03_chisel_combiantion_logic</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xuanyao Peng</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/PengXuanyao"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">新手学电脑，也请多多指教。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chisel-and-Xiangshan-Learning"><span class="toc-number">1.</span> <span class="toc-text">Chisel and Xiangshan Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chisel-%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.1.</span> <span class="toc-text">Chisel 学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ch2-Basic-Component"><span class="toc-number">1.1.1.</span> <span class="toc-text">Ch2 Basic Component</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决"><img src="https://s2.loli.net/2023/01/10/Gnz3RKpxZOYeulf.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Hexo】-06-使用github同步博客时的若干问题及解决"/></a><div class="content"><a class="title" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决">【Hexo】-06-使用github同步博客时的若干问题及解决</a><time datetime="2023-01-12T09:56:23.000Z" title="发表于 2023-01-12 17:56:23">2023-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置"><img src="https://avatars2.githubusercontent.com/t/3419353?s=280&amp;v=4" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Fluid】00_Hexo主题Fluid配置"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置">【Fluid】00_Hexo主题Fluid配置</a><time datetime="2023-01-10T07:10:00.000Z" title="发表于 2023-01-10 15:10:00">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙"><img src="https://s2.loli.net/2023/01/10/nqXCl9KY8mQHa4B.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【星河杯】00_赛题发布沙龙"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙">【星河杯】00_赛题发布沙龙</a><time datetime="2023-01-10T06:02:19.000Z" title="发表于 2023-01-10 14:02:19">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关"><img src="https://s2.loli.net/2023/01/10/POV4FL6dMYX9yBR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【xs】14_蓬莱接口相关"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关">【xs】14_蓬莱接口相关</a><time datetime="2023-01-10T02:46:57.000Z" title="发表于 2023-01-10 10:46:57">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【ChiselBookByLiang】00_Chisel"/></a><div class="content"><a class="title" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel">【ChiselBookByLiang】00_Chisel</a><time datetime="2022-12-18T03:36:20.000Z" title="发表于 2022-12-18 11:36:20">2022-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Xuanyao Peng</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤️🧡💚🇨🇳💙💜🤎</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【chisel】00_Chisel_Learning | Xuanyao's Blog</title><meta name="author" content="Xuanyao Peng"><meta name="copyright" content="Xuanyao Peng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="ChiselChisel 学习资料：  chisel-cheatsheet3.pdf chisel基本语法、数据类型的讲解和示例，阅读之后可以熟悉基础的语法知识点。chisel变量命名严格按照面向对象语言设计：类名使用驼峰命名法、变量和函数使用小写字母和下划线方式命名。  不同点是，chisel使用:&#x3D;进行物理连线的描述，用&#x3D;来进行变量的定义（和verilog的&#x3D;、&lt;&#x3D;表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【chisel】00_Chisel_Learning">
+<meta property="og:url" content="http://example.com/2022/11/02/%E3%80%90chisel%E3%80%9100_Chisel_Learning/index.html">
+<meta property="og:site_name" content="Xuanyao&#39;s Blog">
+<meta property="og:description" content="ChiselChisel 学习资料：  chisel-cheatsheet3.pdf chisel基本语法、数据类型的讲解和示例，阅读之后可以熟悉基础的语法知识点。chisel变量命名严格按照面向对象语言设计：类名使用驼峰命名法、变量和函数使用小写字母和下划线方式命名。  不同点是，chisel使用:&#x3D;进行物理连线的描述，用&#x3D;来进行变量的定义（和verilog的&#x3D;、&lt;&#x3D;表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png">
+<meta property="article:published_time" content="2022-11-02T11:20:20.000Z">
+<meta property="article:modified_time" content="2023-01-11T04:16:36.002Z">
+<meta property="article:author" content="Xuanyao Peng">
+<meta property="article:tag" content="Chisel">
+<meta property="article:tag" content="Chisel cheat sheet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png"><link rel="shortcut icon" href="https://s2.loli.net/2023/01/10/ARwIOr2ym4q5kxY.png"><link rel="canonical" href="http://example.com/2022/11/02/%E3%80%90chisel%E3%80%9100_Chisel_Learning/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【chisel】00_Chisel_Learning',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-11 12:16:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://api.ixiaowai.cn/gqapi/gqapi.php/')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xuanyao's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【chisel】00_Chisel_Learning</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-02T11:20:20.000Z" title="发表于 2022-11-02 19:20:20">2022-11-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-11T04:16:36.002Z" title="更新于 2023-01-11 12:16:36">2023-01-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【chisel】00_Chisel_Learning"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="Chisel"><a href="#Chisel" class="headerlink" title="Chisel"></a>Chisel</h2><p>Chisel 学习资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs250/sp17/handouts/chisel-cheatsheet3.pdf">chisel-cheatsheet3.pdf</a><ul>
+<li><p>chisel基本语法、数据类型的讲解和示例，阅读之后可以熟悉基础的语法知识点。chisel变量命名严格按照面向对象语言设计：类名使用驼峰命名法、变量和函数使用小写字母和下划线方式命名。</p>
+</li>
+<li><p>不同点是，chisel使用<code>:=</code>进行物理连线的描述，用<code>=</code>来进行变量的定义（和verilog的&#x3D;、&lt;&#x3D;表示方式不同），目前没有看到区分组合逻辑部分和时序逻辑部分的表示。</p>
+</li>
+<li><p>有一些奇怪的语法，不知道有什么特殊的含义没有（cheat sheet上没有明示），例如下面这几个加法，减法同理也有。</p>
+<table>
+<thead>
+<tr>
+<th>Chisel</th>
+<th>Explanation</th>
+<th>Width</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x + y</td>
+<td>Addition</td>
+<td>max(w(x),w(y))</td>
+</tr>
+<tr>
+<td>x +% y</td>
+<td>Addition</td>
+<td>max(w(x),w(y))</td>
+</tr>
+<tr>
+<td>x +&amp; y</td>
+<td>Addition</td>
+<td>max(w(x),w(y))+1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>同时chisel里面也定义了一些较为高级的函数、接口（例如，带有握手信号的IO、仲裁器等）</p>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="http://www.imm.dtu.dk/~masca/chisel-book.pdf">Digital Design with Chisel</a><ul>
+<li>这本是丹麦大学Martin Schoeberl教授撰写的Cshisel入门书籍</li>
+<li>目前有中文版（第几版不太清楚），且目录有点小问题，可以先看中文版，过了一遍之后，再去读英文原版（第四版）<a target="_blank" rel="noopener" href="http://www.imm.dtu.dk/~masca/chisel-book.pdf">Digital Design with Chisel</a></li>
+<li>话不多说直接开看</li>
+</ul>
+</li>
+</ul>
+<h2 id="Chisel-book"><a href="#Chisel-book" class="headerlink" title="Chisel book"></a>Chisel book</h2><p>chisel book是一本简明扼要的书，书中的代码都在github仓库里面有源码，开始不知道，跑不通手敲的demo，可能就是只看到了源码的一部分导致的。源码仓库：<a target="_blank" rel="noopener" href="https://github.com/schoeberl/chisel-examples">schoeberl&#x2F;chisel-examples: Chisel examples and code snippets</a></p>
+<!-- > 中途摸鱼又去看了彭志辉大佬的博客和仓库，好像又被打了鸡血一样，怎么会有怎么厉害一个人，kao，太强了。路还很长，一步一步来。 -->
+
+<p>明天记得写一下gitignore，今天有点晚了。</p>
+<p>上午还没有写gitignore，把10月总结和11月计划倒是先写了，然后装了sbt，又遇到了上次的那个bug。</p>
+<p>参考了一下官方的教程去安装<a target="_blank" rel="noopener" href="https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html">sbt Reference Manual — Installing sbt on Linux</a>，但是在运行这一行命令的时候还是会出现报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -sL <span class="string">&quot;https://keyserver.ubuntu.com/pks/lookup?op=get&amp;search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823&quot;</span> | sudo -H gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import</span><br><span class="line"></span><br><span class="line">gpg: no valid OpenPGP data found.</span><br><span class="line">gpg: Total number processed: 0</span><br></pre></td></tr></table></figure>
+
+<p>直接打开这个网址是可以看到有public key，但是加不进去，头大。</p>
+<p><strong>最后解决方案</strong>：手动复制下来放在一个临时的文件里面再运行后面的那句话就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> scalasbt-release.gpg | sudo -H gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import</span><br><span class="line"></span><br><span class="line">gpg: directory <span class="string">&#x27;/root/.gnupg&#x27;</span> created</span><br><span class="line">gpg: /root/.gnupg/trustdb.gpg: trustdb created</span><br><span class="line">gpg: key 99E82A75642AC823: public key <span class="string">&quot;sbt build tool &lt;scalasbt@gmail.com&gt;&quot;</span> imported</span><br><span class="line">gpg: Total number processed: 1</span><br><span class="line">gpg:               imported: 1</span><br></pre></td></tr></table></figure>
+
+<p>上面这个当前路径下的gpg就是自己创建的那个文件，把网站上的内容复制下来。最后成功运行，安装好了sbt。</p>
+<h3 id="Ch2-Basic-Component"><a href="#Ch2-Basic-Component" class="headerlink" title="Ch2 Basic Component"></a>Ch2 Basic Component</h3><h4 id="Data-Type-and-Contant"><a href="#Data-Type-and-Contant" class="headerlink" title="Data Type and Contant"></a>Data Type and Contant</h4><p>Chisel 中的<strong>有符号数</strong>是用<strong>补码表示</strong>，数据表示的时候，通过用(n.W)的方式规定数据的位宽为n。如下实例：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// variable </span></span><br><span class="line"><span class="keyword">val</span> b_data = <span class="type">Bits</span>(<span class="number">3.</span><span class="type">W</span>)    <span class="comment">// binary, datawidth is 3 bits</span></span><br><span class="line"><span class="keyword">val</span> s_data = <span class="type">SInt</span>(<span class="number">2.</span><span class="type">W</span>)    <span class="comment">// signed integer, datawidth is 2 bits</span></span><br><span class="line"><span class="keyword">val</span> u_data = <span class="type">UInt</span>(<span class="number">2.</span><span class="type">W</span>)    <span class="comment">// unsigned integer, datawidth is 2 bits     </span></span><br><span class="line"></span><br><span class="line"><span class="comment">// constant</span></span><br><span class="line"><span class="number">3.</span><span class="type">U</span>(<span class="number">3.</span><span class="type">W</span>)  <span class="comment">// constant unsigned int 3, with datawidth of 3</span></span><br><span class="line"><span class="number">-3.</span><span class="type">S</span>(<span class="number">3.</span><span class="type">W</span>) <span class="comment">// constant signed int -3, with datawidth of 3 </span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：规定位宽的时候，一定要带上.W，否则会被判断为是<strong>抓取</strong>操作。例如：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="number">1.</span><span class="type">U</span>(<span class="number">32</span>) <span class="comment">// 结果a会是0，因为对这个常量来说，第32位是0（没有规定位宽时，**高位会补零**）</span></span><br></pre></td></tr></table></figure>
+
+<p>数据默认时十进制，但是可以规定需要需要的进制，例如：o、h、b</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;b1111_1011&quot;</span>.<span class="type">U</span></span><br></pre></td></tr></table></figure>
+
+<p>Chisel Bool类型的定义：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a = <span class="type">Bool</span>()</span><br><span class="line">a = <span class="literal">true</span>.<span class="type">B</span></span><br><span class="line">b = <span class="literal">false</span>.<span class="type">B</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h3><h4 id="Update-operator"><a href="#Update-operator" class="headerlink" title="Update operator"></a>Update operator</h4><p>Chisel 同样规定了线网类型的变量，以及用来赋值的update operator （:&#x3D;）。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> w = <span class="type">Wire</span>(<span class="type">UInt</span>()) </span><br><span class="line">w := a &amp; b</span><br></pre></td></tr></table></figure>
+
+<h4 id="Mux"><a href="#Mux" class="headerlink" title="Mux"></a>Mux</h4><p>Chisel 自带了多路选择器模块，调用方法：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> r = <span class="type">Mux</span>(sel, a, b)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Reg"><a href="#Reg" class="headerlink" title="Reg"></a>Reg</h4><p>Chisel的寄存器有两种定义方法，一种是不带输入端口的，另一种是带的：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// first case:</span></span><br><span class="line"><span class="keyword">val</span> reg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>))</span><br><span class="line">reg := d</span><br><span class="line"><span class="keyword">val</span> q = reg</span><br><span class="line"></span><br><span class="line"><span class="comment">// second case:</span></span><br><span class="line"><span class="keyword">val</span> reg = <span class="type">RegNext</span>(d, <span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>))</span><br><span class="line"><span class="keyword">val</span> q = reg</span><br></pre></td></tr></table></figure>
+
+<h4 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h4><p>计数器可以用Reg + Mux的方式实现：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> cntReg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>)) </span><br><span class="line">cntReg := <span class="type">Mux</span>(cntReg === <span class="number">9.</span><span class="type">U</span>, <span class="number">0.</span><span class="type">U</span>, cntReg + <span class="number">1.</span><span class="type">U</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h4><p>Bundle 是一个类似于c语言中的结构体的数据类型，可以在其中自定义不同类型的数据。</p>
+<p>自定义Bundle需要通过使用类继承的方式进行，下面是一个实例：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Channel</span>(<span class="params"></span>) <span class="keyword">extends</span> <span class="title">Bundle</span></span>&#123;</span><br><span class="line">  <span class="keyword">val</span> sig = <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>)</span><br><span class="line">  <span class="keyword">val</span> ena = <span class="type">Bool</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要创建一个变量时：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> ch = <span class="type">Wire</span>(<span class="keyword">new</span> <span class="type">Channel</span>())</span><br><span class="line">ch.sig := <span class="number">123.</span><span class="type">U</span></span><br><span class="line">ch.ena := <span class="literal">true</span>.<span class="type">B</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> mySig = ch.sig</span><br><span class="line"><span class="keyword">val</span> channel = ch</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里有一个小问题就是定义Channel的时候加<code>()</code>和不加有什么区别么<br>后面会有一个是没有加括号的情况</p>
+</blockquote>
+<h4 id="Vec"><a href="#Vec" class="headerlink" title="Vec"></a>Vec</h4><h5 id="Wire-Vec"><a href="#Wire-Vec" class="headerlink" title="Wire Vec"></a>Wire Vec</h5><p>Vec是一个数组变量类型</p>
+<p><strong>组合逻辑的数组类型需要打包在Wire中</strong>（例如，当定义模块的接口的时候），下面是一个示例：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> v = <span class="type">Wire</span>(<span class="type">Vec</span>(<span class="number">3</span>, <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>上面这个示例说的是，创建一个有3个8位无符号整形变量的数组（用于<strong>组合逻辑</strong>）。下面是赋值的实例，可以使用常量，也可以使用变量。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v(<span class="number">0</span>) = <span class="number">1.</span><span class="type">U</span></span><br><span class="line">v(<span class="number">1</span>) = <span class="number">2.</span><span class="type">U</span></span><br><span class="line">v(<span class="number">2</span>) = <span class="number">5.</span><span class="type">U</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> index = <span class="number">2.</span><span class="type">U</span>(<span class="number">2.</span><span class="type">W</span>)</span><br><span class="line"><span class="keyword">val</span> a = vec(index)</span><br></pre></td></tr></table></figure>
+
+<p>接下来通过数组实现一个多路选择器：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> v = <span class="type">Wire</span>(<span class="type">Vec</span>(<span class="number">3</span>, <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>)))</span><br><span class="line"></span><br><span class="line">v(<span class="number">0</span>) := x</span><br><span class="line">v(<span class="number">1</span>) := y</span><br><span class="line">v(<span class="number">2</span>) := z</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> muxOut = v(select)</span><br></pre></td></tr></table></figure>
+
+<p>还可以使用<strong>VecInit</strong>的方式进行初始化，<strong>VecInit</strong>继承了<strong>WireDefault</strong>，因此不必再将其定义到Wire中（这不是推荐的CodingStyle）。下面代码中的<strong>when</strong>结构对Vec的值进行了重写，其生成了3个<strong>二选一</strong>多路选择器件（注意理解）。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> vecDef = <span class="type">VecInit</span>(<span class="number">1.</span><span class="type">U</span>(<span class="number">3.</span><span class="type">W</span>), <span class="number">2.</span><span class="type">U</span>, <span class="number">3.</span><span class="type">U</span>)</span><br><span class="line"></span><br><span class="line">when (cond) &#123;</span><br><span class="line">  vecDef(<span class="number">0</span>) = <span class="number">3.</span><span class="type">U</span></span><br><span class="line">  vecDef(<span class="number">1</span>) = <span class="number">4.</span><span class="type">U</span></span><br><span class="line">  vecDef(<span class="number">2</span>) = <span class="number">5.</span><span class="type">U</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> vecOut = vecDef(sel)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同时，也可以通过VecInit直接线路的连接：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> vecDef = <span class="type">VecInit</span>(x, y, z)</span><br><span class="line"><span class="keyword">val</span> vecOut = vecDef(sel)</span><br></pre></td></tr></table></figure>
+
+<h5 id="Reg-Vec"><a href="#Reg-Vec" class="headerlink" title="Reg Vec"></a>Reg Vec</h5><p>寄存器也可以定义为数组（注意，在Chisel中，<strong>Reg</strong>就是<strong>寄存器</strong>，和verilog中不同）。</p>
+<p><img src="https://s2.loli.net/2022/11/05/OjJDVW5fUCMou2g.png"></p>
+<p>实现上面这个电路：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> regVec = <span class="type">Reg</span>(<span class="type">Vec</span>(<span class="number">3</span>, <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>)))</span><br><span class="line"></span><br><span class="line">regVec(wrIdx) := din   <span class="comment">// 注意这里是:=，不要用成=号了。 </span></span><br><span class="line"><span class="keyword">val</span> dout = regVec(reIdx)</span><br></pre></td></tr></table></figure>
+
+<p>带有初始化的Reg定义：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> initVal = <span class="type">RegInit</span>(<span class="type">VecInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">3.</span><span class="type">W</span>), <span class="number">1</span>, <span class="number">2</span>))  <span class="comment">// 第一个规定位宽时，默认将后面两个数据的位宽也规定为3</span></span><br><span class="line"><span class="keyword">val</span> selVal = initVal(sel)</span><br><span class="line">initVal(<span class="number">0</span>) := a</span><br><span class="line">initVal(<span class="number">1</span>) := b</span><br><span class="line">initVal(<span class="number">2</span>) := c</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用初始化将所有值赋值为同一个初始值的方式</span></span><br><span class="line"><span class="keyword">val</span> resetRegFile = <span class="type">RegInit</span>(<span class="type">VecInit</span>(<span class="type">Seq</span>.fill(<span class="number">32</span>)(<span class="number">0.</span><span class="type">U</span>(<span class="number">32.</span><span class="type">W</span>))))</span><br><span class="line"><span class="keyword">val</span> rdReg = resetRegFile(sel)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Conbine-Vec-and-Bundle"><a href="#Conbine-Vec-and-Bundle" class="headerlink" title="Conbine Vec and Bundle"></a>Conbine Vec and Bundle</h4><h5 id="将Vec放在Bundle中"><a href="#将Vec放在Bundle中" class="headerlink" title="将Vec放在Bundle中"></a>将Vec放在Bundle中</h5><p>这个很好理解，就是在结构体中加入了一个数组：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BundleVec</span> <span class="keyword">extends</span> <span class="title">Bundle</span></span>&#123;</span><br><span class="line">  <span class="keyword">val</span> field = <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>)</span><br><span class="line">  <span class="keyword">val</span> vector = <span class="type">Vec</span>(<span class="number">4</span>, <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="将Bundle组成Vec"><a href="#将Bundle组成Vec" class="headerlink" title="将Bundle组成Vec"></a>将Bundle组成Vec</h4><p>这个也好理解，就是一个结构体数组：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> vecBundle = <span class="type">Wire</span>(<span class="number">8</span>, <span class="keyword">new</span> <span class="type">BundleVec</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="给结构体赋初值"><a href="#给结构体赋初值" class="headerlink" title="给结构体赋初值"></a>给结构体赋初值</h4><p>这个需要看一下，先定义为Wire型，赋值完成后，再用RegInit进行定义。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> initVal = <span class="type">Wire</span>(<span class="keyword">new</span> <span class="type">Channel</span>()) </span><br><span class="line">initVal.data := <span class="number">0.</span><span class="type">U</span> </span><br><span class="line">initVal.valid := <span class="literal">false</span>.<span class="type">B</span> </span><br><span class="line"><span class="keyword">val</span> channelReg = <span class="type">RegInit</span>(initVal)</span><br></pre></td></tr></table></figure>
+
+<h4 id="部分赋值的问题"><a href="#部分赋值的问题" class="headerlink" title="部分赋值的问题"></a>部分赋值的问题</h4><p>在Verilog中，定义了一个向量之后是可以对其任意的位进行赋值，但是在Chisel中不可以，只能够全部进行赋值，下面这种操作会引发报错：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> assignWord = <span class="type">Wire</span>(<span class="type">UInt</span>(<span class="number">16.</span><span class="type">W</span>)) </span><br><span class="line">assignWord(<span class="number">7</span>, <span class="number">0</span>) := lowByte </span><br><span class="line">assignWord(<span class="number">15</span>, <span class="number">8</span>) := highByte</span><br></pre></td></tr></table></figure>
+
+<p>书中给出的解决方案就是使用Bundle或者是Bool类型的Vec来解决：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> assignWord = <span class="type">Wire</span>(<span class="type">UInt</span>(<span class="number">16.</span><span class="type">W</span>)) </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Split</span> <span class="keyword">extends</span> <span class="title">Bundle</span> </span>&#123; </span><br><span class="line">  <span class="keyword">val</span> high = <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>) </span><br><span class="line">  <span class="keyword">val</span> low = <span class="type">UInt</span>(<span class="number">8.</span><span class="type">W</span>) </span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">val</span> split = <span class="type">Wire</span>(<span class="keyword">new</span> <span class="type">Split</span>()) </span><br><span class="line">split.low := lowByte </span><br><span class="line">split.high := highByte </span><br><span class="line">assignWord := split.asUInt()</span><br></pre></td></tr></table></figure>
+
+<p>从这个例子中，也解决了前面的一个疑惑（见Bundle部分），加不加()好像是没有什么影响的。</p>
+<h4 id="IO-Reg-and-Wire"><a href="#IO-Reg-and-Wire" class="headerlink" title="IO, Reg and Wire"></a>IO, Reg and Wire</h4><p>上述定义UInt、SInt、Bits等类型的时候并不会生成相应的电路，只有当<strong>包裹进Wire、Reg和IO</strong>的时候，才会有实际的<strong>物理意义</strong>。</p>
+<p><code>=, :=</code>的区别在于，<code>=</code>用于定义中，而<code>:=</code>用于赋值一个<strong>已经存在的</strong>硬件模块。</p>
+<p>Wire的带有初始值的定义：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> wire = <span class="type">WireDefault</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>))</span><br></pre></td></tr></table></figure>
+
+<p>Reg带有初始值的定义：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> reg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">8.</span><span class="type">W</span>))</span><br></pre></td></tr></table></figure>
+
+<h4 id="Practice"><a href="#Practice" class="headerlink" title="Practice"></a>Practice</h4><p>写一个<strong>点灯</strong>小程序作为练习。</p>
+<p>点灯需要一个输出<strong>IO</strong>引脚，以及模块中默认含有的reset和clk信号。逻辑很简单，就是使用计数器实现定时功能，当计数器溢出的时候，产生IO翻转信号即可。</p>
+<p>写<strong>chisel程序</strong>的时候需要借用模板，解决环境配置的问题（实验开始前，需要<strong>安装scala、sbt环境</strong>，直接<code>sudo apt insall scala sbt</code>即可，中途可能会出现卡住的情况，查找后发现可能是cdn的问题，耐心等待即可），安装完成后开始实验。</p>
+<p>第一步是从<strong>官方仓库</strong>中clone chisel模板：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/freechipsproject/chisel-template</span><br></pre></td></tr></table></figure>
+
+<p>更改其中的src文件夹下内容，逻辑代码写在main文件夹下即可，自己创建的src&#x2F;hello.scala</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test</span><br><span class="line"><span class="keyword">import</span> chisel3._</span><br><span class="line"><span class="keyword">import</span> chisel3.experimental._</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hello</span> <span class="keyword">extends</span> <span class="title">Module</span> </span>&#123;</span><br><span class="line">    <span class="keyword">val</span> io = <span class="type">IO</span>(<span class="keyword">new</span> <span class="type">Bundle</span> &#123;</span><br><span class="line">        <span class="keyword">val</span> led = <span class="type">Output</span>(<span class="type">UInt</span>(<span class="number">1.</span><span class="type">W</span>))</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">val</span> <span class="type">CNT_MAX</span> = (<span class="number">500</span>_000_000 / <span class="number">2</span> - <span class="number">1</span>).<span class="type">U</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> blkReg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">1.</span><span class="type">W</span>))</span><br><span class="line">    <span class="keyword">val</span> cntReg = <span class="type">RegInit</span>(<span class="number">0.</span><span class="type">U</span>(<span class="number">32.</span><span class="type">W</span>))</span><br><span class="line"></span><br><span class="line">    cntReg := cntReg + <span class="number">1.</span><span class="type">U</span></span><br><span class="line">    when (cntReg === <span class="type">CNT_MAX</span> ) &#123;</span><br><span class="line">        cntReg := <span class="number">0.</span><span class="type">U</span></span><br><span class="line">        blkReg := ~blkReg</span><br><span class="line">    &#125;</span><br><span class="line">    io.led := blkReg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>src&#x2F;test&#x2F;helloTest内容为：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> test</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> chisel3.stage.<span class="type">ChiselGeneratorAnnotation</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">testMain</span> <span class="keyword">extends</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">    (<span class="keyword">new</span> chisel3.stage.<span class="type">ChiselStage</span>).execute(<span class="type">Array</span>(<span class="string">&quot;--target-dir&quot;</span>, <span class="string">&quot;generated/and&quot;</span>), <span class="type">Seq</span>(<span class="type">ChiselGeneratorAnnotation</span>(() =&gt; <span class="keyword">new</span> <span class="type">Hello</span>)))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完成上述代码编写之后，回到仓库的根目录下，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbt <span class="string">&quot;test:runMain test.testMain&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可看见生成的generate文件夹中有生成的可综合的verilog代码，完成逻辑设计。转入vivado中，综合、<br>实现、烧录代码，验证结果。</p>
+<p>目前遇到的一些问题：</p>
+<ul>
+<li>按照chisel默认的设置，生成的verilog代码的reset的信号是<strong>高有效</strong>，于是手动改了一下v代码，后面学习后再看看应该如何设置。</li>
+<li>chisel中的<code>:=</code>更新操作符是如何适用于不同的时钟域的，例如：计数器1和2的时钟关系是倍频关系如何处理（除了判断计数值外），现在还没有找到相应的办法。(:&#x3D;是否是每个时钟更新？如何跨时钟域？)</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Xuanyao Peng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/11/02/%E3%80%90chisel%E3%80%9100_Chisel_Learning/">http://example.com/2022/11/02/%E3%80%90chisel%E3%80%9100_Chisel_Learning/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Xuanyao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Chisel/">Chisel</a><a class="post-meta__tags" href="/tags/Chisel-cheat-sheet/">Chisel cheat sheet</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/04/%E3%80%90vim%E3%80%9100_vim_leaning/"><img class="prev-cover" src="https://s2.loli.net/2023/01/10/G9H6LbTizCy5XmW.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">10_Vim_Learning</div></div></a></div><div class="next-post pull-right"><a href="/2022/10/14/%E3%80%90RPI%E3%80%91-01-%E5%B0%8F%E8%BD%A6%E5%90%AF%E5%8A%A8/"><img class="next-cover" src="https://s2.loli.net/2023/01/10/Wm8nPS2eqZQbpdw.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【RPI】-01-小车启动</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/11/16/%E3%80%90chisel%E3%80%9102_chisel%E7%9A%84%E8%BF%90%E8%A1%8C%E5%92%8C%E9%AA%8C%E8%AF%81/" title="【chisel】02_chisel的运行与验证"><img class="cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-16</div><div class="title">【chisel】02_chisel的运行与验证</div></div></a></div><div><a href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img class="cover" src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-18</div><div class="title">【ChiselBookByLiang】00_Chisel</div></div></a></div><div><a href="/2022/12/10/%E3%80%90ChiselBookV1%E3%80%9100_Combinational_Circuit/" title="【ChiselBookV1】00_Combinational_Circuit"><img class="cover" src="https://s2.loli.net/2023/01/10/w6JK7dIO8ijpDg3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-10</div><div class="title">【ChiselBookV1】00_Combinational_Circuit</div></div></a></div><div><a href="/2022/11/21/%E3%80%90ChiselBookV1%E3%80%9101_Sequential_Circuit/" title="【ChiselBookV1】01_Sequential_Circuit"><img class="cover" src="https://s2.loli.net/2023/01/10/w6JK7dIO8ijpDg3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">【ChiselBookV1】01_Sequential_Circuit</div></div></a></div><div><a href="/2022/11/09/%E3%80%90chisel%E3%80%9101_chisel_slide/" title="【chisel】01_Chisel_Slide"><img class="cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-09</div><div class="title">【chisel】01_Chisel_Slide</div></div></a></div><div><a href="/2022/11/21/%E3%80%90chisel%E3%80%9103_chisel_combiantion_logic/" title="【chisel】03_chisel_combiantion_logic"><img class="cover" src="https://s2.loli.net/2023/01/10/9pw3QdWsFlBycvk.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-21</div><div class="title">【chisel】03_chisel_combiantion_logic</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xuanyao Peng</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/PengXuanyao"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">新手学电脑，也请多多指教。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chisel"><span class="toc-number">1.</span> <span class="toc-text">Chisel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chisel-book"><span class="toc-number">2.</span> <span class="toc-text">Chisel book</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ch2-Basic-Component"><span class="toc-number">2.1.</span> <span class="toc-text">Ch2 Basic Component</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Data-Type-and-Contant"><span class="toc-number">2.1.1.</span> <span class="toc-text">Data Type and Contant</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Component"><span class="toc-number">2.2.</span> <span class="toc-text">Component</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Update-operator"><span class="toc-number">2.2.1.</span> <span class="toc-text">Update operator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mux"><span class="toc-number">2.2.2.</span> <span class="toc-text">Mux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reg"><span class="toc-number">2.2.3.</span> <span class="toc-text">Reg</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Counter"><span class="toc-number">2.2.4.</span> <span class="toc-text">Counter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bundle"><span class="toc-number">2.2.5.</span> <span class="toc-text">Bundle</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vec"><span class="toc-number">2.2.6.</span> <span class="toc-text">Vec</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Wire-Vec"><span class="toc-number">2.2.6.1.</span> <span class="toc-text">Wire Vec</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Reg-Vec"><span class="toc-number">2.2.6.2.</span> <span class="toc-text">Reg Vec</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Conbine-Vec-and-Bundle"><span class="toc-number">2.2.7.</span> <span class="toc-text">Conbine Vec and Bundle</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%86Vec%E6%94%BE%E5%9C%A8Bundle%E4%B8%AD"><span class="toc-number">2.2.7.1.</span> <span class="toc-text">将Vec放在Bundle中</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86Bundle%E7%BB%84%E6%88%90Vec"><span class="toc-number">2.2.8.</span> <span class="toc-text">将Bundle组成Vec</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%99%E7%BB%93%E6%9E%84%E4%BD%93%E8%B5%8B%E5%88%9D%E5%80%BC"><span class="toc-number">2.2.9.</span> <span class="toc-text">给结构体赋初值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.10.</span> <span class="toc-text">部分赋值的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IO-Reg-and-Wire"><span class="toc-number">2.2.11.</span> <span class="toc-text">IO, Reg and Wire</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Practice"><span class="toc-number">2.2.12.</span> <span class="toc-text">Practice</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决"><img src="https://s2.loli.net/2023/01/10/Gnz3RKpxZOYeulf.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Hexo】-06-使用github同步博客时的若干问题及解决"/></a><div class="content"><a class="title" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决">【Hexo】-06-使用github同步博客时的若干问题及解决</a><time datetime="2023-01-12T09:56:23.000Z" title="发表于 2023-01-12 17:56:23">2023-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置"><img src="https://avatars2.githubusercontent.com/t/3419353?s=280&amp;v=4" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Fluid】00_Hexo主题Fluid配置"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置">【Fluid】00_Hexo主题Fluid配置</a><time datetime="2023-01-10T07:10:00.000Z" title="发表于 2023-01-10 15:10:00">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙"><img src="https://s2.loli.net/2023/01/10/nqXCl9KY8mQHa4B.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【星河杯】00_赛题发布沙龙"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙">【星河杯】00_赛题发布沙龙</a><time datetime="2023-01-10T06:02:19.000Z" title="发表于 2023-01-10 14:02:19">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关"><img src="https://s2.loli.net/2023/01/10/POV4FL6dMYX9yBR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【xs】14_蓬莱接口相关"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关">【xs】14_蓬莱接口相关</a><time datetime="2023-01-10T02:46:57.000Z" title="发表于 2023-01-10 10:46:57">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【ChiselBookByLiang】00_Chisel"/></a><div class="content"><a class="title" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel">【ChiselBookByLiang】00_Chisel</a><time datetime="2022-12-18T03:36:20.000Z" title="发表于 2022-12-18 11:36:20">2022-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Xuanyao Peng</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤️🧡💚🇨🇳💙💜🤎</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

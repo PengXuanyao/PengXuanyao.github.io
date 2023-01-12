@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>【RPI】-00-Hello-Pi | Xuanyao's Blog</title><meta name="author" content="Xuanyao Peng"><meta name="copyright" content="Xuanyao Peng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="安装系统镜像安装RPI的镜像非常的顺畅，在完成安装后，主要遇到的问题是板载的wifi坏掉了（wifi模块表面肉眼可见有一个坑）。上次买台式机送了一个MW150UH的网卡，想着安装上去，没有找到wifi驱动，导致这两天的进度非常缓慢。 现在的解决办法是买一个免驱wifi模块的试一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【RPI】-00-Hello-Pi">
+<meta property="og:url" content="http://example.com/2022/10/08/%E3%80%90RPI%E3%80%91-00-hello-pi/index.html">
+<meta property="og:site_name" content="Xuanyao&#39;s Blog">
+<meta property="og:description" content="安装系统镜像安装RPI的镜像非常的顺畅，在完成安装后，主要遇到的问题是板载的wifi坏掉了（wifi模块表面肉眼可见有一个坑）。上次买台式机送了一个MW150UH的网卡，想着安装上去，没有找到wifi驱动，导致这两天的进度非常缓慢。 现在的解决办法是买一个免驱wifi模块的试一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/01/10/Wm8nPS2eqZQbpdw.jpg">
+<meta property="article:published_time" content="2022-10-08T08:52:18.000Z">
+<meta property="article:modified_time" content="2023-01-11T04:16:35.478Z">
+<meta property="article:author" content="Xuanyao Peng">
+<meta property="article:tag" content="踩坑">
+<meta property="article:tag" content="RaspberryPi">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/01/10/Wm8nPS2eqZQbpdw.jpg"><link rel="shortcut icon" href="https://s2.loli.net/2023/01/10/ARwIOr2ym4q5kxY.png"><link rel="canonical" href="http://example.com/2022/10/08/%E3%80%90RPI%E3%80%91-00-hello-pi/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【RPI】-00-Hello-Pi',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-11 12:16:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://api.ixiaowai.cn/gqapi/gqapi.php/')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Xuanyao's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【RPI】-00-Hello-Pi</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-08T08:52:18.000Z" title="发表于 2022-10-08 16:52:18">2022-10-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-11T04:16:35.478Z" title="更新于 2023-01-11 12:16:35">2023-01-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【RPI】-00-Hello-Pi"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="安装系统镜像"><a href="#安装系统镜像" class="headerlink" title="安装系统镜像"></a>安装系统镜像</h2><p>安装RPI的镜像非常的顺畅，在完成安装后，主要遇到的问题是板载的wifi坏掉了（wifi模块表面肉眼可见有一个坑）。上次买台式机送了一个MW150UH的网卡，想着安装上去，没有找到wifi驱动，导致这两天的进度非常缓慢。</p>
+<p>现在的解决办法是买一个免驱wifi模块的试一下。</p>
+<span id="more"></span>
+
+<h2 id="HelloPi"><a href="#HelloPi" class="headerlink" title="HelloPi"></a>HelloPi</h2><p>在树莓派上打印了一个HelloWorld，啥也不是。</p>
+<p>遇见的问题：</p>
+<ol>
+<li><p>Ubuntu上有线网连接不上树莓派，暂时不清楚原因（报错是：activation of network connection failed）<br>终于连上了，根据这位大佬的博客（<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39529413/article/details/79222696">树莓派网线直连Ubuntu_栋次大次的博客-CSDN博客</a>），更改了一下有线网络的设置：<br><img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221009194526.png" alt="更改有线网络设置"></p>
+</li>
+<li><p>解决了一个小问题：刚刚不能google，以为是下午为了连树莓派装了arp-scan的原因；最后反应过来是下午调系统设置的network的时候不小心动了一下Network Proxy的设置导致的（设置成手动模式）：<br><img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221009184552.png" alt="设置成手动模式"></p>
+</li>
+</ol>
+<h2 id="Linux开发环境搭建"><a href="#Linux开发环境搭建" class="headerlink" title="Linux开发环境搭建"></a>Linux开发环境搭建</h2><h4 id="为树莓派分配固定的IP地址"><a href="#为树莓派分配固定的IP地址" class="headerlink" title="为树莓派分配固定的IP地址"></a>为树莓派分配固定的IP地址</h4><p>重启之后，通过网络设置找到本机ip：</p>
+<p><img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221009200225.png" alt="本机ip"></p>
+<p>然后通过nmap命令找到树莓派的地址，最后连接成功进入树莓派终端：</p>
+<p><img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221009200425.png" alt="树莓派地址和链接成功截图"></p>
+<p>接下来为树莓派分配固定的地址：参考博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44214671/article/details/114165432">树莓派如何固定 IP 地址_疯魔coding君的博客-CSDN博客_树莓派固定ip</a></p>
+<p>这里没有和原博客一样对路由地址进行修改，只是取消了eth0两行的注释：</p>
+<p>发现无法连接，于是按照博客内容进行了完全的修改，此事依旧无法正常连接树莓派。主机上的ip地址（10.42.0.1）没有变化，树莓派上已经改变为（192.168.0.10&#x2F;24），此时nmap命令已经无法找到pi。</p>
+<p>改为静态ip后无法连接，遂先改为原来的动态分配方式。目前想到的解决办法是：通过将静态ip设置为和动态ip一样，看能不能解决。</p>
+<h2 id="安装vnc软件on-Linux"><a href="#安装vnc软件on-Linux" class="headerlink" title="安装vnc软件on Linux"></a>安装vnc软件on Linux</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/horizonli/p/5179224.html">dpkg安装deb缺少依赖包的解决方法 - my_cool2007 - 博客园</a></p>
+</blockquote>
+<p>使用dpkg -i   *.deb 的时候出现依赖没有安装</p>
+<p>使用apt-get -f -y install  解决依赖问题后再执行dpkg安装deb包</p>
+<p>在桌面打不开vnc</p>
+<p>解决办法：</p>
+<p>按照下面这个博客搞就完事儿。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://shumeipai.nxez.com/2018/08/31/raspberry-pi-vnc-viewer-configuration-tutorial.html">树莓派 VNC Viewer 远程桌面配置教程 | 树莓派实验室</a></p>
+</blockquote>
+<p>以前是因为树莓pi上面没有装vnc viewer</p>
+<p><img src="https://raw.githubusercontent.com/PengXuanyao/img-bed/main/20221013200451.png" alt="截图留念"></p>
+<h2 id="vscode通过ssh远程连接树莓派"><a href="#vscode通过ssh远程连接树莓派" class="headerlink" title="vscode通过ssh远程连接树莓派"></a>vscode通过ssh远程连接树莓派</h2><p>安装remote-ssh</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangzhihao1994/article/details/100047558">VSCode通过Remote - SSH实现远程开发_飞翔的大白菜丶的博客-CSDN博客</a></p>
+</blockquote>
+<p>安装完成后，配置一下本机的.ssh即可，到此为止，环境大概是配好了，新买的wifi模块装上后就能用，现在终于搞完了，爽歪歪。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Xuanyao Peng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/10/08/%E3%80%90RPI%E3%80%91-00-hello-pi/">http://example.com/2022/10/08/%E3%80%90RPI%E3%80%91-00-hello-pi/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Xuanyao's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%B8%A9%E5%9D%91/">踩坑</a><a class="post-meta__tags" href="/tags/RaspberryPi/">RaspberryPi</a><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/01/10/Wm8nPS2eqZQbpdw.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/10/13/%E3%80%90%E8%9C%82%E9%B8%9FE203%E3%80%91-01-%E5%85%88%E5%86%92%E4%B8%AA%E7%83%9F/"><img class="prev-cover" src="https://s2.loli.net/2023/01/10/Noum4xY86cqvMQy.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【蜂鸟E203】-01-先冒个烟</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/30/%E3%80%90xup_summer_camp%E3%80%91-05-hls%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%8B%EF%BC%89/"><img class="next-cover" src="https://s2.loli.net/2023/01/10/Iq1S4BF7wADbRhc.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【xup_summer_camp】-05-hls学习（下）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/12/%E3%80%90CAG_SLAM%E3%80%91-01-%E6%8E%A7%E5%88%B6%E4%BF%A1%E5%8F%B7/" title="【CAG_SLAM】-01-控制信号"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-12</div><div class="title">【CAG_SLAM】-01-控制信号</div></div></a></div><div><a href="/2022/01/05/%E3%80%90CAG_SLAM%E3%80%91-00-%E6%AF%94%E8%BE%83%E6%A0%91/" title="【CAG_SLAM】-00-比较树"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-05</div><div class="title">【CAG_SLAM】-00-比较树</div></div></a></div><div><a href="/2022/01/17/%E3%80%90CAG_SLAM%E3%80%91-02-%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/" title="【CAG-SLAM】-02-项目总结"><img class="cover" src="https://s2.loli.net/2023/01/10/MhktI1loSdFYmJT.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-17</div><div class="title">【CAG-SLAM】-02-项目总结</div></div></a></div><div><a href="/2022/01/12/%E3%80%90Hexo%E3%80%91-03-%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E5%92%8C%E5%A4%B4%E5%83%8F/" title="【Hexo】-03-增加标签页和头像"><img class="cover" src="https://s2.loli.net/2023/01/10/Gnz3RKpxZOYeulf.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-12</div><div class="title">【Hexo】-03-增加标签页和头像</div></div></a></div><div><a href="/2022/01/11/%E3%80%90python%E3%80%91-00-%E7%85%A7%E7%89%87%E6%95%B4%E7%90%86/" title="【python】-00-照片整理"><img class="cover" src="https://s2.loli.net/2023/01/10/cKCUI3HNYfxQyDn.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-11</div><div class="title">【python】-00-照片整理</div></div></a></div><div><a href="/2022/10/14/%E3%80%90RPI%E3%80%91-01-%E5%B0%8F%E8%BD%A6%E5%90%AF%E5%8A%A8/" title="【RPI】-01-小车启动"><img class="cover" src="https://s2.loli.net/2023/01/10/Wm8nPS2eqZQbpdw.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-14</div><div class="title">【RPI】-01-小车启动</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/01/11/uxgHFMtiBm1kKcf.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Xuanyao Peng</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">106</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">77</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/PengXuanyao"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">新手学电脑，也请多多指教。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="toc-number">1.</span> <span class="toc-text">安装系统镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HelloPi"><span class="toc-number">2.</span> <span class="toc-text">HelloPi</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">Linux开发环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E6%A0%91%E8%8E%93%E6%B4%BE%E5%88%86%E9%85%8D%E5%9B%BA%E5%AE%9A%E7%9A%84IP%E5%9C%B0%E5%9D%80"><span class="toc-number">3.0.1.</span> <span class="toc-text">为树莓派分配固定的IP地址</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85vnc%E8%BD%AF%E4%BB%B6on-Linux"><span class="toc-number">4.</span> <span class="toc-text">安装vnc软件on Linux</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vscode%E9%80%9A%E8%BF%87ssh%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%A0%91%E8%8E%93%E6%B4%BE"><span class="toc-number">5.</span> <span class="toc-text">vscode通过ssh远程连接树莓派</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决"><img src="https://s2.loli.net/2023/01/10/Gnz3RKpxZOYeulf.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Hexo】-06-使用github同步博客时的若干问题及解决"/></a><div class="content"><a class="title" href="/2023/01/12/%E3%80%90Hexo%E3%80%91-06-%E4%BD%BF%E7%94%A8github%E5%90%8C%E6%AD%A5%E5%8D%9A%E5%AE%A2%E6%97%B6%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" title="【Hexo】-06-使用github同步博客时的若干问题及解决">【Hexo】-06-使用github同步博客时的若干问题及解决</a><time datetime="2023-01-12T09:56:23.000Z" title="发表于 2023-01-12 17:56:23">2023-01-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置"><img src="https://avatars2.githubusercontent.com/t/3419353?s=280&amp;v=4" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Fluid】00_Hexo主题Fluid配置"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90Fluid%E3%80%9100_Hexo%E4%B8%BB%E9%A2%98Fluid%E9%85%8D%E7%BD%AE/" title="【Fluid】00_Hexo主题Fluid配置">【Fluid】00_Hexo主题Fluid配置</a><time datetime="2023-01-10T07:10:00.000Z" title="发表于 2023-01-10 15:10:00">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙"><img src="https://s2.loli.net/2023/01/10/nqXCl9KY8mQHa4B.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【星河杯】00_赛题发布沙龙"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90%E6%98%9F%E6%B2%B3%E6%9D%AF%E3%80%9100_%E8%B5%9B%E9%A2%98%E5%8F%91%E5%B8%83%E6%B2%99%E9%BE%99/" title="【星河杯】00_赛题发布沙龙">【星河杯】00_赛题发布沙龙</a><time datetime="2023-01-10T06:02:19.000Z" title="发表于 2023-01-10 14:02:19">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关"><img src="https://s2.loli.net/2023/01/10/POV4FL6dMYX9yBR.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【xs】14_蓬莱接口相关"/></a><div class="content"><a class="title" href="/2023/01/10/%E3%80%90xs%E3%80%9114-%E8%93%AC%E8%8E%B1%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3/" title="【xs】14_蓬莱接口相关">【xs】14_蓬莱接口相关</a><time datetime="2023-01-10T02:46:57.000Z" title="发表于 2023-01-10 10:46:57">2023-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel"><img src="https://s2.loli.net/2023/01/10/WrvaUEYJ4xioHbm.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【ChiselBookByLiang】00_Chisel"/></a><div class="content"><a class="title" href="/2022/12/18/%E3%80%90ChiselBookByLiang%E3%80%9100_Chisel/" title="【ChiselBookByLiang】00_Chisel">【ChiselBookByLiang】00_Chisel</a><time datetime="2022-12-18T03:36:20.000Z" title="发表于 2022-12-18 11:36:20">2022-12-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Xuanyao Peng</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">❤️🧡💚🇨🇳💙💜🤎</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
