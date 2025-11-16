@@ -3,7 +3,8 @@ title: "OpenRVGPU Course"
 collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2025-autumn-rvgpu
-venue: "RIOS, TBSI, Work as Teaching Assistant"
+venue: "RIOS, Tsinghua-Berkeley Shenzhen Institute(TBSI)"
+role: "Teaching Assistant"
 date: 2025-10-20
 location: "Shenzhen, China"
 ---

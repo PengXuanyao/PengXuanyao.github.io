@@ -9,6 +9,8 @@ redirect_from:
 
 Xuanyao Peng is an M.E. candidate at the [State Key Lab of Processors](https://sklp.ict.ac.cn/), Institute of Computing Technology (ICT), Chinese Academy of Sciences (CAS), majoring in Computer Technology under the supervision of Prof. [Hang Lu](https://luhang-hpu.github.io/). As a visiting student at the [COMPASS lab](https://compass.sustech.edu.cn/), he is supervised by Prof. [Fengwei Zhang](https://fengweiz.github.io/). His research interests span computer architecture, confidential computing, and acceleration of LLM inference. He received his B.E. in Automation from Xi’an Jiaotong University before joining ICT.
 
+You can find my CV [here](/files/cv-english.pdf).
+
 Education
 ------
 * M.E. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Now
