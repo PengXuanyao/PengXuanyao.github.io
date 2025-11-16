@@ -4,6 +4,7 @@ collection: publications
 category: conferences
 permalink: /publication/2025-01-01-Dep-TEE-Decoupled-Memory-Protection-for-Secure-and-Scalable-Inter-enclave-Communication-on-RISC-V
 date: 2025-01-01
+paperurl: /files/paper-deptee-2025.pdf
 venue: 'In the proceedings of Proceedings of the 30th Asia and South Pacific Design Automation Conference'
 citation: ' Shangjie Pan,  Xuanyao Peng,  Zeyuan Man,  Xiquan Zhao,  Dongrong Zhang,  Bicheng Yang,  Dong Du,  Hang Lu,  Yubin Xia,  Xiaowei Li, &quot;Dep-TEE: Decoupled Memory Protection for Secure and Scalable Inter-enclave Communication on RISC-V.&quot; In the proceedings of Proceedings of the 30th Asia and South Pacific Design Automation Conference, 2025.'
 ---
