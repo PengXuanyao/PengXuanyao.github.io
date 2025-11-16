@@ -27,11 +27,19 @@ News
 * 2025.9, Our team won second prize in the SecretFlow Cup Data Challenge Competition[[news😆]](https://www.isc.org.cn/article/26347674537553920.html) [[news📰]](https://sklp.ict.ac.cn/xwzx/202510/t20251021_785152.html)! We developed an efficient and secure LLM inference system on Intel TDX (Confidential Virtual Machine).
 * 2025.7, Our paper on securing LLM inference on NPU was accepted by the $$43^{rd}$$ International Conference on Computer Design([ICCD](https://www.iccd-conf.com/home.html) 2025). See you at Dallas🌇, Texas!
 
+Selected publications
+------
+{% assign pubs = site.publications | sort: 'date' | reverse %}
+{% for post in pubs limit:5 %}
+* [{{ post.title }}]({{ post.url }}) — {{ post.date | date: "%Y" }}{% if post.venue %}, _{{ post.venue }}_{% endif %}
+{% endfor %}
+
+[See all publications](/publications/)
+
 Honors and Awards
 ------
 * 2025: National Scholar Ship / 硕士生国家奖学金
 * 2022: National Scholar Ship / 本科生国家奖学金
-
 <!--
 For more info
 ------
