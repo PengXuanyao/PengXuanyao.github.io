@@ -21,3 +21,4 @@ package-lock.json
 
 # Ignore python virtual environment folders
 venv/
+.DS_Store

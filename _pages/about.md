@@ -14,7 +14,7 @@ You can find my CV [here](/files/cv-english.pdf).
 Education
 ------
 * M.E. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Now
-* B.S. [School of Automation Science and Engineering, Xi'an Jiao Tong University](https://automation.xjtu.edu.cn/), 2019 - 2023
+* B.E. [School of Automation Science and Engineering, Xi'an Jiao Tong University](https://automation.xjtu.edu.cn/), 2019 - 2023
 
 Research Interests
 ------

@@ -9,9 +9,9 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Peng Xuanyao | 彭宣尧"  # Update this with the title of your site
+title                    : "Xuanyao Peng | 彭宣尧"  # Update this with the title of your site
 title_separator          : "-"
-name                     : &name "Xuanyao Peng (Shane)"
+name                     : &name "Xuanyao Peng"
 description              : &description "Xuanyao's academic portfolio"   # Update this with a general description of your site, this is the default if not overridden by a page
 url                      : https://pengxuanyao.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
@@ -26,7 +26,7 @@ author:
   avatar           : "profile.png"
   name             : "Xuanyao Peng (Shane)"  # Update this with your name
   pronouns         : # example: "she/her"
-  bio              : "M.E Student at Institute of Computing Technology, Chinese Academy of Sciences"  # Update this with a short bio or description
+  bio              : "M.E. Student at Institute of Computing Technology, Chinese Academy of Sciences"  # Update this with a short bio or description
   location         : "Beijing, China"  # Update this with your location
   employer         : "University of Chinese Academy of Sciences"  # Update this with your employer
   uri              : # URL
