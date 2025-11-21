@@ -13,8 +13,12 @@ You can find my CV [here](/files/cv-english.pdf).
 
 Education
 ------
-* M.E. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Now
-* B.E. [School of Automation Science and Engineering, Xi'an Jiao Tong University](https://automation.xjtu.edu.cn/), 2019 - 2023
+M.E. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Present
+* Major in Computer Technology
+* National Scholarship 2025
+B.E. [School of Automation Science and Engineering, Xi'an Jiao Tong University](https://automation.xjtu.edu.cn/), 2019 - 2023
+* Major in Automation
+* National Scholarship 2022
 
 Research Interests
 ------
@@ -38,8 +42,8 @@ Selected publications
 
 Honors and Awards
 ------
-* 2025: National Scholar Ship / 硕士生国家奖学金
-* 2022: National Scholar Ship / 本科生国家奖学金
+* 2025: National Scholarship / 硕士生国家奖学金
+* 2022: National Scholarship / 本科生国家奖学金
 <!--
 For more info
 ------
