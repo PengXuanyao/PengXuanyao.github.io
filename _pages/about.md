@@ -13,10 +13,11 @@ You can find my CV [here](/files/cv-english.pdf).
 
 Education
 ------
-M.E. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Present
+M.Eng. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Present
 * Major in Computer Technology
 * National Scholarship 2025
-B.E. [School of Automation Science and Engineering, Xi'an Jiao Tong University](https://automation.xjtu.edu.cn/), 2019 - 2023
+
+B.Eng. [School of Automation Science and Engineering, Xi'an Jiao Tong University](https://automation.xjtu.edu.cn/), 2019 - 2023
 * Major in Automation
 * National Scholarship 2022
 
