@@ -30,6 +30,7 @@ publist = {
         "file" : "proceedings.bib",
         "venuekey": "booktitle",
         "venue-pretext": "In the proceedings of ",
+        "category": "conferences",
         "collection" : {"name":"publications",
                         "permalink":"/publication/"}
 
@@ -38,6 +39,7 @@ publist = {
         "file": "pubs.bib",
         "venuekey" : "journal",
         "venue-pretext" : "",
+        "category": "manuscripts",
         "collection" : {"name":"publications",
                         "permalink":"/publication/"}
     }
@@ -117,6 +119,8 @@ for pubsource in publist:
 
             md += """collection: """ +  publist[pubsource]["collection"]["name"]
 
+            md += """\ncategory: """ +  publist[pubsource]["category"]
+
             md += """\npermalink: """ + publist[pubsource]["collection"]["permalink"]  + html_filename
 
             note = False
@@ -135,6 +139,12 @@ for pubsource in publist:
                     md += "\npaperurl: '" + b["url"] + "'"
                     url = True
 
+            slides = False
+            if "slides" in b.keys():
+                if len(str(b["slides"])) > 5:
+                    md += "\nslidesurl: '" + b["slides"] + "'"
+                    slides = True
+
             md += "\ncitation: '" + html_escape(citation) + "'"
 
             md += "\n---"
@@ -144,10 +154,13 @@ for pubsource in publist:
             if note:
                 md += "\n" + html_escape(b["note"]) + "\n"
 
-            if url:
-                md += "\n[Access paper here](" + b["url"] + "){:target=\"_blank\"}\n"
-            else:
-                md += "\nUse [Google Scholar](https://scholar.google.com/scholar?q="+html.escape(clean_title.replace("-","+"))+"){:target=\"_blank\"} for full citation"
+            # if url:
+            #     md += "\n[Access paper here](" + b["url"] + "){:target=\"_blank\"}"
+
+            # if slides:
+            #     md += "  [View slides here](" + b["slides"] + "){:target=\"_blank\"}"
+
+            md += "\n\nUse [Google Scholar](https://scholar.google.com/scholar?q="+html.escape(clean_title.replace("-","+"))+"){:target=\"_blank\"} for full citation"
 
             md_filename = os.path.basename(md_filename)
 
