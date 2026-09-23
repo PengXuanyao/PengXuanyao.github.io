@@ -7,13 +7,16 @@ redirect_from:
   - /about.html
 ---
 
-Xuanyao Peng is an M.E. candidate at the [State Key Lab of Processors](https://sklp.ict.ac.cn/), Institute of Computing Technology (ICT), Chinese Academy of Sciences (CAS), majoring in Computer Technology under the supervision of Prof. [Hang Lu](https://luhang-hpu.github.io/). As a visiting student at the [COMPASS lab](https://compass.sustech.edu.cn/), he is supervised by Prof. [Fengwei Zhang](https://fengweiz.github.io/). His research interests span computer architecture, confidential computing, and acceleration of LLM inference. He received his B.E. in Automation from Xi’an Jiaotong University before joining ICT.
+Xuanyao Peng is a first-year Ph.D. student at the [School of Computing](https://www.comp.nus.edu.sg/), [National University of Singapore (NUS)](https://nus.edu.sg/), advised by Prof. [Flavien Solt](https://flaviens.github.io/). His research interests span computer architecture, hardware security, confidential computing, and secure and efficient LLM inference. Before joining NUS, he received his M.E. in Computer Technology from the [State Key Lab of Processors](https://sklp.ict.ac.cn/), Institute of Computing Technology (ICT), Chinese Academy of Sciences (CAS), under the supervision of Prof. [Hang Lu](https://luhang-hpu.github.io/), and was a visiting student at the [COMPASS lab](https://compass.sustech.edu.cn/) supervised by Prof. [Fengwei Zhang](https://fengweiz.github.io/). He received his B.E. in Automation from Xi’an Jiaotong University.
 
 You can find my CV [here](/files/cv-english.pdf).
 
 Education
 ------
-M.Eng. Candidate, [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - Present
+Ph.D. Student, [School of Computing, National University of Singapore](https://www.comp.nus.edu.sg/), 2026 - Present
+* Advisor: Prof. [Flavien Solt](https://flaviens.github.io/)
+
+M.Eng. [Institute of Computing Technology, Chinese Academy of Sciences](https://www.ict.ac.cn/), 2023 - 2026
 * Major in Computer Technology
 * National Scholarship 2025
 
@@ -24,11 +27,13 @@ B.Eng. [School of Automation Science and Engineering, Xi'an Jiao Tong University
 Research Interests
 ------
 * Computer Architecture
+* Hardware Security
 * Confidential Computing
-* AI System / LLM Acceleration
+* Secure and Efficient LLM Inference
 
 News
 ------
+* 2026.8, I started my Ph.D. at the National University of Singapore 🇸🇬, advised by Prof. [Flavien Solt](https://flaviens.github.io/)!
 * 2025.9, Our team won second prize in the SecretFlow Cup Data Challenge Competition[[news😆]](https://www.isc.org.cn/article/26347674537553920.html) [[news📰]](https://sklp.ict.ac.cn/xwzx/202510/t20251021_785152.html)! We developed an efficient and secure LLM inference system on Intel TDX (Confidential Virtual Machine).
 * 2025.7, Our paper on securing LLM inference on NPU was accepted by the $$43^{rd}$$ International Conference on Computer Design([ICCD](https://www.iccd-conf.com/home.html) 2025). See you at Dallas🌇, Texas!
 
